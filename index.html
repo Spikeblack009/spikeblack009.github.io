@@ -50,8 +50,8 @@ input::placeholder,textarea::placeholder{color:#666}
 <input id="nombre" placeholder="Tu aca tu placa">
 <textarea id="mensaje" placeholder="¿Qué quieres publicar hoy?"></textarea>
 <input type="file" id="foto" accept="image/*">
-<input id="video" placeholder="Link">
-<input id="link" placeholder="Link">
+<input id="video" placeholder="tu placa">
+<input id="link" placeholder="mensaje">
 <button class="btn-red" onclick="publicar()">PUBLICAR EN EL MURO</button>
 <div id="muro" style="margin-top:15px;"><p style="color:#666;text-align:center;">Sé el primero en publicar 💀</p></div>
 </div>
@@ -112,7 +112,7 @@ onValue(muroRef,snap=>{
   Object.values(d).reverse().forEach(f=>{
     let media='';
     if(f.fotoUrl) media+=`<img src="${f.fotoUrl}">`;
-    if(f.videoUrl){const id=ytId(f.videoUrl); if(id) media+=`<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`; else media+=`<p>🎥 <a href="${f.videoUrl}" target="_blank" style="color:#00ff88;">${f.videoUrl}</a></p>`}
+    if(f.videoUrl){const id=ytId(f.videoUrl); if(id) media+=`<iframe src="https://embed/${id}" allowfullscreen></iframe>`; else media+=`<p>🎥 <a href="${f.videoUrl}" target="_blank" style="color:#00ff88;">${f.videoUrl}</a></p>`}
     if(f.linkUrl) media+=`<p>🔗 <a href="${f.linkUrl}" target="_blank" style="color:#00ff88;">${f.linkUrl}</a></p>`;
     c.innerHTML+=`<div class="post"><b>${f.nombre}</b><p style="color:#ddd;margin:6px 0;">${f.mensaje}</p>${media}</div>`;
   });
@@ -125,6 +125,13 @@ try{
   else await updateDoc(contadorRef,{total:increment(1)});
 }catch(e){console.log(e)}
 onSnapshot(contadorRef,d=>{if(d.exists()) document.getElementById('contador').innerText=d.data().total; else document.getElementById('contador').innerText='1'});
+Línea 65:   </div>  <- este es el cierre del LIBRO DE VISITAS
+Línea 66:
+Línea 67:   <a href="https://wa.me/523350807690"...>WHATSAPP</a>  <- AQUÍ EMPIEZA LO NUEVO
+Línea 68:   <div>👁️ VISITAS...</div>
+Línea 69:
+Línea 70: </body>  <- AQUÍ TERMINA
+Línea 71: </html>
 </script>
 </body>
 </html>
