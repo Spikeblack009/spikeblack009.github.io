@@ -5,7 +5,8 @@
 <title>SPIKE BLACK</title>
 <style>
 body{background:black;color:white;text-align:center;font-family:Arial;margin:0;padding:15px}
-h1{color:red;font-size:32px;margin-top:50px}
+h1{color:red;font-size:32px;margin-top:20px;margin-bottom:5px}
+.contador{color:#00ff00;font-size:14px;border:1px solid #00ff00;display:inline-block;padding:4px 12px;border-radius:20px;margin-bottom:20px}
 .sub{color:white;font-size:14px;margin-bottom:25px}
 .wrap{max-width:380px;margin:15px auto;background:#0a0a0a;padding:15px;border-radius:12px;text-align:left;border:1px solid #222}
 .wrap h3{text-align:center;color:red}
@@ -17,7 +18,7 @@ input,textarea{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:non
 </style>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, doc, getDoc, setDoc, increment, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyCpjqhAbanu-hfzCI-xx-twu3qQC-Jo9GErN8Y",
   authDomain: "spike-black.firebaseapp.com",
@@ -29,6 +30,17 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+// --- CONTADOR DE VISITAS ---
+const contadorRef = doc(db, "visitas", "contador");
+try {
+  const snap = await getDoc(contadorRef);
+  if (!snap.exists()) { await setDoc(contadorRef, { total: 1 }); } 
+  else { await updateDoc(contadorRef, { total: increment(1) }); }
+} catch(e){}
+onSnapshot(contadorRef, (d)=>{ if(d.exists()) document.getElementById('numVisitas').innerText = d.data().total; });
+
+// --- MUROS ---
 const q1 = query(collection(db,"muroSpike"), orderBy("fecha","desc"));
 onSnapshot(q1,(s)=>{let m=document.getElementById('muroSpike');m.innerHTML='';s.forEach(d=>{let e=document.createElement('div');e.className='post';e.innerHTML='<b>Spike</b><p>'+d.data().texto+'</p>';m.appendChild(e)})});
 window.publicarSpike=async()=>{let msg=document.getElementById('msgSpike').value.trim();if(!msg)return;await addDoc(collection(db,"muroSpike"),{texto:msg,fecha:serverTimestamp()});document.getElementById('msgSpike').value='';}
@@ -39,9 +51,10 @@ window.firmar=async()=>{let n=document.getElementById('nombre').value.trim();let
 </head>
 <body>
 <h1>SPIKE BLACK</h1>
+<div id="contador" class="contador">👁️ VISITAS: <span id="numVisitas">...</span></div>
 <div class="sub">Muro oficial - En vivo</div>
 <div class="wrap"><h3>📢 MURO DE SPIKE</h3><textarea id="msgSpike" placeholder="Publica algo..."></textarea><button class="btn-rojo" onclick="publicarSpike()">Publicar</button><div id="muroSpike"></div></div>
-<div class="wrap"><h3 style="color:white">📖 LIBRO DE VISITAS</h3><input id="nombre" placeholder="Tu placa / aka"><textarea id="mensaje" placeholder="Deja tu mensaje..."></textarea><button class="btn-verde" onclick="firmar()">Firmar muro</button><div id="lista"></div></div>
+<div class="wrap"><h3 style="color:white">📖 LIBRO DE VISITAS</h3><input id="nombre" placeholder="Tu placa / aca"><textarea id="mensaje" placeholder="Deja tu mensaje..."></textarea><button class="btn-verde" onclick="firmar()">Firmar muro</button><div id="lista"></div></div>
 <a class="wa" href="https://api.whatsapp.com/send?phone=523350807690&text=Que%20onda%20Spike%20vi%20tu%20muro" target="_blank">WHATSAPP</a>
 </body>
 </html>
