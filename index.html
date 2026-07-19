@@ -5,48 +5,43 @@
 <title>SPIKE BLACK</title>
 <style>
 body{background:black;color:white;text-align:center;font-family:Arial;margin:0;padding:15px}
-h1{color:red;font-size:32px;margin-top:50px;letter-spacing:2px}
+h1{color:red;font-size:32px;margin-top:50px}
 .sub{color:white;font-size:14px;margin-bottom:25px}
 .wrap{max-width:380px;margin:15px auto;background:#0a0a0a;padding:15px;border-radius:12px;text-align:left;border:1px solid #222}
-.wrap h3{text-align:center;margin:0 0 10px 0;color:red}
+.wrap h3{text-align:center;color:red}
 input,textarea{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:none;background:#1a1a1a;color:white;box-sizing:border-box}
 .btn-rojo{background:red;color:white;width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold}
 .btn-verde{background:#25D366;color:white;width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;margin-top:5px}
-.post{background:#141414;padding:10px;border-radius:8px;margin-top:10px;border-left:3px solid red}
-.post b{color:red}
-.post p{margin:5px 0 0 0;word-break:break-word;color:white}
-.contador{max-width:380px;margin:20px auto;background:black;padding:10px;border-radius:20px;border:1px dashed red;font-size:13px;color:red}
+.post{background:#141414;padding:10px;border-radius:8px;margin-top:10px;border-left:3px solid red;word-break:break-word}
 .wa{background:#25D366;color:white;padding:14px 35px;text-decoration:none;font-weight:bold;border-radius:25px;display:inline-block;margin:30px 0}
 </style>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyCpjqhAbanu-hfzCI-xx-twu3qQC-Jo9GErN8Y",
+  authDomain: "spike-black.firebaseapp.com",
+  projectId: "spike-black",
+  storageBucket: "spike-black.firebasestorage.app",
+  messagingSenderId: "286463514538",
+  appId: "1:286463514538:web:5342842db87951066e7dd2f2d2",
+  measurementId: "G-6FN7YVJKR7"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const q1 = query(collection(db,"muroSpike"), orderBy("fecha","desc"));
+onSnapshot(q1,(s)=>{let m=document.getElementById('muroSpike');m.innerHTML='';s.forEach(d=>{let e=document.createElement('div');e.className='post';e.innerHTML='<b>Spike</b><p>'+d.data().texto+'</p>';m.appendChild(e)})});
+window.publicarSpike=async()=>{let msg=document.getElementById('msgSpike').value.trim();if(!msg)return;await addDoc(collection(db,"muroSpike"),{texto:msg,fecha:serverTimestamp()});document.getElementById('msgSpike').value='';}
+const q2 = query(collection(db,"libroVisitas"), orderBy("fecha","desc"));
+onSnapshot(q2,(s)=>{let l=document.getElementById('lista');l.innerHTML='';s.forEach(d=>{let e=document.createElement('div');e.className='post';e.style.borderLeftColor='#25D366';e.innerHTML='<b style=color:#25D366>'+d.data().nombre+'</b><p>'+d.data().texto+'</p>';l.appendChild(e)})});
+window.firmar=async()=>{let n=document.getElementById('nombre').value.trim();let m=document.getElementById('mensaje').value.trim();if(!n||!m)return alert('Pon placa y mensaje');await addDoc(collection(db,"libroVisitas"),{nombre:n,texto:m,fecha:serverTimestamp()});document.getElementById('nombre').value='';document.getElementById('mensaje').value='';}
+</script>
 </head>
 <body>
 <h1>SPIKE BLACK</h1>
-<div class="sub">Muro oficial - Spike</div>
-<div class="wrap">
-<h3>📢 MURO DE SPIKE</h3>
-<textarea id="msgSpike" placeholder="Publica algo..."></textarea>
-<button class="btn-rojo" onclick="publicarSpike()">Publicar</button>
-<div id="muroSpike"></div>
-</div>
-<div class="wrap">
-<h3 style="color:white">📖 LIBRO DE VISITAS</h3>
-<input id="nombre" placeholder="Tu placa / aka">
-<textarea id="mensaje" placeholder="Deja tu mensaje..."></textarea>
-<button class="btn-verde" onclick="firmar()">Firmar muro</button>
-<div id="lista"></div>
-</div>
-<div class="contador" id="contador">👁️ 1 personas han pisado el muro</div>
+<div class="sub">Muro oficial - En vivo</div>
+<div class="wrap"><h3>📢 MURO DE SPIKE</h3><textarea id="msgSpike" placeholder="Publica algo..."></textarea><button class="btn-rojo" onclick="publicarSpike()">Publicar</button><div id="muroSpike"></div></div>
+<div class="wrap"><h3 style="color:white">📖 LIBRO DE VISITAS</h3><input id="nombre" placeholder="Tu placa / aka"><textarea id="mensaje" placeholder="Deja tu mensaje..."></textarea><button class="btn-verde" onclick="firmar()">Firmar muro</button><div id="lista"></div></div>
 <a class="wa" href="https://api.whatsapp.com/send?phone=523350807690&text=Que%20onda%20Spike%20vi%20tu%20muro" target="_blank">WHATSAPP</a>
-<script>
-let posts=JSON.parse(localStorage.getItem('muroSpike')||'[]');
-function mostrarSpike(){let m=document.getElementById('muroSpike');m.innerHTML='';posts.slice().reverse().forEach(p=>{let d=document.createElement('div');d.className='post';d.innerHTML='<b>'+p.n+'</b><p>'+p.m+'</p>';m.appendChild(d);});}
-function publicarSpike(){let msg=document.getElementById('msgSpike').value.trim();if(!msg)return;posts.push({n:"Spike",m:msg});localStorage.setItem('muroSpike',JSON.stringify(posts));document.getElementById('msgSpike').value='';mostrarSpike();}
-mostrarSpike();
-let firmas=JSON.parse(localStorage.getItem('libroSpike')||'[]');
-function mostrarVisitas(){let l=document.getElementById('lista');l.innerHTML='';firmas.slice().reverse().forEach(f=>{let d=document.createElement('div');d.className='post';d.style.borderLeftColor='#25D366';d.innerHTML='<b style=color:#25D366>'+f.n+'</b><p>'+f.m+'</p>';l.appendChild(d);});}
-function firmar(){let n=document.getElementById('nombre').value.trim();let m=document.getElementById('mensaje').value.trim();if(!n||!m)return alert('Pon placa y mensaje');firmas.push({n,m});localStorage.setItem('libroSpike',JSON.stringify(firmas));document.getElementById('nombre').value='';document.getElementById('mensaje').value='';mostrarVisitas();}
-mostrarVisitas();
-let visitas=parseInt(localStorage.getItem('visitasSpike')||'0')+1;localStorage.setItem('visitasSpike',visitas);document.getElementById('contador').textContent="👁️ "+visitas+" personas han pisado el muro";
-</script>
 </body>
 </html>
