@@ -5,59 +5,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ghost Dark Circle | Spike Black</title>
   <style>
-    body { background: #0a0a0a; color: white; font-family: Arial, sans-serif; margin: 0; text-align: center; }
-    .logo { width: 280px; margin-top: 30px; border-radius: 50%; box-shadow: 0 0 30px #00ff88; }
-    /* LETRAS ROJAS COMO LAS QUERIAS */
-    h1 { color: #ff0000; font-size: 38px; margin: 15px 0 5px 0; letter-spacing: 2px; text-shadow: 0 0 15px #ff0000; }
-    .subtitle { color: #888; margin-bottom: 40px; }
-    .section { max-width: 700px; margin: 20px auto; background: #151515; padding: 25px; border-radius: 15px; border: 1px solid #222; }
-    .section h2 { color: #ff0000; }
-    .btn { display: inline-block; background: #00ff88; color: black; padding: 12px 25px; border-radius: 25px; font-weight: bold; margin-top: 10px; text-decoration: none; }
-    .counter { margin: 60px 0 20px 0; color: #00ff88; font-family: monospace; }
-
-    /* BOTON WHATSAPP */
-    .whatsapp-float {
-      position: fixed;
-      width: 60px;
-      height: 60px;
-      bottom: 20px;
-      right: 20px;
-      background-color: #25d366;
-      color: white;
-      border-radius: 50%;
-      text-align: center;
-      font-size: 32px;
-      line-height: 60px;
-      box-shadow: 0 0 15px #25d366;
-      z-index: 100;
-      text-decoration: none;
-    }
+    body { background: #0a0a0a; color: white; font-family: Arial, sans-serif; margin: 0; text-align: center; padding-bottom: 80px; }
+    .logo { width: 260px; margin-top: 30px; border-radius: 50%; box-shadow: 0 0 30px #00ff88; }
+    h1 { color: #ff0000; font-size: 38px; margin: 15px 0 5px 0; text-shadow: 0 0 15px #ff0000; }
+    .subtitle { color: #888; margin-bottom: 10px; }
+    .visitas-badge { border: 1px solid #00ff88; color: #00ff88; padding: 5px 15px; border-radius: 20px; display: inline-block; margin: 10px 0 20px 0; }
+    .section { max-width: 700px; margin: 20px auto; background: #151515; padding: 20px; border-radius: 15px; border: 1px solid #222; text-align: left; }
+    .section h2 { color: #ff0000; text-align: center; margin-top: 0; }
+    .section h2.green { color: #00ff88; }
+    textarea, input { width: 100%; background: #222; border: none; color: white; padding: 12px; border-radius: 10px; margin: 8px 0; box-sizing: border-box; }
+    .btn { display: block; width: 100%; padding: 12px; border-radius: 10px; font-weight: bold; border: none; cursor: pointer; margin-top: 8px; }
+    .btn-red { background: #ff0000; color: white; }
+    .btn-green { background: #00ff88; color: black; }
+    .btn-whatsapp-main { background: #25d366; color: white; width: auto; margin: 20px auto; padding: 12px 30px; border-radius: 25px; display: inline-block; text-decoration: none; }
+    .post { background: #1e1e1e; padding: 15px; border-radius: 10px; margin-top: 15px; border-left: 3px solid #ff0000; word-wrap: break-word; }
+    .post img, .post video { max-width: 100%; border-radius: 10px; margin-top: 10px; }
+    .post a { color: #00ff88; word-break: break-all; }
+    .counter { margin: 40px 0 20px 0; color: #00ff88; font-family: monospace; text-align: center; }
+    .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; background: #25d366; border-radius: 50%; text-align: center; font-size: 32px; line-height: 60px; box-shadow: 0 0 15px #25d366; z-index: 100; text-decoration: none; }
+    .tools { display: flex; gap: 8px; margin: 8px 0; }
+    .tools input { flex: 1; }
   </style>
 </head>
 <body>
-  <img src="logo.png" alt="Ghost Dark Circle Logo" class="logo">
+
+  <img src="logo.png" alt="Logo" class="logo">
   <h1>GHOST DARK CIRCLE</h1>
   <p class="subtitle">Muro oficial de Spike Black</p>
+  <div class="visitas-badge">👁️ VISITAS: <span id="visitasNum">1</span></div>
 
-  <div class="section">
+  <div class="section" style="text-align:center">
     <h2>👻 Bienvenido al Dark Circle</h2>
     <p>Aquí se junta la música, el muro de fans y la comunidad Dark Circle.</p>
-    <a href="https://github.com/Spikeblack009" class="btn">Seguir en GitHub</a>
+    <a href="https://github.com/Spikeblack009" style="background:#00ff88; color:black; padding:10px 20px; border-radius:20px; text-decoration:none; font-weight:bold; display:inline-block; margin-top:10px;">Seguir en GitHub</a>
   </div>
 
-  <div class="section">
+  <div class="section" style="text-align:center">
     <h2>🔥 ¿Qué hay aquí?</h2>
     <p>• Música y proyectos de Spike Black<br>• Muro de mensajes para los fans<br>• Noticias y lanzamientos</p>
   </div>
 
-  <div class="counter">
-    <p>👁️ Visitantes del Dark Circle</p>
-    <img src="https://visitor-badge.laobi.icu/badge?page_id=Spikeblack009.spikeblack009.github.io&style=flat-square&label=Visitas&color=00ff88" alt="contador">
-    <p style="font-size: 12px; margin-top: 10px; color: #666;">Spike Black - Ghost Dark Circle © 2026</p>
+  <!-- MURO DE SPIKE CON FOTOS, VIDEOS Y LINKS -->
+  <div class="section">
+    <h2>📢 MURO DE SPIKE</h2>
+    <textarea id="postText" placeholder="Publica algo..."></textarea>
+    <div class="tools">
+      <input type="text" id="postLink" placeholder="Pega link de YouTube, foto o web...">
+      <input type="file" id="postFile" accept="image/*,video/*">
+    </div>
+    <button class="btn btn-red" onclick="publicar()">Publicar</button>
+    <div id="muroPosts"></div>
   </div>
 
-  <!-- BOTON WHATSAPP FLOTANTE -->
-  <a href="https://wa.me/523350807690?text=Hola%20Spike%20vengo%20del%20Dark%20Circle%20👻" class="whatsapp-float" target="_blank">💬</a>
+  <!-- LIBRO DE VISITAS -->
+  <div class="section">
+    <h2 style="color:white">📖 LIBRO DE VISITAS</h2>
+    <input type="text" id="visitaNombre" placeholder="Tu placa / aka">
+    <textarea id="visitaMensaje" placeholder="Deja tu mensaje..."></textarea>
+    <button class="btn btn-green" onclick="firmarMuro()">Firmar muro</button>
+    <div id="visitasPosts"></div>
+  </div>
 
-</body>
-</html>
+  <a href="https://wa.me/523350807690?text=Hola%20Spike%20vengo%20del%20Dark%20Circle%20👻" class="btn-whatsapp-main">WHATSAPP</a>
+
+  <div class="counter">
+    <p>👁️ Visitantes del Dark Circle</p>
+    <img src="https://visitor-badge.laobi.icu/badge?page_id=Spikeblack009.spikeblack009.github.io&style=flat-square&label=visitors&color=00ff88" alt="contador">
+    <p style="font-size: 12px; color: #666;">Spike Black © 2026</p>
+  </div>
+
+  <a href="https://wa.me/523350807690?text=Hola%20Spike" class="whatsapp-float" target="_blank">💬</a>
+
+<script>
+let visitas = localStorage.getItem('visitas_gdc') || 1;
+document.getElementById('visitasNum').innerText = visitas;
