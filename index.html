@@ -20,61 +20,33 @@ input,textarea{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:non
 </style>
 </head>
 <body>
-
 <h1>SPIKE BLACK</h1>
 <div class="sub">Muro oficial - Spike</div>
-
 <div class="wrap">
 <h3>📢 MURO DE SPIKE</h3>
 <textarea id="msgSpike" placeholder="Publica algo..."></textarea>
 <button class="btn-rojo" onclick="publicarSpike()">Publicar</button>
 <div id="muroSpike"></div>
 </div>
-
 <div class="wrap">
 <h3 style="color:white">📖 LIBRO DE VISITAS</h3>
-<input id="nombre" placeholder="Tu placa / aca">
+<input id="nombre" placeholder="Tu placa / aka">
 <textarea id="mensaje" placeholder="Deja tu mensaje..."></textarea>
 <button class="btn-verde" onclick="firmar()">Firmar muro</button>
 <div id="lista"></div>
 </div>
-
-<div class="contador" id="contador"></div>
-
+<div class="contador" id="contador">👁️ 1 personas han pisado el muro</div>
 <a class="wa" href="https://api.whatsapp.com/send?phone=523350807690&text=Que%20onda%20Spike%20vi%20tu%20muro" target="_blank">WHATSAPP</a>
-
 <script>
 let posts=JSON.parse(localStorage.getItem('muroSpike')||'[]');
-function mostrarSpike(){
- let m=document.getElementById('muroSpike'); m.innerHTML='';
- posts.slice().reverse().forEach(p=>{
-  let b=document.createElement('b'); b.textContent=p.n;
-  let t=document.createElement('p'); t.textContent=p.m;
-  let d=document.createElement('div'); d.className='post'; d.append(b,t);
-  m.appendChild(d);
- });
-}
-function publicarSpike(){
- let msg=document.getElementById('msgSpike').value.trim();
- if(!msg) return alert('Escribe algo');
- posts.push({n:"Spike",m:msg}); localStorage.setItem('muroSpike',JSON.stringify(posts));
- document.getElementById('msgSpike').value=''; mostrarSpike();
-}
+function mostrarSpike(){let m=document.getElementById('muroSpike');m.innerHTML='';posts.slice().reverse().forEach(p=>{let d=document.createElement('div');d.className='post';d.innerHTML='<b>'+p.n+'</b><p>'+p.m+'</p>';m.appendChild(d);});}
+function publicarSpike(){let msg=document.getElementById('msgSpike').value.trim();if(!msg)return;posts.push({n:"Spike",m:msg});localStorage.setItem('muroSpike',JSON.stringify(posts));document.getElementById('msgSpike').value='';mostrarSpike();}
 mostrarSpike();
-
 let firmas=JSON.parse(localStorage.getItem('libroSpike')||'[]');
-function mostrarVisitas(){
- let l=document.getElementById('lista'); l.innerHTML='';
- firmas.slice().reverse().forEach(f=>{
-  let div=document.createElement('div'); div.className='post'; div.style.borderLeftColor='#25D366';
-  let b=document.createElement('b'); b.textContent=f.n; b.style.color='#25D366';
-  let p=document.createElement('p'); p.textContent=f.m;
-  div.append(b,p); l.appendChild(div);
- });
-}
-function firmar(){
- let n=document.getElementById('nombre').value.trim();
- let m=document.getElementById('mensaje').value.trim();
- if(!n||!m) return alert('Pon placa y mensaje');
- firmas.push({n,m}); localStorage.setItem('libroSpike',JSON.stringify(firmas));
- document.getElementById('nombre').value=''; document.getElement
+function mostrarVisitas(){let l=document.getElementById('lista');l.innerHTML='';firmas.slice().reverse().forEach(f=>{let d=document.createElement('div');d.className='post';d.style.borderLeftColor='#25D366';d.innerHTML='<b style=color:#25D366>'+f.n+'</b><p>'+f.m+'</p>';l.appendChild(d);});}
+function firmar(){let n=document.getElementById('nombre').value.trim();let m=document.getElementById('mensaje').value.trim();if(!n||!m)return alert('Pon placa y mensaje');firmas.push({n,m});localStorage.setItem('libroSpike',JSON.stringify(firmas));document.getElementById('nombre').value='';document.getElementById('mensaje').value='';mostrarVisitas();}
+mostrarVisitas();
+let visitas=parseInt(localStorage.getItem('visitasSpike')||'0')+1;localStorage.setItem('visitasSpike',visitas);document.getElementById('contador').textContent="👁️ "+visitas+" personas han pisado el muro";
+</script>
+</body>
+</html>
