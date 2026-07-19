@@ -1,47 +1,20 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muro</title>
+<title>SPIKE BLACK 009</title>
 <style>
-body{font-family:Arial;background:#111;color:#fff;padding:20px}
-.card{background:#222;padding:20px;border-radius:15px;max-width:500px;margin:auto}
-input,textarea{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;box-sizing:border-box}
-.enviar{width:100%;padding:10px;background:#00c853;color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:bold}
-.wa{background:#25D366;color:#fff;display:block;text-align:center;padding:10px;border-radius:8px;text-decoration:none;margin-bottom:15px;font-weight:bold}
-.post{background:#333;padding:12px;border-radius:10px;margin:10px 0}
-.post b{color:#00e676}
+body{background:black;color:white;text-align:center;font-family:Arial;margin:0;padding:0}
+h1{color:red;font-size:42px;margin-top:120px;letter-spacing:2px}
+p{color:white;margin-top:10px}
+.btn{ background:#25D366;color:white;padding:16px 35px;text-decoration:none;font-weight:bold;border-radius:30px;display:inline-block;margin-top:40px;font-size:18px }
 </style>
 </head>
 <body>
-<div class="card">
-<h3>📢 Muro</h3>
-<a class="wa" href="https://wa.me/523350807690">💬 Mi WhatsApp Privado</a>
-<input id="nom" placeholder="Tu nombre">
-<textarea id="msg" placeholder="Publica algo..."></textarea>
-<button class="enviar" onclick="publicar()">Publicar</button>
-<div id="muro"></div>
-</div>
-<script>
-let posts=JSON.parse(localStorage.getItem('muro')||'[]');
-function mostrar(){
- let m=document.getElementById('muro'); m.innerHTML='';
- posts.slice().reverse().forEach(p=>{
-  let b=document.createElement('b'); b.textContent=p.n;
-  let t=document.createElement('p'); t.textContent=p.m;
-  let d=document.createElement('div'); d.className='post'; d.append(b,t);
-  m.appendChild(d);
- });
-}
-function publicar(){
- let n=document.getElementById('nom').value.trim();
- let msg=document.getElementById('msg').value.trim();
- if(!n||!msg) return alert('Completa todo');
- posts.push({n,m:msg}); localStorage.setItem('muro',JSON.stringify(posts));
- document.getElementById('msg').value=''; mostrar();
-}
-mostrar();
-</script>
+
+<h1>SPIKE BLACK 009</h1>
+<p>Muro oficial - Spike</p>
+
+<a class="btn" href="https://wa.me/5213350807290?text=Que%20onda%20Spike%20vi%20tu%20muro">WHATSAPP 009</a>
+
 </body>
 </html>
