@@ -1,21 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SPIKE BLACK </title>
 <style>
-body{background:black;color:white;text-align:center;font-family:Arial;margin:0;padding:0}
-h1{color:#ff0000;font-size:32px;margin-top:80px;font-weight:bold;letter-spacing:1px}
-p{color:white;font-size:14px;margin-top:10px}
-.btn{background:#25D366;color:white;padding:12px 28px;text-decoration:none;font-weight:bold;border-radius:25px;display:inline-block;margin-top:20px;font-size:14px}
+body{background:black;color:white;text-align:center;font-family:Arial;margin:0;padding:20px 10px}
+h1{color:red;font-size:32px;margin-top:60px;letter-spacing:2px}
+.sub{font-size:14px;margin-bottom:20px}
+.wa{background:#25D366;color:white;padding:15px 35px;text-decoration:none;font-weight:bold;border-radius:25px;display:inline-block;margin:40px 0 20px 0;font-size:16px}
+.wrap{max-width:380px;margin:20px auto;background:#111;padding:15px;border-radius:12px;text-align:left;border:1px solid #222}
+.wrap h3{color:red;text-align:center;margin-top:0}
+input,textarea{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:none;background:#222;color:white;box-sizing:border-box}
+button{background:red;color:white;width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;margin-top:5px}
+.post{background:#1a1a1a;padding:10px;border-radius:8px;margin-top:10px;border-left:3px solid red}
+.post b{color:red}
+.post p{margin:5px 0 0 0;color:#ddd;word-break:break-word}
 </style>
 </head>
 <body>
 
 <h1>SPIKE BLACK </h1>
-<p>Muro oficial - Spike</p>
+<div class="sub">Muro oficial - Spike</div>
 
-<a class="btn" href="https://api.whatsapp.com/send?phone=523350807690&text=Que%20onda%20Spike%20vi%20tu%20muro">WHATSAPP </a>
+<div class="wrap">
+<h3>📖 LIBRO DE VISITAS</h3>
+<input id="nombre" placeholder="Tu placa / aka">
+<textarea id="mensaje" placeholder="Deja tu mensaje para el muro..."></textarea>
+<button onclick="firmar()">FIRMAR MURO</button>
+<div id="lista"></div>
+</div>
+
+<a class="wa" href="https://api.whatsapp.com/send?phone=5213350807290&text=Que%20onda%20Spike%20vi%20tu%20muro%20009%20y%20quiero%20contactarte" target="_blank">WHATSAPP 009</a>
+
+<script>
+let firmas=JSON.parse(localStorage.getItem('libro009')||'[]');
+function mostrar(){
+ let l=document.getElementById('lista'); l.innerHTML='';
+ firmas.slice().reverse().forEach(f=>{
+  let div=document.createElement('div'); div.className='post';
+  let b=document.createElement('b'); b.textContent=f.n;
+  let p=document.createElement('p'); p.textContent=f.m;
+  div.append(b,p); l.appendChild(div);
+ });
+}
+function firmar(){
+ let n=document.getElementById('nombre').value.trim();
+ let m=document.getElementById('mensaje').value.trim();
+ if(!n||!m) return alert('Pon tu placa y mensaje');
+ firmas.push({n,m}); localStorage.setItem('libro009',JSON.stringify(firmas));
+ 
+ // Abre tu WhatsApp con el mensaje que dejaron
+ window.open("https://api.whatsapp.com/send?phone=5213350807290&text=Nueva%20firma%20en%20tu%20muro%20009%3A%0APlaca%3A%20"+encodeURIComponent(n)+"%0AMensaje%3A%20"+encodeURIComponent(m), "_blank");
+
+ document.getElementById('nombre').value=''; document.getElementById('mensaje').value='';
+ mostrar();
+}
+mostrar();
+</script>
 
 </body>
 </html>
