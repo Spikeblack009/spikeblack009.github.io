@@ -5,6 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ghost Dark Circle | Spike Black</title>
   <style>
+<!-- MURO DARK CIRCLE GLOBAL - FIREBASE -->
+<div id="muroBox">
+  <input type="text" id="nombreInput" placeholder="Tu nombre / AKA" style="width:100%;padding:10px;margin:5px 0;border-radius:8px;border:none;">
+  <textarea id="mensajeInput" placeholder="Firma el muro del Dark Circle..." style="width:100%;padding:10px;margin:5px 0;border-radius:8px;border:none;height:80px;"></textarea>
+  <button onclick="enviarFirma()" style="width:100%;padding:12px;background:#ff0000;color:white;border:none;border-radius:8px;font-weight:bold;">FIRMAR MURO</button>
+  <div id="visitasPosts" style="margin-top:20px;">Cargando firmas...</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAR7kUWo6MKaOUgFTiuDaQXM5TYbfNcZKU",
+  authDomain: "ghost-dark-circle.firebaseapp.com",
+  databaseURL: "https://ghost-dark-circle-default-rtdb.firebaseio.com",
+  projectId: "ghost-dark-circle",
+  storageBucket: "ghost-dark-circle.firebasestorage.app",
+  messagingSenderId: "1049315311255",
+  appId: "1:1049315311255:web:005c42fbf8bd00bec6b3d2"
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const muroRef = ref(db, 'firmas');
+
+window.enviarFirma = () => {
+  const nombre = document.getElementById('nombreInput').value.trim();
+  const mensaje = document.getElementById('mensajeInput').value.trim();
+  if(!nombre || !mensaje) return alert('Pon tu AKA y tu mensaje, Spike');
+  push(muroRef, { nombre, mensaje, fecha: Date.now() });
+  document.getElementById('nombreInput').value = '';
+  document.getElementById('mensajeInput').value = '';
+};
+
+const contenedor = document.getElementById('visitasPosts');
+onValue(muroRef, (snap) => {
+  contenedor.innerHTML = '';
+  const data = snap.val();
+  if(!data){ contenedor.innerHTML = '<p style=color:white>Sé el primero en firmar el Dark Circle 💀</p>'; return; }
+  Object.values(data).reverse().forEach(f => {
+    contenedor.innerHTML += `<div style="background:#111;color:white;padding:10px;margin:10px 0;border-left:3px solid red;border-radius:5px;"><b style="color:red;">${f.nombre}</b><p style="margin:5px 0 0 0;">${f.mensaje}</p></div>`;
+  });
+});
+</script>
     body { background: #0a0a0a; color: white; font-family: Arial, sans-serif; margin: 0; text-align: center; padding-bottom: 80px; }
     .logo { width: 260px; margin-top: 30px; border-radius: 50%; box-shadow: 0 0 30px #00ff88; }
     .visitas-badge{display:none !important;}
