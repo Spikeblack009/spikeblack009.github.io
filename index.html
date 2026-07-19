@@ -1,22 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ghost Dark Circle | Spike Black</title>
-  <style>
-<!-- MURO DARK CIRCLE GLOBAL - FIREBASE -->
-<div id="muroBox">
-  <input type="text" id="nombreInput" placeholder="Tu nombre / AKA" style="width:100%;padding:10px;margin:5px 0;border-radius:8px;border:none;">
-  <textarea id="mensajeInput" placeholder="Firma el muro del Dark Circle..." style="width:100%;padding:10px;margin:5px 0;border-radius:8px;border:none;height:80px;"></textarea>
-  <button onclick="enviarFirma()" style="width:100%;padding:12px;background:#ff0000;color:white;border:none;border-radius:8px;font-weight:bold;">FIRMAR MURO</button>
-  <div id="visitasPosts" style="margin-top:20px;">Cargando firmas...</div>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GHOST DARK CIRCLE - Spike Black</title>
+<style>
+    * { box-sizing: border-box; }
+  html, body {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  body { padding: 15px; text-align: center; }
+  .logo-wrap {
+    width: 280px; height: 280px; margin: 20px auto;
+    border-radius: 50%; box-shadow: 0 0 35px #00ff88;
+    background: #000;
+  }
+  .logo-wrap img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+  h1 { color: #ff1a1a; font-size: 38px; font-weight: 900; text-shadow: 0 0 15px red; margin: 15px 0 5px 0; }
+  .sub { color: #999; font-size: 18px; margin-bottom: 20px; text-align: left; }
+  .card {
+    background: #111111 !important;
+    border-radius: 20px; padding: 20px; margin: 18px 0;
+    border: 1px solid #222;
+  }
+  .card h2 { color: #cc0000; margin: 0 0 12px 0; font-size: 22px; }
+  .card p, .card li { color: #e0e0e0 !important; }
+  .btn-green { background: #00ff88; color: #000; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 16px; cursor: pointer; }
+  input, textarea { width: 100%; background: #222 !important; border: 1px solid #333 !important; color: white !important; border-radius: 12px; padding: 12px; margin: 6px 0; }
+</style>
+</head>
+<body>
+
+<div class="logo-wrap">
+  <img src="logo.png" alt="Ghost Dark Circle Spike Black">
+</div>
+
+<h1>GHOST DARK CIRCLE</h1>
+<div class="sub">Muro oficial de Spike Black</div>
+
+<div class="card">
+  <h2>👻 Bienvenido al Dark Circle</h2>
+  <p>Aquí se junta la música, el muro de fans y la comunidad Dark Circle.</p>
+  <button class="btn-green">Seguir en GitHub</button>
+</div>
+
+<div class="card">
+  <h2>🔥 ¿Qué hay aquí?</h2>
+  <p>• Música y proyectos de Spike Black<br>• Muro de mensajes para los fans<br>• Noticias y lanzamientos</p>
+</div>
+
+<div class="card">
+  <h2>📢 MURO DE SPIKE</h2>
+  <input type="text" id="nombreInput" placeholder="Tu nombre / AKA">
+  <textarea id="mensajeInput" placeholder="Publica algo..."></textarea>
+  <button onclick="enviarFirma()" style="width:100%;padding:12px;background:red;color:white;border:none;border-radius:10px;font-weight:bold;margin-top:8px;">FIRMAR</button>
+  <div id="visitasPosts" style="margin-top:20px;text-align:left;"></div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
 const firebaseConfig = {
   apiKey: "AIzaSyAR7kUWo6MKaOUgFTiuDaQXM5TYbfNcZKU",
   authDomain: "ghost-dark-circle.firebaseapp.com",
@@ -28,99 +76,22 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-const muroRef = ref(db, 'firmas');
-
+const muroRef = ref(db, 'muro_dark_circle');
 window.enviarFirma = () => {
-  const nombre = document.getElementById('nombreInput').value.trim();
-  const mensaje = document.getElementById('mensajeInput').value.trim();
-  if(!nombre || !mensaje) return alert('Pon tu AKA y tu mensaje, Spike');
-  push(muroRef, { nombre, mensaje, fecha: Date.now() });
-  document.getElementById('nombreInput').value = '';
-  document.getElementById('mensajeInput').value = '';
+  const n = document.getElementById('nombreInput').value.trim();
+  const m = document.getElementById('mensajeInput').value.trim();
+  if(!n||!m) return alert('Llena todo');
+  push(muroRef, { nombre:n, mensaje:m, fecha:Date.now() });
+  document.getElementById('nombreInput').value=''; document.getElementById('mensajeInput').value='';
 };
-
-const contenedor = document.getElementById('visitasPosts');
 onValue(muroRef, (snap) => {
-  contenedor.innerHTML = '';
-  const data = snap.val();
-  if(!data){ contenedor.innerHTML = '<p style=color:white>Sé el primero en firmar el Dark Circle 💀</p>'; return; }
-  Object.values(data).reverse().forEach(f => {
-    contenedor.innerHTML += `<div style="background:#111;color:white;padding:10px;margin:10px 0;border-left:3px solid red;border-radius:5px;"><b style="color:red;">${f.nombre}</b><p style="margin:5px 0 0 0;">${f.mensaje}</p></div>`;
+  const c = document.getElementById('visitasPosts');
+  c.innerHTML=''; const d=snap.val();
+  if(!d){c.innerHTML='<p style=color:#888>Sé el primero en firmar 💀</p>';return;}
+  Object.values(d).reverse().forEach(f=>{
+    c.innerHTML+=`<div style="background:#1a1a1a;padding:10px;border-radius:10px;margin-bottom:10px;border-left:3px solid red;"><b style="color:#ff4444;">${f.nombre}</b><p style="margin:5px 0 0 0;">${f.mensaje}</p></div>`;
   });
 });
 </script>
-    body { background: #0a0a0a; color: white; font-family: Arial, sans-serif; margin: 0; text-align: center; padding-bottom: 80px; }
-    .logo { width: 260px; margin-top: 30px; border-radius: 50%; box-shadow: 0 0 30px #00ff88; }
-    .visitas-badge{display:none !important;}
-    h1 { color: #ff0000; font-size: 38px; margin: 15px 0 5px 0; text-shadow: 0 0 15px #ff0000; }
-    .subtitle { color: #888; margin-bottom: 10px; }
-    .visitas-badge { border: 1px solid #00ff88; color: #00ff88; padding: 5px 15px; border-radius: 20px; display: inline-block; margin: 10px 0 20px 0; }
-    .section { max-width: 700px; margin: 20px auto; background: #151515; padding: 20px; border-radius: 15px; border: 1px solid #222; text-align: left; }
-    .section h2 { color: #ff0000; text-align: center; margin-top: 0; }
-    .section h2.green { color: #00ff88; }
-    textarea, input { width: 100%; background: #222; border: none; color: white; padding: 12px; border-radius: 10px; margin: 8px 0; box-sizing: border-box; }
-    .btn { display: block; width: 100%; padding: 12px; border-radius: 10px; font-weight: bold; border: none; cursor: pointer; margin-top: 8px; }
-    .btn-red { background: #ff0000; color: white; }
-    .btn-green { background: #00ff88; color: black; }
-    .btn-whatsapp-main { background: #25d366; color: white; width: auto; margin: 20px auto; padding: 12px 30px; border-radius: 25px; display: inline-block; text-decoration: none; }
-    .post { background: #1e1e1e; padding: 15px; border-radius: 10px; margin-top: 15px; border-left: 3px solid #ff0000; word-wrap: break-word; }
-    .post img, .post video { max-width: 100%; border-radius: 10px; margin-top: 10px; }
-    .post a { color: #00ff88; word-break: break-all; }
-    .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; background: #25d366; border-radius: 50%; text-align: center; font-size: 32px; line-height: 60px; box-shadow: 0 0 15px #25d366; z-index: 100; text-decoration: none; }
-    .tools { display: flex; gap: 8px; margin: 8px 0; }
-    .tools input { flex: 1; }
-  </style>
-</head>
-<style>
-<body>
-
-  <img src="logo.png" alt="Logo" class="logo">
-  <h1>GHOST DARK CIRCLE</h1>
-  <p class="subtitle">Muro oficial de Spike Black</p>
-  <div class="visitas-badge">👁️ VISITAS: <span id="visitasNum">1</span></div>
-
-  <div class="section" style="text-align:center">
-    <h2>👻 Bienvenido al Dark Circle</h2>
-    <p>Aquí se junta la música, el muro de fans y la comunidad Dark Circle.</p>
-    <a href="https://github.com/Spikeblack009" style="background:#00ff88; color:black; padding:10px 20px; border-radius:20px; text-decoration:none; font-weight:bold; display:inline-block; margin-top:10px;">Seguir en GitHub</a>
-  </div>
-
-  <div class="section" style="text-align:center">
-    <h2>🔥 ¿Qué hay aquí?</h2>
-    <p>• Música y proyectos de Spike Black<br>• Muro de mensajes para los fans<br>• Noticias y lanzamientos</p>
-  </div>
-
-  <!-- MURO DE SPIKE CON FOTOS, VIDEOS Y LINKS -->
-  <div class="section">
-    <h2>📢 MURO DE SPIKE</h2>
-    <textarea id="postText" placeholder="Publica algo..."></textarea>
-    <div class="tools">
-      <input type="text" id="postLink" placeholder="Pega link, foto o web...">
-      <input type="file" id="postFile" accept="image/*,video/*">
-    </div>
-    <button class="btn btn-red" onclick="publicar()">Publicar</button>
-    <div id="muroPosts"></div>
-  </div>
-
-  <!-- LIBRO DE VISITAS -->
-  <div class="section">
-    <h2 style="color:white">📖 LIBRO DE VISITAS</h2>
-    <input type="text" id="visitaNombre" placeholder="Tu placa / aca">
-    <textarea id="visitaMensaje" placeholder="Deja tu mensaje..."></textarea>
-    <button class="btn btn-green" onclick="firmarMuro()">Firmar muro</button>
-    <div id="visitasPosts"></div>
-  </div>
-
-  <a href="https://wa.me/523350807690?text=Hola%20Spike%20vengo%20del%20Dark%20Circle%20👻" class="btn-whatsapp-main">WHATSAPP</a>
-
-  <div class="counter">
-    <p>👁️ Visitantes del Dark Circle</p>
-    <img src="https://visitor-badge.laobi.icu/badge?page_id=Spikeblack009.spikeblack009.github.io&style=flat-square&label=visitors&color=00ff88" alt="contador">
-    <p style="font-size: 12px; color: #666;">Spike Black © 2026</p>
-  </div>
-
-  <a href="https://wa.me/523350807690?text=Hola%20Spike" class="whatsapp-float" target="_blank">💬</a>
-
-<script>
-let visitas = localStorage.getItem('visitas_gdc') || 1;
-document.getElementById('visitasNum').innerText = visitas;
+</body>
+</html>
