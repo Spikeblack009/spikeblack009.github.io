@@ -1,3 +1,4 @@
+![Logo](logo.png)
 # 👻 Ghost Dark Circle
 ### Muro oficial de Spike Black
 
