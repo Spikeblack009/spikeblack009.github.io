@@ -30,10 +30,10 @@ button{background:red;color:white;width:100%;padding:12px;border:none;border-rad
 <div id="lista"></div>
 </div>
 
-<a class="wa" href="https://api.whatsapp.com/send?phone=523350807290&text=Que%20onda%20Spike%20vi%20tu%20muro%20y%20quiero%20contactarte" target="_blank">WHATSAPP </a>
+<a class="wa" href="https://api.whatsapp.com/send?phone=523350807690&text=Que%20onda%20Spike%20vi%20tu%20muro%20y%20quiero%20contactarte" target="_blank">WHATSAPP </a>
 
 <script>
-let firmas=JSON.parse(localStorage.getItem('libro009')||'[]');
+let firmas=JSON.parse(localStorage.getItem('libro')||'[]');
 function mostrar(){
  let l=document.getElementById('lista'); l.innerHTML='';
  firmas.slice().reverse().forEach(f=>{
@@ -50,7 +50,7 @@ function firmar(){
  firmas.push({n,m}); localStorage.setItem('libro009',JSON.stringify(firmas));
  
  // Abre tu WhatsApp con el mensaje que dejaron
- window.open("https://api.whatsapp.com/send?phone=523350807690&text=Nueva%20firma%20en%20tu%20muro%20009%3A%0APlaca%3A%20"+encodeURIComponent(n)+"%0AMensaje%3A%20"+encodeURIComponent(m), "_blank");
+ window.open("https://api.whatsapp.com/send?phone=523350807690&text=Nueva%20firma%20en%20tu%20muro%3A%0APlaca%3A%20"+encodeURIComponent(n)+"%0AMensaje%3A%20"+encodeURIComponent(m), "_blank");
 
  document.getElementById('nombre').value=''; document.getElementById('mensaje').value='';
  mostrar();
