@@ -119,4 +119,25 @@ window.firmarLibro = () => {
   const placa=document.getElementById('placaLibro').value.trim() || "Anonimo";
   const mensaje=document.getElementById('mensajeLibro').value.trim();
   if(!mensaje) return alert('Escribe un mensaje');
-  push
+  push(libroRef,{placa,mensaje,fecha:Date.now()});
+  document.getElementById('placaLibro').value='';document.getElementById('mensajeLibro').value='';
+};
+onValue(libroRef,snap=>{
+  const c=document.getElementById('listaLibro');c.innerHTML='';
+  const d=snap.val();if(!d) return;
+  Object.values(d).reverse().forEach(f=>{
+    c.innerHTML+=`<div class="post" style="border-left-color:#22c55e"><b>${f.placa}</b><p style="color:#ddd;margin:6px 0;">${f.mensaje}</p></div>`;
+  });
+});
+
+// CONTADOR
+const contadorRef=doc(fs,"visitas","contador");
+try{
+  const s=await getDoc(contadorRef);
+  if(!s.exists()) await setDoc(contadorRef,{total:1});
+  else await updateDoc(contadorRef,{total:increment(1)});
+}catch(e){console.log(e)}
+onSnapshot(contadorRef,d=>{if(d.exists()) document.getElementById('contador').innerText=d.data().total;});
+</script>
+</body>
+</html>
