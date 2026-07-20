@@ -12,17 +12,16 @@ h1{color:#00ff88;font-size:34px;font-weight:900;margin:10px 0 5px 0;text-shadow:
 .sub{color:#888;margin-bottom:25px;font-size:14px;letter-spacing:1px}
 .card{background:linear-gradient(145deg,#151515,#0f0f0f);border-radius:22px;padding:22px;margin:20px auto;max-width:500px;border:1px solid #222;box-shadow:0 4px 20px rgba(0,255,136,0.1)}
 .card h2{color:#00ff88;margin:0 0 15px 0;font-size:20px}
-.card p{color:#ccc;line-height:1.6;margin:5px 0}
 .btn-green{background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;border:none;padding:14px 30px;border-radius:30px;font-weight:900;font-size:15px;cursor:pointer;box-shadow:0 0 20px rgba(0,255,136,0.4);width:100%}
-.btn-whats{background:linear-gradient(90deg,#25D366,#128C7E);color:white;border:none;padding:14px 30px;border-radius:30px;font-weight:900;font-size:16px;cursor:pointer;width:100%;margin-top:10px;box-shadow:0 0 20px rgba(37,211,102,0.4)}
+.btn-whats{background:linear-gradient(90deg,#25D366,#128C7E);color:white;border:none;padding:14px 30px;border-radius:30px;font-weight:900;font-size:16px;cursor:pointer;width:100%;max-width:500px; margin:20px auto 10px auto; display:block; box-shadow:0 0 20px rgba(37,211,102,0.4)}
 input,textarea{background:#1e1e1e!important;border:1px solid #333!important;color:white!important;border-radius:14px;padding:14px;margin:8px 0;width:100%;box-sizing:border-box;font-size:14px}
-input::placeholder,textarea::placeholder{color:#666}
 .btn-red{background:linear-gradient(90deg,#ff0033,#cc0000);color:white;border:none;padding:14px;border-radius:14px;font-weight:900;width:100%;cursor:pointer;margin-top:10px;letter-spacing:1px}
+.btn-verde2{background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;border:none;padding:14px;border-radius:14px;font-weight:900;width:100%;cursor:pointer;margin-top:10px;}
 .post{background:#1e1e1e;padding:14px;border-radius:14px;margin-top:14px;border-left:4px solid #00ff88;text-align:left;animation:aparece 0.5s}
 .post b{color:#00ff88}
 .post img{width:100%;border-radius:12px;margin-top:10px;border:1px solid #333}
 .post iframe{width:100%;height:230px;border:none;border-radius:12px;margin-top:10px}
-.contador{color:#00ff88;font-size:15px;margin:25px 0;font-weight:bold;text-shadow:0 0 10px #00ff88}
+.contador{color:#00ff88;font-size:15px;margin:15px 0 40px 0;font-weight:bold;text-shadow:0 0 10px #00ff88; text-align:center;}
 @keyframes aparece{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
@@ -32,36 +31,32 @@ input::placeholder,textarea::placeholder{color:#666}
 <h1>GHOST DARK CIRCLE</h1>
 <div class="sub">MURO OFICIAL DE SPIKE BLACK</div>
 
-<div class="card">
-<h2>👻 Bienvenido al Dark Circle</h2>
-<p>Aquí se junta la música, el muro de fans y la comunidad Dark Circle. Publica lo que quieras.</p>
-<button class="btn-green" onclick="window.open('https://github.com/Spikeblack009','_blank')">💚 Seguir en GitHub</button>
-<button class="btn-whats" onclick="window.open('https://wa.me/523350807690','_blank')">💬 WhatsApp Dark Circle</button>
-<p style="font-size:11px;color:#666;text-align:center;margin-top:8px;">Cambia el número en el código por tu WhatsApp real</p>
-</div>
-
-<div class="card">
-<h2>🔥 ¿Qué hay aquí?</h2>
-<p>• Música y proyectos de Spike Black<br>• Muro de mensajes para los fans<br>• Fotos, videos y links de todos</p>
-</div>
-
+<!-- 1. MURO DE SPIKE -->
 <div class="card">
 <h2>📢 MURO DE SPIKE</h2>
-<input id="nombre" placeholder="Tu aca tu placa">
+<input id="nombre" placeholder="Tu aka tu placa">
 <textarea id="mensaje" placeholder="¿Qué quieres publicar hoy?"></textarea>
 <input type="file" id="foto" accept="image/*">
-<input id="video" placeholder="tu placa">
-<input id="link" placeholder="mensaje">
+<input id="video" placeholder="Link de YouTube (opcional)">
+<input id="link" placeholder="Link externo (opcional)">
 <button class="btn-red" onclick="publicar()">PUBLICAR EN EL MURO</button>
 <div id="muro" style="margin-top:15px;"><p style="color:#666;text-align:center;">Sé el primero en publicar 💀</p></div>
 </div>
 
-<div class="card" style="text-align:center;">
-<h2>📲 Contacto</h2>
-<p>GitHub: Spikeblack009<br>Dark Circle forever 🖤</p>
+<!-- 2. LIBRO DE VISITAS -->
+<div class="card">
+<h2>📖 LIBRO DE VISITAS</h2>
+<input id="placaLibro" placeholder="Tu placa / aka">
+<textarea id="mensajeLibro" placeholder="Deja tu mensaje..."></textarea>
+<button class="btn-verde2" onclick="firmarLibro()">Firmar muro</button>
+<div id="listaLibro" style="margin-top:15px;"></div>
 </div>
 
-<div class="contador">👁️ Visitantes del Dark Circle: <span id="contador">cargando...</span></div>
+<!-- 3. WHATSAPP + CONTADOR ABAJO -->
+<button class="btn-whats" onclick="window.open('https://wa.me/523350807690','_blank')">💬 WHATSAPP</button>
+
+<div class="contador">👁️ VISITAS: <span id="contador">cargando...</span></div>
+
 <footer style="color:#444;font-size:11px;">Spike Black - Ghost Dark Circle © 2026</footer>
 
 <script type="module">
@@ -84,8 +79,9 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const storage = getStorage(app);
 const fs = getFirestore(app);
-const muroRef = ref(db, 'muro_dark_circle');
 
+// MURO
+const muroRef = ref(db, 'muro_dark_circle');
 window.publicar = async () => {
   const nombre=document.getElementById('nombre').value.trim();
   const mensaje=document.getElementById('mensaje').value.trim();
@@ -104,7 +100,6 @@ window.publicar = async () => {
   push(muroRef,{nombre,mensaje,fotoUrl,videoUrl:video,linkUrl:link,fecha:Date.now()});
   document.getElementById('nombre').value='';document.getElementById('mensaje').value='';document.getElementById('video').value='';document.getElementById('link').value='';document.getElementById('foto').value='';
 };
-
 function ytId(u){const m=u.match(/(?:youtube\.com\/.*v=|youtu\.be\/)([^&? ]{11})/);return m?m[1]:null}
 onValue(muroRef,snap=>{
   const c=document.getElementById('muro');c.innerHTML='';
@@ -112,26 +107,16 @@ onValue(muroRef,snap=>{
   Object.values(d).reverse().forEach(f=>{
     let media='';
     if(f.fotoUrl) media+=`<img src="${f.fotoUrl}">`;
-    if(f.videoUrl){const id=ytId(f.videoUrl); if(id) media+=`<iframe src="https://embed/${id}" allowfullscreen></iframe>`; else media+=`<p>🎥 <a href="${f.videoUrl}" target="_blank" style="color:#00ff88;">${f.videoUrl}</a></p>`}
+    if(f.videoUrl){const id=ytId(f.videoUrl); if(id) media+=`<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`; else media+=`<p>🎥 <a href="${f.videoUrl}" target="_blank" style="color:#00ff88;">${f.videoUrl}</a></p>`}
     if(f.linkUrl) media+=`<p>🔗 <a href="${f.linkUrl}" target="_blank" style="color:#00ff88;">${f.linkUrl}</a></p>`;
     c.innerHTML+=`<div class="post"><b>${f.nombre}</b><p style="color:#ddd;margin:6px 0;">${f.mensaje}</p>${media}</div>`;
   });
 });
 
-const contadorRef=doc(fs,"visitas","contador");
-try{
-  const s=await getDoc(contadorRef);
-  if(!s.exists()) await setDoc(contadorRef,{total:1});
-  else await updateDoc(contadorRef,{total:increment(1)});
-}catch(e){console.log(e)}
-onSnapshot(contadorRef,d=>{if(d.exists()) document.getElementById('contador').innerText=d.data().total; else document.getElementById('contador').innerText='1'});
-Línea 65:   </div>  <- este es el cierre del LIBRO DE VISITAS
-Línea 66:
-Línea 67:   <a href="https://wa.me/523350807690"...>WHATSAPP</a>  <- AQUÍ EMPIEZA LO NUEVO
-Línea 68:   <div>👁️ VISITAS...</div>
-Línea 69:
-Línea 70: </body>  <- AQUÍ TERMINA
-Línea 71: </html>
-</script>
-</body>
-</html>
+// LIBRO DE VISITAS
+const libroRef = ref(db, 'libro_visitas');
+window.firmarLibro = () => {
+  const placa=document.getElementById('placaLibro').value.trim() || "Anonimo";
+  const mensaje=document.getElementById('mensajeLibro').value.trim();
+  if(!mensaje) return alert('Escribe un mensaje');
+  push
