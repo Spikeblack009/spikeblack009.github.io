@@ -139,14 +139,15 @@ onValue(libroRef,snap=>{
   });
 });
 
-// CONTADOR
-const contadorRef=doc(fs,"visitas","contador");
-try{
-  const s=await getDoc(contadorRef);
-  if(!s.exists()) await setDoc(contadorRef,{total:1});
-  else await updateDoc(contadorRef,{total:increment(1)});
-}catch(e){console.log(e)}
-onSnapshot(contadorRef,d=>{if(d.exists()) document.getElementById('contador').innerText=d.data().total;});
+// CONTADOR - REEMPLAZO
+const contadorRT = ref(db,"visitas_contador");
+get(contadorRT).then(s=>{
+  if(!s.exists()) set(contadorRT,1);
+  else set(contadorRT, s.val()+1);
+});
+onValue(contadorRT,s=>{
+  if(s.exists()) document.getElementById('contador').innerText=s.val();
+});
 </script>
 </body>
 </html>
