@@ -115,10 +115,6 @@ window.publicar = async () => {
   document.getElementById('foto').value='';
   alert('Publicado!');
 };
-push(muroRef,{nombre,mensaje,fotoUrl,fecha:Date.now()});
-  document.getElementById('nombre').value='';document.getElementById('mensaje').value='';document.getElementById('foto').value='';
-  document.getElementById('nombre').value='';document.getElementById('mensaje').value='';document.getElementById('video').value='';document.getElementById('link').value='';document.getElementById('foto').value='';
-};
 function ytId(u){const m=u.match(/(?:youtube\.com\/.*v=|youtu\.be\/)([^&? ]{11})/);return m?m[1]:null}
 onValue(muroRef,snap=>{
   const c=document.getElementById('muro');c.innerHTML='';
