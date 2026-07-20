@@ -92,18 +92,29 @@ const fs = getFirestore(app);
 // MURO
 const muroRef = ref(db, 'muro_dark_circle');
 window.publicar = async () => {
-  const nombre=document.getElementById('nombre').value.trim();
-  const mensaje=document.getElementById('mensaje').value.trim();
-  const file=document.getElementById('foto').files[0];
-  if(!nombre||!mensaje) return alert('Pon tu AKA y mensaje');
-  let fotoUrl="";
+  const nombre = document.getElementById('nombre').value.trim();
+  const mensaje = document.getElementById('mensaje').value.trim();
+  const file = document.getElementById('foto').files[0];
+  if(!nombre ||!mensaje) return alert('Pon tu AKA y mensaje');
+
+  let fotoUrl = '';
   if(file){
-    try{
-      const r=sRef(storage,'fotos/'+Date.now()+'_'+file.name);
-      await uploadBytes(r,file);
-      fotoUrl=await getDownloadURL(r);
-    }catch(e){return alert('Error subiendo foto, activa las reglas de Storage en Firebase');}
+    // si usas imgbb o cloudinary aquí va tu subida
+    // por lo pronto lo dejamos vacío para probar
   }
+
+  push(muroRef, {
+    nombre: nombre,
+    mensaje: mensaje,
+    fotoUrl: fotoUrl,
+    fecha: Date.now()
+  });
+
+  document.getElementById('nombre').value='';
+  document.getElementById('mensaje').value='';
+  document.getElementById('foto').value='';
+  alert('Publicado!');
+};
 push(muroRef,{nombre,mensaje,fotoUrl,fecha:Date.now()});
   document.getElementById('nombre').value='';document.getElementById('mensaje').value='';document.getElementById('foto').value='';
   document.getElementById('nombre').value='';document.getElementById('mensaje').value='';document.getElementById('video').value='';document.getElementById('link').value='';document.getElementById('foto').value='';
