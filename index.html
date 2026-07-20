@@ -45,11 +45,9 @@ input,textarea{background:#1e1e1e!important;border:1px solid #333!important;colo
 <!-- 1. MURO DE SPIKE -->
 <div class="card">
 <h2>📢 MURO DE SPIKE</h2>
-<input id="nombre" placeholder="Tu aka tu placa">
+<input id="nombre" placeholder="Tu placa aca">
 <textarea id="mensaje" placeholder="¿Qué quieres publicar hoy?"></textarea>
 <input type="file" id="foto" accept="image/*">
-<input id="video" placeholder="Link de YouTube (opcional)">
-<input id="link" placeholder="Link externo (opcional)">
 <button class="btn-red" onclick="publicar()">PUBLICAR EN EL MURO</button>
 <div id="muro" style="margin-top:15px;"><p style="color:#666;text-align:center;">Sé el primero en publicar 💀</p></div>
 </div>
@@ -57,7 +55,7 @@ input,textarea{background:#1e1e1e!important;border:1px solid #333!important;colo
 <!-- 2. LIBRO DE VISITAS -->
 <div class="card">
 <h2>📖 LIBRO DE VISITAS</h2>
-<input id="placaLibro" placeholder="Tu placa / aka">
+<input id="placaLibro" placeholder="Tu placa / aca">
 <textarea id="mensajeLibro" placeholder="Deja tu mensaje..."></textarea>
 <button class="btn-verde2" onclick="firmarLibro()">Firmar muro</button>
 <div id="listaLibro" style="margin-top:15px;"></div>
@@ -72,7 +70,7 @@ input,textarea{background:#1e1e1e!important;border:1px solid #333!important;colo
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, push, onValue, get, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 import { getFirestore, doc, getDoc, setDoc, updateDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
