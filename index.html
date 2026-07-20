@@ -94,8 +94,6 @@ const muroRef = ref(db, 'muro_dark_circle');
 window.publicar = async () => {
   const nombre=document.getElementById('nombre').value.trim();
   const mensaje=document.getElementById('mensaje').value.trim();
-  const video=document.getElementById('video').value.trim();
-  const link=document.getElementById('link').value.trim();
   const file=document.getElementById('foto').files[0];
   if(!nombre||!mensaje) return alert('Pon tu AKA y mensaje');
   let fotoUrl="";
@@ -106,7 +104,8 @@ window.publicar = async () => {
       fotoUrl=await getDownloadURL(r);
     }catch(e){return alert('Error subiendo foto, activa las reglas de Storage en Firebase');}
   }
-  push(muroRef,{nombre,mensaje,fotoUrl,videoUrl:video,linkUrl:link,fecha:Date.now()});
+push(muroRef,{nombre,mensaje,fotoUrl,fecha:Date.now()});
+  document.getElementById('nombre').value='';document.getElementById('mensaje').value='';document.getElementById('foto').value='';
   document.getElementById('nombre').value='';document.getElementById('mensaje').value='';document.getElementById('video').value='';document.getElementById('link').value='';document.getElementById('foto').value='';
 };
 function ytId(u){const m=u.match(/(?:youtube\.com\/.*v=|youtu\.be\/)([^&? ]{11})/);return m?m[1]:null}
