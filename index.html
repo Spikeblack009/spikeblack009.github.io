@@ -1,3 +1,4 @@
+<!-- COPIA DESDE AQUÍ -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,39 +11,34 @@ body{background:#000000;color:white;font-family:Arial,sans-serif;margin:0;paddin
 .logo img{width:100%;height:100%;object-fit:cover}
 h1{color:#ff0000;font-size:34px;font-weight:900;margin:10px 0 5px 0;text-shadow:0 0 15px #00ff88;letter-spacing:2px}
 .sub{color:#888;margin-bottom:25px;font-size:14px;letter-spacing:1px}
-.card{background:#000000!important;border-radius:22px;padding:22px;margin:20px auto;max-width:500px;border:1px solid #111!important;box-shadow:0 4px 20px rgba(0,255,136,0.1)}
+.card{background:#000000!important;border-radius:22px;padding:22px;margin:20px auto;max-width:500px;border:1px solid #222!important;box-shadow:0 4px 20px rgba(0,255,136,0.1)}
 .card h2{color:#ff0000;margin:0 0 15px 0;font-size:20px}
 .btn-green{background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;border:none;padding:14px 30px;border-radius:30px;font-weight:900;font-size:15px;cursor:pointer;box-shadow:0 0 20px rgba(0,255,136,0.4);width:100%}
 .btn-whats{background:linear-gradient(90deg,#25D366,#128C7E);color:white;border:none;padding:14px 30px;border-radius:30px;font-weight:900;font-size:16px;cursor:pointer;width:100%;max-width:500px; margin:20px auto 10px auto; display:block; box-shadow:0 0 20px rgba(37,211,102,0.4)}
-input,textarea{background:#000000!important;border:1px solid #222!important;color:white!important;border-radius:14px;padding:14px;margin:8px 0;width:100%;box-sizing:border-box;font-size:14px}
+input,textarea{background:#000000!important;border:1px solid #333!important;color:white!important;border-radius:14px;padding:14px;margin:8px 0;width:100%;box-sizing:border-box;font-size:14px}
 .btn-red{background:linear-gradient(90deg,#ff0033,#cc0000);color:white;border:none;padding:14px;border-radius:14px;font-weight:900;width:100%;cursor:pointer;margin-top:10px;letter-spacing:1px}
 .btn-verde2{background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;border:none;padding:14px;border-radius:14px;font-weight:900;width:100%;cursor:pointer;margin-top:10px;}
-.post{background:#000000!important;padding:14px;border-radius:14px;margin-top:14px;border:1px solid #111!important;border-left:4px solid #00ff88!important;text-align:left;animation:aparece 0.5s}
+.post{background:#000000!important;padding:14px;border-radius:14px;margin-top:14px;border:1px solid #222!important;border-left:4px solid #00ff88!important;text-align:left;animation:aparece 0.5s}
 .post b{color:#00ff88}
-.post img{width:100%;border-radius:12px;margin-top:10px;border:1px solid #222}
+.post img{width:100%;border-radius:12px;margin-top:10px;border:1px solid #333}
 .post iframe{width:100%;height:230px;border:none;border-radius:12px;margin-top:10px}
 .contador{color:#00ff88;font-size:15px;margin:15px 0 40px 0;font-weight:bold;text-shadow:0 0 10px #00ff88; text-align:center;}
 @keyframes aparece{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
-
 <div class="logo"><img src="logo.png"></div>
 <h1>GHOST DARK CIRCLE</h1>
 <div class="sub">MURO OFICIAL DE SPIKE BLACK</div>
-
 <div class="card">
 <h2>Bienvenido al Dark Circle</h2>
 <p>Aquí se junta la música, el muro de fans y la comunidad Dark Circle.</p>
 <button class="btn-green" onclick="window.open('https://github.com/Spikeblack009','_blank')">Seguir en GitHub</button>
 </div>
-
 <div class="card">
 <h2>🔥 ¿Qué hay aquí?</h2>
 <p style="text-align:left; display:inline-block;">• Música y proyectos de Spike Black<br>• Muro de mensajes para los fans<br>• Noticias y lanzamientos</p>
 </div>
-
-<!-- 1. MURO DE SPIKE -->
 <div class="card">
 <h2>📢 MURO DE SPIKE</h2>
 <input id="nombre" placeholder="Tu placa aca">
@@ -51,8 +47,6 @@ input,textarea{background:#000000!important;border:1px solid #222!important;colo
 <button class="btn-red" onclick="publicar()">PUBLICAR EN EL MURO</button>
 <div id="muro" style="margin-top:15px;"><p style="color:#666;text-align:center;">Sé el primero en publicar</p></div>
 </div>
-
-<!-- 2. LIBRO DE VISITAS -->
 <div class="card">
 <h2>📖 LIBRO DE VISITAS</h2>
 <input id="placaLibro" placeholder="Tu placa / aca">
@@ -60,6 +54,70 @@ input,textarea{background:#000000!important;border:1px solid #222!important;colo
 <button class="btn-verde2" onclick="firmarLibro()">Firmar muro</button>
 <div id="listaLibro" style="margin-top:15px;"></div>
 </div>
-
-<!-- 3. WHATSAPP + CONTADOR ABAJO -->
-<button class="btn-whats" onclick="window.open('https
+<button class="btn-whats" onclick="window.open('https://wa.me/523350807690','_blank')">💬 WHATSAPP</button>
+<div class="contador">👁️ VISITAS: <span id="contador">cargando...</span></div>
+<footer style="color:#444;font-size:11px;">Spike Black - Ghost Dark Circle © 2026</footer>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push, onValue, get, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyAR7kUWo6MKaOUgFTiuDaQXM5TYbfNcZKU",
+  authDomain: "ghost-dark-circle.firebaseapp.com",
+  databaseURL: "https://ghost-dark-circle-default-rtdb.firebaseio.com",
+  projectId: "ghost-dark-circle",
+  storageBucket: "ghost-dark-circle.firebasestorage.app",
+  messagingSenderId: "1049315311255",
+  appId: "1:1049315311255:web:005c42fbf8bd00bec6b3d2"
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const storage = getStorage(app);
+const muroRef = ref(db, 'muro_dark_circle');
+window.publicar = async () => {
+  const nombre = document.getElementById('nombre').value.trim();
+  const mensaje = document.getElementById('mensaje').value.trim();
+  const file = document.getElementById('foto').files[0];
+  if(!nombre ||!mensaje) return alert('Pon tu AKA y mensaje');
+  let fotoUrl = '';
+  if(file){
+    const fileRef = sRef(storage, 'muro/' + Date.now() + '_' + file.name);
+    await uploadBytes(fileRef, file);
+    fotoUrl = await getDownloadURL(fileRef);
+  }
+  push(muroRef, { nombre: nombre, mensaje: mensaje, fotoUrl: fotoUrl, fecha: Date.now() });
+  document.getElementById('nombre').value=''; document.getElementById('mensaje').value=''; document.getElementById('foto').value='';
+  alert('Publicado!');
+};
+function ytId(u){const m=u.match(/(?:youtube\.com\/.*v=|youtu\.be\/)([^&? ]{11})/);return m?m[1]:null}
+onValue(muroRef,snap=>{
+  const c=document.getElementById('muro');c.innerHTML='';
+  const d=snap.val();if(!d){c.innerHTML='<p style=color:#666;text-align:center>Sé el primero en publicar 💀</p>';return;}
+  Object.values(d).reverse().forEach(f=>{
+    let media=''; if(f.fotoUrl) media+=`<img src="${f.fotoUrl}">`;
+    if(f.videoUrl){const id=ytId(f.videoUrl); if(id) media+=`<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`; else media+=`<p>🎥 <a href="${f.videoUrl}" target="_blank" style="color:#00ff88;">${f.videoUrl}</a></p>`}
+    if(f.linkUrl) media+=`<p>🔗 <a href="${f.linkUrl}" target="_blank" style="color:#00ff88;">${f.linkUrl}</a></p>`;
+    c.innerHTML+=`<div class="post"><b>${f.nombre}</b><p style="color:#ddd;margin:6px 0;">${f.mensaje}</p>${media}</div>`;
+  });
+});
+const libroRef = ref(db, 'libro_visitas');
+window.firmarLibro = () => {
+  const placa=document.getElementById('placaLibro').value.trim() || "Anonimo";
+  const mensaje=document.getElementById('mensajeLibro').value.trim();
+  if(!mensaje) return alert('Escribe un mensaje');
+  push(libroRef,{placa,mensaje,fecha:Date.now()});
+  document.getElementById('placaLibro').value='';document.getElementById('mensajeLibro').value='';
+};
+onValue(libroRef,snap=>{
+  const c=document.getElementById('listaLibro');c.innerHTML='';
+  const d=snap.val();if(!d) return;
+  Object.values(d).reverse().forEach(f=>{
+    c.innerHTML+=`<div class="post" style="border-left-color:#22c55e"><b>${f.placa}</b><p style="color:#ddd;margin:6px 0;">${f.mensaje}</p></div>`;
+  });
+});
+const contadorRT = ref(db,"visitas_contador");
+get(contadorRT).then(s=>{ if(!s.exists()) set(contadorRT,1); else set(contadorRT, s.val()+1); });
+onValue(contadorRT,s=>{ if(s.exists()) document.getElementById('contador').innerText=s.val(); });
+</script>
+</body>
+</html>
