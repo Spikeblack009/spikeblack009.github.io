@@ -9,7 +9,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:Consolas,monospace;line-height:1.7}
 header{background:#000;border-bottom:2px solid var(--neon);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
-header img{width:42px;height:42px;border-radius:50%;border:2px solid var(--neon);box-shadow:0 0 12px var(--neon)}
+header img{width:42px;height:42px;border-radius:50%;border:2px solid var(--neon);box-shadow:0 0 12px var(--neon);background:#111}
 header h1{color:var(--neon);font-size:1.1rem;letter-spacing:1px;text-shadow:0 0 8px var(--neon)}
 header a{margin-left:auto;color:var(--neon);border:1px solid var(--neon);padding:6px 12px;border-radius:6px;text-decoration:none}
 main{max-width:800px;margin:36px auto;padding:0 20px}
@@ -22,7 +22,9 @@ h2{color:var(--neon);font-size:2rem;text-shadow:0 0 10px var(--neon);margin-bott
 </head>
 <body>
 <header>
-<img src="logo.png"><h1>GHOST DARK CIRCLE</h1>
+<!-- LOGO CON RESPALDO SI FALLA -->
+<img src="logo.png" onerror="this.src='https://spikeblack009.github.io/logo.png'; this.onerror=null;" alt="G">
+<h1>GHOST DARK CIRCLE</h1>
 <a href="index.html">← INICIO</a>
 </header>
 <main>
@@ -45,7 +47,7 @@ h2{color:var(--neon);font-size:2rem;text-shadow:0 0 10px var(--neon);margin-bott
   <p style="margin:0 0 15px 0;">Un círculo no es nada con un solo fantasma. Necesito tu sombra aquí.</p>
   <p style="margin:0 0 15px 0;"><span style="color:#00ff41; font-weight:bold;">ROMPE EL SILENCIO.</span> ¿Quién eres y de dónde nos miras?</p>
   <p style="margin:0 0 10px 0;">Deja tu marca abajo. Cada comentario crea un nuevo fantasma. 👇</p>
-  <p id="ghost-counter" style="margin-top:15px; border-top:1px dashed #00ff41; padding-top:10px; color:#00ff41; font-weight:bold;">👻 FANTASMAS EN EL CÍRCULO: 0 - Sé el primero</p>
+  <p id="ghost-counter" style="margin-top:15px; border-top:1px dashed #00ff41; padding-top:10px; color:#00ff41; font-weight:bold;"> FANTASMAS EN EL CÍRCULO: 0 - Sé el primero</p>
 </div>
 
 <script>
@@ -54,14 +56,14 @@ async function updateGhosts(){
   try{
     const res = await fetch('https://api.github.com/repos/SpikeBlack009/SpikeBlack009.github.io/issues?state=all&per_page=100');
     const data = await res.json();
-    const issue = data.find(i => i.title.includes('blog'));
+    const issue = data.find(i => i.title.toLowerCase().includes('blog'));
     if(issue && issue.comments > 0){
-      el.innerHTML = `👻 FANTASMAS EN EL CÍRCULO: ${issue.comments}`;
+      el.innerHTML =  FANTASMAS EN EL CÍRCULO: ${issue.comments}`;
     } else {
-      el.innerHTML = `👻 FANTASMAS EN EL CÍRCULO: 0 - Sé el primero`;
+      el.innerHTML =  FANTASMAS EN EL CÍRCULO: 0 - Sé el primero`;
     }
   }catch(e){
-    el.innerHTML = `👻 FANTASMAS EN EL CÍRCULO: 0 - Sé el primero`;
+    el.innerHTML =  FANTASMAS EN EL CÍRCULO: 0 - Sé el primero`;
   }
 }
 updateGhosts();
@@ -71,10 +73,13 @@ setInterval(updateGhosts, 15000);
 <div style="border:1px dashed #333; background:#0a0a0a; padding:18px; border-radius:8px; margin:25px 0; text-align:center; font-family:monospace;">
   <p style="color:#666; font-size:11px; margin:0 0 8px 0; letter-spacing:2px;">OJOS EN LA OSCURIDAD</p>
   <p style="color:#00ff41; font-size:12px; margin:0 0 12px 0;">SOMBRAS QUE HAN CRUZADO EL CÍRCULO</p>
-  <!-- CONTADOR NUEVO MÁS ESTABLE -->
-  <img src="https://hits.sh/spikeblack009.github.io/blog.html.svg?style=flat-square&label=SOMBRAS&extraCount=1&color=00ff41&labelColor=000000" alt="contador visitas" style="margin-bottom:10px;" />
+  <!-- CONTADOR 1 - Nuevo que no bloquea AdBlock -->
+  <div style="margin-bottom:12px;">
+    <img src="https://komarev.com/ghpvc/?username=SpikeBlack009&repo=SpikeBlack009.github.io&label=SOMBRAS&style=flat-square&color=00ff41" alt="visitas" />
+  </div>
+  <!-- CONTADOR 2 - Flag con https -->
   <div style="margin-top:12px;">
-    <a href="https://info.flagcounter.com/RcH9"><img src="https://s01.flagcounter.com/count2/RcH9/bg_000000/txt_00ff41/border_222222/columns_3/maxflags_12/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
+    <img src="https://s11.flagcounter.com/count2/RcH9/bg_000000/txt_00ff41/border_222222/columns_3/maxflags_12/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="banderas" />
   </div>
   <p style="color:#444; font-size:9px; margin-top:8px;">*contador anónimo, no guarda IPs</p>
 </div>
@@ -86,3 +91,11 @@ repo="SpikeBlack009/SpikeBlack009.github.io"
 issue-term="pathname"
 theme="github-dark"
 crossorigin="anonymous"
+async>
+</script>
+<p style="font-size:.75rem;opacity:.5;margin-top:12px">*Necesitas cuenta de GitHub para comentar. Así evitamos bots y tú controlas todo desde tu repo.</p>
+</div>
+
+</main>
+</body>
+</html>
