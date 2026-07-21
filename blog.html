@@ -62,30 +62,20 @@ async function updateGhosts(){
     if(data.items && data.items.length > 0){
       const issue = data.items[0];
       const count = issue.comments;
-      document.getElementById('ghost-counter').innerHTML = ` FANTASMAS EN EL CÍRCULO: ${count}`;
+      document.getElementById('ghost-counter').innerHTML =  FANTASMAS EN EL CÍRCULO: ${count}`;
     } else {
-      document.getElementById('ghost-counter').innerHTML = ` FANTASMAS EN EL CÍRCULO: 0 - Sé el primero`;
+      document.getElementById('ghost-counter').innerHTML =  FANTASMAS EN EL CÍRCULO: 0 - Sé el primero`;
     }
   }catch(e){
-    document.getElementById('ghost-counter').innerHTML = ` FANTASMAS EN EL CÍRCULO: 0`;
+    document.getElementById('ghost-counter').innerHTML =  FANTASMAS EN EL CÍRCULO: 0`;
   }
 }
 updateGhosts();
 setInterval(updateGhosts, 15000);
 </script>
 
-<div class="comments">
-<h3>Comentarios — Únete a la discusión</h3>
-<script src="https://utteranc.es/client.js"
-repo="SpikeBlack009/SpikeBlack009.github.io"
-issue-term="pathname"
-theme="github-dark"
-crossorigin="anonymous"
-async>
-</script>
-<p style="font-size:.75rem;opacity:.5;margin-top:12px">*Necesitas cuenta de GitHub para comentar. Así evitamos bots y tú controlas todo desde tu repo.</p>
-</div>
-
-</main>
-</body>
-</html>
+<div style="border:1px dashed #333; background:#0a0a0a; padding:15px; border-radius:8px; margin:25px 0; text-align:center; font-family:monospace;">
+  <p style="color:#666; font-size:11px; margin:0 0 8px 0; letter-spacing:2px;">OJOS EN LA OSCURIDAD</p>
+  <p style="color:#00ff41; font-size:12px; margin:0 0 10px 0;">SOMBRAS QUE HAN CRUZADO EL CÍRCULO</p>
+  <img src="https://api.visitorbadge.io/api/visitors?path=spikeblack009.github.io%2Fblog&label=&labelColor=%230d0d0d&countColor=%2300ff41&style=flat&labelStyle=none" alt="visitas" />
+  <div style="
