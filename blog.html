@@ -27,33 +27,57 @@ h2{color:var(--neon);font-size:2rem;text-shadow:0 0 10px var(--neon);margin-bott
 </header>
 <main>
 <h2>Bienvenidos al Dark Side</h2>
+
 <article class="post">
 <p>Bienvenido, viajero del abismo... Este es el punto de entrada a GHOST DARK CIRCLE SPIKE BLACK, donde las sombras hablan y el neón verde es nuestro faro en la oscuridad.</p>
 <p>Este blog es para todos los que sienten que la oscuridad no es el final. Es donde comienza todo. Aquí encontrarás cultura oscura, reseñas sin filtro, historias del underground y reflexiones en la penumbra.</p>
+<p><em>"La oscuridad no es el final. Es donde comienza todo."</em> — Spike Black</p>
+</article>
+
 <div style="background:#111; border-left:3px solid #00ff41; padding:20px; margin:30px 0; font-family:monospace;">
   <p style="color:#00ff41; font-size:12px; margin:0 0 10px 0;">[POST 001 - 11.05.2026] [SPIKE BLACK]</p>
   <h2 style="color:#fff; margin:0 0 15px 0; font-size:20px;">EL INICIO DEL CÍRCULO.</h2>
   <p style="color:#ccc; line-height:1.6; margin:0 0 10px 0;">
-    Hoy se abre. <br><br>
-    Esto no es un blog más. No es para likes. Es un registro de lo que pasa cuando nadie mira.<br><br>
-    Aquí voy a soltar lo que no puedo decir en otros lados. Reseñas sin filtro, pensamientos de madrugada, la oscura.<br><br>
-    Si llegaste aquí, no fue por accidente. <br><br>
-    <span style="color:#00ff41; font-weight:bold;">Ya eres parte. Deja tu sombra abajo.</span>
+    Hoy se abre.<br><br>
+    Esto no es un blog más. Es un registro de lo que pasa cuando nadie mira.<br><br>
+    Si llegaste aquí, no fue por accidente. Ya eres parte.<br><br>
+    <span style="color:#00ff41; font-weight:bold;">Deja tu sombra abajo.</span>
   </p>
 </div>
-<p><em>"La oscuridad no es el final. Es donde comienza todo."</em> — Spike Black</p>
-</article>
-<div class="comments">
-  <div style="border:1px solid #00ff41; box-shadow:0 0 12px #00ff41; background:#0d0d0d; color:#e0e0e0; padding:20px; border-radius:10px; margin-bottom:25px; font-family:monospace; text-align:left;">
+
+<div style="border:1px solid #00ff41; box-shadow:0 0 12px #00ff41; background:#0d0d0d; color:#e0e0e0; padding:20px; border-radius:10px; margin-bottom:25px; font-family:monospace; text-align:left;">
   <p style="color:#00ff41; font-weight:bold; font-size:18px; margin:0 0 10px 0;">FUISTE ELEGIDO.</p>
   <p style="margin:0 0 15px 0;">Esto es GHOST DARK CIRCLE. Un submundo vivo para los que viven en las sombras.</p>
   <p style="margin:0 0 15px 0;">Un círculo no es nada con un solo fantasma. Necesito tu sombra aquí.</p>
   <p style="margin:0 0 15px 0;"><span style="color:#00ff41; font-weight:bold;">ROMPE EL SILENCIO.</span> ¿Quién eres y de dónde nos miras?</p>
-  <p style="margin:0;">Deja tu marca abajo. Cada comentario crea un nuevo fantasma. 👇</p>
+  <p style="margin:0 0 10px 0;">Deja tu marca abajo. Cada comentario crea un nuevo fantasma. 👇</p>
+  <p id="ghost-counter" style="margin-top:15px; border-top:1px dashed #00ff41; padding-top:10px; color:#00ff41; font-weight:bold;">👻 FANTASMAS EN EL CÍRCULO: cargando...</p>
 </div>
+
+<script>
+async function updateGhosts(){
+  try{
+    const res = await fetch('https://api.github.com/search/issues?q=repo:SpikeBlack009/SpikeBlack009.github.io+blog+in:title');
+    const data = await res.json();
+    if(data.items && data.items.length > 0){
+      const issue = data.items[0];
+      const count = issue.comments;
+      document.getElementById('ghost-counter').innerHTML = `👻 FANTASMAS EN EL CÍRCULO: ${count}`;
+    } else {
+      document.getElementById('ghost-counter').innerHTML = `👻 FANTASMAS EN EL CÍRCULO: 0 - Sé el primero`;
+    }
+  }catch(e){
+    document.getElementById('ghost-counter').innerHTML = `👻 FANTASMAS EN EL CÍRCULO: 0`;
+  }
+}
+updateGhosts();
+setInterval(updateGhosts, 15000);
+</script>
+
+<div class="comments">
 <h3>Comentarios — Únete a la discusión</h3>
 <script src="https://utteranc.es/client.js"
-repo="Spikeblack009/spikeblack009.github.io"
+repo="SpikeBlack009/SpikeBlack009.github.io"
 issue-term="pathname"
 theme="github-dark"
 crossorigin="anonymous"
@@ -61,6 +85,7 @@ async>
 </script>
 <p style="font-size:.75rem;opacity:.5;margin-top:12px">*Necesitas cuenta de GitHub para comentar. Así evitamos bots y tú controlas todo desde tu repo.</p>
 </div>
+
 </main>
 </body>
 </html>
