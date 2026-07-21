@@ -51,7 +51,7 @@ h2{color:var(--neon);font-size:2rem;text-shadow:0 0 10px var(--neon);margin-bott
   <p style="margin:0 0 15px 0;">Un círculo no es nada con un solo fantasma. Necesito tu sombra aquí.</p>
   <p style="margin:0 0 15px 0;"><span style="color:#00ff41; font-weight:bold;">ROMPE EL SILENCIO.</span> ¿Quién eres y de dónde nos miras?</p>
   <p style="margin:0 0 10px 0;">Deja tu marca abajo. Cada comentario crea un nuevo fantasma. 👇</p>
-  <p id="ghost-counter" style="margin-top:15px; border-top:1px dashed #00ff41; padding-top:10px; color:#00ff41; font-weight:bold;">👻 FANTASMAS EN EL CÍRCULO: cargando...</p>
+  <p id="ghost-counter" style="margin-top:15px; border-top:1px dashed #00ff41; padding-top:10px; color:#00ff41; font-weight:bold;"> FANTASMAS EN EL CÍRCULO: cargando...</p>
 </div>
 
 <script>
@@ -62,12 +62,12 @@ async function updateGhosts(){
     if(data.items && data.items.length > 0){
       const issue = data.items[0];
       const count = issue.comments;
-      document.getElementById('ghost-counter').innerHTML = `👻 FANTASMAS EN EL CÍRCULO: ${count}`;
+      document.getElementById('ghost-counter').innerHTML = ` FANTASMAS EN EL CÍRCULO: ${count}`;
     } else {
-      document.getElementById('ghost-counter').innerHTML = `👻 FANTASMAS EN EL CÍRCULO: 0 - Sé el primero`;
+      document.getElementById('ghost-counter').innerHTML = ` FANTASMAS EN EL CÍRCULO: 0 - Sé el primero`;
     }
   }catch(e){
-    document.getElementById('ghost-counter').innerHTML = `👻 FANTASMAS EN EL CÍRCULO: 0`;
+    document.getElementById('ghost-counter').innerHTML = ` FANTASMAS EN EL CÍRCULO: 0`;
   }
 }
 updateGhosts();
