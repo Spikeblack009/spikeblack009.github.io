@@ -6,81 +6,99 @@
 <title>Nuyoo - Spike Black</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;text-align:center}
-.top{padding:30px 20px 100px;display:flex;flex-direction:column;align-items:center}
-.artwork{width:85vw;max-width:360px;aspect-ratio:1/1;border-radius:18px;overflow:hidden;box-shadow:0 0 50px rgba(0,255,136,.6),0 0 100px rgba(0,255,136,.3);border:1.5px solid #00ff88}
+body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;text-align:center;padding-bottom:110px}
+.top-art{padding:15px}
+.artwork{width:100%;max-width:420px;aspect-ratio:1/1;margin:0 auto;border-radius:18px;overflow:hidden;border:1px solid #1a3d26;box-shadow:0 0 40px rgba(0,255,136,0.3)}
 .artwork img{width:100%;height:100%;object-fit:cover}
-h1{margin-top:22px;font-size:28px;font-weight:800;letter-spacing:-.6px}
-.artist{color:#a1a1a6;margin-top:4px;font-size:15px}
-.sub{color:#00ff88;font-size:12px;letter-spacing:1px;font-weight:700;margin-top:4px}
-.controls-bar{width:85vw;max-width:360px;margin-top:22px}
-.bar{width:100%;height:4px;background:#2c2c2e;border-radius:10px;overflow:hidden}
-.fill{width:32%;height:100%;background:#00ff88;box-shadow:0 0 10px #00ff88}
+.title{margin-top:18px}
+.title h1{font-size:28px;font-weight:800}
+.title p{color:#a1a1a6;font-size:15px;margin-top:2px}
+.title span{color:#6e6e73;font-size:13px;margin-top:4px;display:block}
+.controls{max-width:420px;margin:18px auto 0;display:flex;justify-content:space-between;align-items:center;padding:0 10px;color:#6e6e73;font-size:20px}
+.controls button{background:none;border:none;color:#6e6e73;font-size:20px}
+.play-big{width:58px;height:58px;background:#00ff88;border-radius:50%;color:#000!important;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,255,136,0.6)}
+.bar-wrap{max-width:420px;margin:18px auto 0;padding:0 10px}
+.bar{width:100%;height:3px;background:#2c2c2e;border-radius:10px;position:relative}
+.fill{width:28%;height:100%;background:#00ff88}
 .time{display:flex;justify-content:space-between;color:#86868b;font-size:11px;margin-top:6px}
-.player-actions{width:85vw;max-width:360px;display:flex;justify-content:space-between;align-items:center;margin-top:20px;font-size:22px;color:#00ff88}
-.player-actions button{background:none;border:none;color:#00ff88;font-size:22px;cursor:pointer}
-.play-center{width:64px;height:64px;background:#00ff88;border-radius:50%;color:#000!important;font-size:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px #00ff88}
-.options{width:85vw;max-width:360px;margin-top:30px;text-align:left}
-.opt-row{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #1c1c1e;color:#f5f5f7;font-size:15px}
-.opt-row span:last-child{color:#00ff88}
-.section{width:85vw;max-width:360px;margin-top:28px;text-align:left;background:#111;padding:16px;border-radius:14px;border:1px solid #222}
-.section h3{display:flex;justify-content:space-between;font-size:14px;letter-spacing:1px;color:#a1a1a6;margin-bottom:10px}
-.section p{font-size:14px;line-height:1.5;color:#e5e5e5}
-.player-bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(20,20,20,0.9);backdrop-filter:blur(25px);border-top:1px solid rgba(255,255,255,0.1);padding:10px 15px;display:flex;align-items:center;gap:12px;text-align:left}
-.mini{width:48px;height:48px;border-radius:8px;overflow:hidden;border:1px solid #00ff88}
-.mini img{width:100%;height:100%;object-fit:cover}
+.actions{max-width:420px;margin:18px auto 0;display:flex;justify-content:space-between;padding:0 10px}
+.act{font-size:12px;color:#a1a1a6;display:flex;flex-direction:column;align-items:center;gap:6px}
+.act b{font-size:18px;color:#fff;font-weight:400}
+.lyrics{max-width:420px;margin:22px auto 0;text-align:left;padding:0 12px}
+.lyrics-head{display:flex;justify-content:space-between;font-size:12px;letter-spacing:0.5px;margin-bottom:8px}
+.lyrics-head span:first-child{color:#00ff88;font-weight:700}
+.lyrics-head span:last-child{color:#00ff88}
+.lyrics p{font-size:13px;color:#a1a1a6;line-height:1.4}
+.credits{max-width:420px;margin:20px auto 0;text-align:left;padding:0 12px}
+.credits-head{display:flex;justify-content:space-between;font-size:11px;color:#6e6e73;margin-bottom:10px;letter-spacing:0.5px}
+.credits-head b:last-child{color:#00ff88}
+.grid{display:flex;gap:10px}
+.box{flex:1;background:#111;border-radius:12px;padding:8px;text-align:left;border:1px solid #222}
+.box img{width:100%;border-radius:8px;aspect-ratio:1/1;object-fit:cover}
+.box b{font-size:12px;display:block;margin-top:6px}
+.box span{font-size:11px;color:#6e6e73}
+.mini-player{position:fixed;bottom:50px;left:10px;right:10px;background:#1c1c1e;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;border:1px solid #2c2c2e}
+.mini-player img{width:36px;height:36px;border-radius:6px}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;padding:8px 0;font-size:10px;color:#6e6e73}
+.nav b{color:#00ff88}
 </style>
 </head>
 <body>
-<div class="top">
-  <div class="artwork"><img src="../logo.png" onerror="this.src='logo.png'"></div>
+
+<div class="top-art">
+  <div class="artwork">
+    <img src="../logo.png" onerror="this.src='logo.png'" style="filter: hue-rotate(0deg) brightness(1.2)">
+  </div>
+</div>
+
+<div class="title">
   <h1>Nuyoo</h1>
-  <div class="artist">Spike Black</div>
-  <div class="sub">SINGLE • 2024 • DARK CIRCLE</div>
+  <p>Spike Black</p>
+  <span>Nuyoo • Single • 2:45 • 18 OCT 2024</span>
+</div>
 
-  <div class="controls-bar">
-    <div class="bar"><div class="fill"></div></div>
-    <div class="time"><span>0:32</span><span>-2:18</span></div>
-  </div>
+<div class="controls">
+  <button>🔀</button>
+  <button>♡</button>
+  <button>🔀</button>
+  <button class="play-big">▶</button>
+  <button>🔁</button>
+</div>
 
-  <div class="player-actions">
-    <button>🔀</button>
-    <button>♡</button>
-    <button class="play-center" onclick="toggle()">▶</button>
-    <button>🔁</button>
-    <button>⋯</button>
-  </div>
+<div class="bar-wrap">
+  <div class="bar"><div class="fill"></div></div>
+  <div class="time"><span>0:38</span><span>2:45</span></div>
+</div>
 
-  <div class="options">
-    <div class="opt-row"><span>Add to Library</span><span>+</span></div>
-    <div class="opt-row"><span>Download</span><span>↓</span></div>
-    <div class="opt-row"><span>Share</span><span>↗</span></div>
-    <div class="opt-row"><span>More • 3 puntitos</span><span>•••</span></div>
-  </div>
+<div class="actions">
+  <div class="act"><b>+</b>Add to Library</div>
+  <div class="act"><b>↓</b>Download</div>
+  <div class="act"><b>↗</b>Share</div>
+  <div class="act"><b>•••</b>More</div>
+</div>
 
-  <div class="section">
-    <h3>LYRICS <span style="color:#00ff88">Show All</span></h3>
-    <p>En la sombra donde nadie va...<br>El fantasma brilla en neón...<br>Ghost Dark Circle no muere...</p>
-  </div>
+<div class="lyrics">
+  <div class="lyrics-head"><span>LYRICS</span><span>Show All</span></div>
+  <p>Silent howl through the neon night — Mixed by BLACKLAB • Mastered at Neon Coast Studio<br>Ghost drifts where the signal dies —<br>Static whisper, cold and quiet —<br>I'm only here to say goodbye.</p>
+</div>
 
-  <div class="section">
-    <h3>CREDITS <span style="color:#00ff88">MORE</span></h3>
-    <p>Written by Spike Black<br>Produced by Ghost Dark Circle<br>Art by Spike Black</p>
-  </div>
-
-  <div class="section">
-    <h3>MORE BY SPIKEBLACK <span style="color:#00ff88">See All</span></h3>
-    <p>Ghost Dark Circle • 2024<br>Midnight • 2023</p>
+<div class="credits">
+  <div class="credits-head"><span>CREDITS &nbsp;&nbsp; MORE BY SPIKE BLACK</span><b>See All</b></div>
+  <div class="grid">
+    <div class="box"><img src="../logo.png"><b>Obscura</b><span>3:12</span></div>
+    <div class="box"><img src="../logo.png"><b>Phantom Drift</b><span>3:51</span></div>
   </div>
 </div>
 
-<div class="player-bottom">
-  <div class="mini"><img src="../logo.png" onerror="this.src='logo.png'"></div>
-  <div style="flex:1"><b style="font-size:14px">Nuyoo</b><br><span style="color:#86868b;font-size:12px">Spike Black</span></div>
-  <button onclick="toggle()" style="background:#00ff88;border:none;width:36px;height:36px;border-radius:50%;font-weight:900">▶</button>
+<div class="mini-player">
+  <img src="../logo.png">
+  <div style="flex:1;text-align:left;font-size:13px"><b>Nuyoo • Spike Black</b></div>
+  <div style="font-size:18px">⏸ ↻</div>
 </div>
 
-<audio id="audio" src="nuyoo.mp3"></audio>
-<script>let playing=false;const a=document.getElementById('audio');function toggle(){if(!playing){a.play();playing=true}else{a.pause();playing=false}}</script>
+<div class="nav">
+  <div><b>💚<br>Library</b></div><div>◉<br>Browse</div><div>◉<br>Radio</div><div>🔍<br>Search</div><div>▶<br>Listen Now</div>
+</div>
+
 </body>
 </html>
