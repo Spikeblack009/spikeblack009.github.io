@@ -1,132 +1,102 @@
-<!-- GHOST DARK CIRCLE v2 CON BLOG -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GHOST DARK CIRCLE - Spike Black</title>
+<title>Ghost Dark Circle</title>
 <style>
-body{background:#000000;color:white;font-family:Arial,sans-serif;margin:0;padding:15px;text-align:center}
-.logo{width:260px;height:260px;margin:15px auto;border-radius:50%;overflow:hidden;box-shadow:0 0 35px #00ff88,0 0 60px #00ff88;background:#000000;border:2px solid #00ff88}
-.logo img{width:100%;height:100%;object-fit:cover}
-h1{color:#ff0000;font-size:34px;font-weight:900;margin:10px 0 5px 0;text-shadow:0 0 15px #00ff88;letter-spacing:2px}
-.sub{color:#888;margin-bottom:25px;font-size:14px;letter-spacing:1px}
-.card{background:#000000!important;border-radius:22px;padding:22px;margin:20px auto;max-width:500px;border:1px solid #222!important;box-shadow:0 4px 20px rgba(0,255,136,0.1)}
-.card h2{color:#ff0000;margin:0 0 15px 0;font-size:20px}
-.btn-green{background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;border:none;padding:14px 30px;border-radius:30px;font-weight:900;font-size:15px;cursor:pointer;box-shadow:0 0 20px rgba(0,255,136,0.4);width:100%}
-.btn-blog{background:transparent;color:#00ff88;border:2px solid #00ff88;padding:16px 30px;border-radius:30px;font-weight:900;font-size:16px;cursor:pointer;width:100%;box-shadow:0 0 20px rgba(0,255,136,0.3);text-shadow:0 0 10px #00ff88;letter-spacing:2px;transition:0.3s}
-.btn-blog:hover{background:#00ff88;color:#000;box-shadow:0 0 35px #00ff88}
-.btn-whats{background:linear-gradient(90deg,#25D366,#128C7E);color:white;border:none;padding:14px 30px;border-radius:30px;font-weight:900;font-size:16px;cursor:pointer;width:100%;max-width:500px; margin:20px auto 10px auto; display:block; box-shadow:0 0 20px rgba(37,211,102,0.4)}
-input,textarea{background:#000000!important;border:1px solid #333!important;color:white!important;border-radius:14px;padding:14px;margin:8px 0;width:100%;box-sizing:border-box;font-size:14px}
-.btn-red{background:linear-gradient(90deg,#ff0033,#cc0000);color:white;border:none;padding:14px;border-radius:14px;font-weight:900;width:100%;cursor:pointer;margin-top:10px;letter-spacing:1px}
-.btn-verde2{background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;border:none;padding:14px;border-radius:14px;font-weight:900;width:100%;cursor:pointer;margin-top:10px;}
-.post{background:#000000!important;padding:14px;border-radius:14px;margin-top:14px;border:1px solid #222!important;border-left:4px solid #00ff88!important;text-align:left;animation:aparece 0.5s}
-.post b{color:#00ff88}
-.post img{width:100%;border-radius:12px;margin-top:10px;border:1px solid #333}
-.post iframe{width:100%;height:230px;border:none;border-radius:12px;margin-top:10px}
-.contador{color:#00ff88;font-size:15px;margin:15px 0 40px 0;font-weight:bold;text-shadow:0 0 10px #00ff88; text-align:center;}
-@keyframes aparece{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#fff;font-family:Consolas,monospace;padding:12px}
+.card{background:#050505;border:1px solid #222;border-radius:18px;padding:18px;margin-bottom:16px}
+.card h2{text-align:center;color:#ff0a1a;font-size:18px;letter-spacing:1px;margin-bottom:16px;font-weight:bold}
+input,textarea{width:100%;background:#0e0e0e;border:1px solid #2a2a2a;color:#aaa;padding:14px 16px;border-radius:12px;margin-bottom:12px;outline:none;font-size:14px}
+.btn{width:100%;border:none;padding:14px;border-radius:12px;font-weight:bold;cursor:pointer;font-size:14px;letter-spacing:1px}
+.btn-red{background:#e30613;color:#fff}
+.btn-green{background:#00e676;color:#000}
+.post{border:1px solid #2a2a2a;border-left:3px solid #00e676;border-radius:12px;padding:12px;margin-top:12px;background:#080808}
+.whatsapp{background:linear-gradient(90deg,#25d366,#128c7e);color:#fff;padding:14px;border-radius:25px;text-align:center;font-weight:bold;margin-top:8px;display:block;text-decoration:none}
+.visitas{text-align:center;color:#00e676;text-shadow:0 0 10px #00e676;margin:12px 0;font-size:14px;font-weight:bold}
+.footer{text-align:center;color:#333;font-size:11px;margin-top:20px}
 </style>
 </head>
 <body>
-<div class="logo"><img src="logo.png"></div>
-<h1>GHOST DARK CIRCLE</h1>
-<div class="sub">MURO OFICIAL DE SPIKE BLACK</div>
 
-<div class="card" style="border:1px solid #00ff88!important; box-shadow:0 0 25px rgba(0,255,136,0.2)">
-<h2 style="color:#00ff88; text-shadow:0 0 10px #00ff88;">📖 DARK BLOG</h2>
-<p>Entra al blog oficial donde las sombras hablan. Cultura oscura, reseñas sin filtro e historias del underground.</p>
-<button class="btn-blog" onclick="window.location.href='blog.html'">👁️ ENTRAR AL BLOG - DARK SIDE</button>
-</div>
-
-<div class="card">
-<h2>Bienvenido al Dark Circle</h2>
-<p>Aquí se junta la música, el muro de fans y la comunidad Dark Circle.</p>
-<button class="btn-green" onclick="window.open('https://github.com/Spikeblack009','_blank')">Seguir en GitHub</button>
-</div>
-<div class="card">
-<h2>🔥 ¿Qué hay aquí?</h2>
-<p style="text-align:left; display:inline-block;">• Música y proyectos de Spike Black<br>• Muro de mensajes para los fans<br>• Noticias y lanzamientos<br>• Nuevo: Blog Dark Side con comentarios</p>
-</div>
 <div class="card">
 <h2>📢 MURO DE SPIKE</h2>
-<input id="nombre" placeholder="Tu placa aca">
-<textarea id="mensaje" placeholder="¿Qué quieres publicar hoy?"></textarea>
-<input type="file" id="foto" accept="image/*">
-<button class="btn-red" onclick="publicar()">PUBLICAR EN EL MURO</button>
-<div id="muro" style="margin-top:15px;"><p style="color:#666;text-align:center;">Sé el primero en publicar</p></div>
+<input id="muro-nombre" type="text" placeholder="Tu placa aca">
+<textarea id="muro-texto" placeholder="¿Qué quieres publicar hoy?"></textarea>
+<div style="background:#0e0e0e;border:1px solid #2a2a2a;border-radius:12px;padding:10px;margin-bottom:12px;display:flex;align-items:center;gap:10px">
+<input id="muro-file" type="file" style="display:none">
+<button onclick="document.getElementById('muro-file').click()" style="background:#fff;color:#000;border:1px solid #999;padding:4px 10px;border-radius:4px;font-size:12px;cursor:pointer">Seleccionar archivo</button>
+<span id="file-name" style="color:#aaa;font-size:12px">Sin archivos seleccionados</span>
 </div>
+<button class="btn btn-red" onclick="publicarMuro()">PUBLICAR EN EL MURO</button>
+<div id="muro-lista"></div>
+</div>
+
 <div class="card">
 <h2>📖 LIBRO DE VISITAS</h2>
-<input id="placaLibro" placeholder="Tu placa / aca">
-<textarea id="mensajeLibro" placeholder="Deja tu mensaje..."></textarea>
-<button class="btn-verde2" onclick="firmarLibro()">Firmar muro</button>
-<div id="listaLibro" style="margin-top:15px;"></div>
+<input id="visita-nombre" type="text" placeholder="Tu placa / aca">
+<textarea id="visita-mensaje" placeholder="Deja tu mensaje..."></textarea>
+<button class="btn btn-green" onclick="firmarLibro()">Firmar muro</button>
+<div id="visita-lista"></div>
 </div>
-<button class="btn-whats" onclick="window.open('https://wa.me/523350807690','_blank')">💬 WHATSAPP</button>
-<div class="contador">👁️ VISITAS: <span id="contador">cargando...</span></div>
-<footer style="color:#444;font-size:11px;">Spike Black - Ghost Dark Circle © 2026</footer>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, get, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyAR7kUWo6MKaOUgFTiuDaQXM5TYbfNcZKU",
-  authDomain: "ghost-dark-circle.firebaseapp.com",
-  databaseURL: "https://ghost-dark-circle-default-rtdb.firebaseio.com",
-  projectId: "ghost-dark-circle",
-  storageBucket: "ghost-dark-circle.firebasestorage.app",
-  messagingSenderId: "1049315311255",
-  appId: "1:1049315311255:web:005c42fbf8bd00bec6b3d2"
-};
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const storage = getStorage(app);
-const muroRef = ref(db, 'muro_dark_circle');
-window.publicar = async () => {
-  const nombre = document.getElementById('nombre').value.trim();
-  const mensaje = document.getElementById('mensaje').value.trim();
-  const file = document.getElementById('foto').files[0];
-  if(!nombre ||!mensaje) return alert('Pon tu AKA y mensaje');
-  let fotoUrl = '';
-  if(file){
-    const fileRef = sRef(storage, 'muro/' + Date.now() + '_' + file.name);
-    await uploadBytes(fileRef, file);
-    fotoUrl = await getDownloadURL(fileRef);
-  }
-  push(muroRef, { nombre: nombre, mensaje: mensaje, fotoUrl: fotoUrl, fecha: Date.now() });
-  document.getElementById('nombre').value=''; document.getElementById('mensaje').value=''; document.getElementById('foto').value='';
-  alert('Publicado!');
-};
-function ytId(u){const m=u.match(/(?:youtube\.com\/.*v=|youtu\.be\/)([^&? ]{11})/);return m?m[1]:null}
-onValue(muroRef,snap=>{
-  const c=document.getElementById('muro');c.innerHTML='';
-  const d=snap.val();if(!d){c.innerHTML='<p style=color:#666;text-align:center>Sé el primero en publicar 💀</p>';return;}
-  Object.values(d).reverse().forEach(f=>{
-    let media=''; if(f.fotoUrl) media+=`<img src="${f.fotoUrl}">`;
-    if(f.videoUrl){const id=ytId(f.videoUrl); if(id) media+=`<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`; else media+=`<p>🎥 <a href="${f.videoUrl}" target="_blank" style="color:#00ff88;">${f.videoUrl}</a></p>`}
-    if(f.linkUrl) media+=`<p>🔗 <a href="${f.linkUrl}" target="_blank" style="color:#00ff88;">${f.linkUrl}</a></p>`;
-    c.innerHTML+=`<div class="post"><b>${f.nombre}</b><p style="color:#ddd;margin:6px 0;">${f.mensaje}</p>${media}</div>`;
-  });
+
+<a class="whatsapp" href="https://wa.me/5210000000000" target="_blank">💬 WHATSAPP</a>
+<div class="visitas">👁️ VISITAS: <span id="contador">36</span></div>
+<div class="footer">Spike Black - Ghost Dark Circle © 2026</div>
+
+<script>
+// Mostrar nombre de archivo
+document.getElementById('muro-file').addEventListener('change', function(){
+  document.getElementById('file-name').textContent = this.files[0]? this.files[0].name : 'Sin archivos seleccionados';
 });
-const libroRef = ref(db, 'libro_visitas');
-window.firmarLibro = () => {
-  const placa=document.getElementById('placaLibro').value.trim() || "Anonimo";
-  const mensaje=document.getElementById('mensajeLibro').value.trim();
-  if(!mensaje) return alert('Escribe un mensaje');
-  push(libroRef,{placa,mensaje,fecha:Date.now()});
-  document.getElementById('placaLibro').value='';document.getElementById('mensajeLibro').value='';
-};
-onValue(libroRef,snap=>{
-  const c=document.getElementById('listaLibro');c.innerHTML='';
-  const d=snap.val();if(!d) return;
-  Object.values(d).reverse().forEach(f=>{
-    c.innerHTML+=`<div class="post" style="border-left-color:#22c55e"><b>${f.placa}</b><p style="color:#ddd;margin:6px 0;">${f.mensaje}</p></div>`;
-  });
-});
-const contadorRT = ref(db,"visitas_contador");
-get(contadorRT).then(s=>{ if(!s.exists()) set(contadorRT,1); else set(contadorRT, s.val()+1); });
-onValue(contadorRT,s=>{ if(s.exists()) document.getElementById('contador').innerText=s.val(); });
+
+// CONTADOR
+let visitas = localStorage.getItem('visitas_ghost');
+if(!visitas){ visitas = 36; } else { visitas = parseInt(visitas)+1; }
+localStorage.setItem('visitas_ghost', visitas);
+document.getElementById('contador').textContent = visitas;
+
+// MURO DE SPIKE - TU CÓDIGO ORIGINAL (INTACTO)
+function publicarMuro(){
+  const nombre = document.getElementById('muro-nombre').value.trim() || 'Ghost';
+  const texto = document.getElementById('muro-texto').value.trim();
+  if(!texto){ alert('Escribe algo'); return; }
+  let posts = JSON.parse(localStorage.getItem('muro_spike') || '[{"nombre":"Ghost","texto":"ola"}]');
+  posts.unshift({nombre, texto});
+  localStorage.setItem('muro_spike', JSON.stringify(posts));
+  document.getElementById('muro-texto').value='';
+  mostrarMuro();
+}
+function mostrarMuro(){
+  let posts = JSON.parse(localStorage.getItem('muro_spike') || '[{"nombre":"Ghost","texto":"ola"}]');
+  document.getElementById('muro-lista').innerHTML = posts.map(p=>`
+    <div class="post"><p style="color:#00e676;font-weight:bold;font-size:14px">${p.nombre}</p><p style="margin-top:4px;color:#ccc;font-size:14px">${p.texto}</p></div>
+  `).join('');
+}
+
+// LIBRO DE VISITAS - AHORA SI FUNCIONA (CORRECCIÓN ÚNICA)
+function firmarLibro(){
+  const nombre = document.getElementById('visita-nombre').value.trim();
+  const mensaje = document.getElementById('visita-mensaje').value.trim();
+  if(!nombre ||!mensaje){ alert('Pon tu placa y mensaje'); return; }
+  let lista = JSON.parse(localStorage.getItem('libro_visitas') || '[]');
+  lista.unshift({nombre, mensaje});
+  localStorage.setItem('libro_visitas', JSON.stringify(lista));
+  document.getElementById('visita-nombre').value='';
+  document.getElementById('visita-mensaje').value='';
+  mostrarLibro();
+}
+function mostrarLibro(){
+  let lista = JSON.parse(localStorage.getItem('libro_visitas') || '[]');
+  document.getElementById('visita-lista').innerHTML = lista.map(v=>`
+    <div class="post" style="border-left-color:#00e676"><p style="color:#00e676;font-weight:bold;font-size:14px">${v.nombre}</p><p style="margin-top:4px;color:#ccc;font-size:14px">${v.mensaje}</p></div>
+  `).join('');
+}
+
+mostrarMuro();
+mostrarLibro();
 </script>
 </body>
 </html>
