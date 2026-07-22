@@ -1,4 +1,4 @@
-<!-- GHOST DARK CIRCLE v2 CON BLOG - CORREGIDO -->
+<!-- GHOST DARK CIRCLE v2 CON BLOG + NUYOO -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,12 +26,30 @@ input,textarea{background:#000000!important;border:1px solid #333!important;colo
 .post iframe{width:100%;height:230px;border:none;border-radius:12px;margin-top:10px}
 .contador{color:#00ff88;font-size:15px;margin:15px 0 40px 0;font-weight:bold;text-shadow:0 0 10px #00ff88; text-align:center;}
 @keyframes aparece{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* NUYOO CARD APPLE */
+.nuyoo-card{max-width:500px;margin:20px auto;background:#0a0a0a;border:1px solid #00ff88;border-radius:22px;padding:15px;display:flex;align-items:center;gap:15px;box-shadow:0 0 25px rgba(0,255,136,0.25);cursor:pointer;text-align:left;text-decoration:none}
+.nuyoo-card img{width:70px;height:70px;border-radius:12px;border:1px solid #00ff88;box-shadow:0 0 15px rgba(0,255,136,0.4);object-fit:cover}
+.nuyoo-info{flex:1}
+.nuyoo-info b{color:#fff;font-size:16px;display:block}
+.nuyoo-info span{color:#a1a1a6;font-size:13px}
+.nuyoo-play{width:38px;height:38px;background:#00ff88;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#000;font-weight:900;box-shadow:0 0 15px #00ff88}
 </style>
 </head>
 <body>
 <div class="logo"><img src="logo.png"></div>
 <h1>GHOST DARK CIRCLE</h1>
 <div class="sub">MURO OFICIAL DE SPIKE BLACK</div>
+
+<a href="Nuyoo/" class="nuyoo-card">
+  <img src="logo.png">
+  <div class="nuyoo-info">
+    <b>Nuyoo</b>
+    <span>Spike Black • Single • 2024</span><br>
+    <span style="color:#00ff88;font-size:11px;letter-spacing:1px;font-weight:700">▶ REPRODUCIR AHORA - APPLE STYLE</span>
+  </div>
+  <div class="nuyoo-play">▶</div>
+</a>
 
 <div class="card" style="border:1px solid #00ff88!important; box-shadow:0 0 25px rgba(0,255,136,0.2)">
 <h2 style="color:#00ff88; text-shadow:0 0 10px #00ff88;">📖 DARK BLOG</h2>
@@ -109,8 +127,6 @@ onValue(muroRef,snap=>{
     c.innerHTML+=`<div class="post"><b>${f.nombre}</b><p style="color:#ddd;margin:6px 0;">${f.mensaje}</p>${media}</div>`;
   });
 });
-
-// --- LIBRO DE VISITAS CORREGIDO - AHORA SI FIRMA ---
 const libroRef = ref(db, 'libro_visitas');
 window.firmarLibro = async () => {
   const placaInput = document.getElementById('placaLibro');
@@ -133,7 +149,6 @@ onValue(libroRef,snap=>{
     c.innerHTML+=`<div class="post" style="border-left-color:#22c55e"><b>${f.placa}</b><p style="color:#ddd;margin:6px 0;">${f.mensaje}</p></div>`;
   });
 });
-
 const contadorRT = ref(db,"visitas_contador");
 get(contadorRT).then(s=>{ if(!s.exists()) set(contadorRT,1); else set(contadorRT, s.val()+1); });
 onValue(contadorRT,s=>{ if(s.exists()) document.getElementById('contador').innerText=s.val(); });
