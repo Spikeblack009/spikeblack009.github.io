@@ -60,7 +60,7 @@ async function updateGhosts(){
     if(issue && issue.comments > 0){
       el.innerHTML =  FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${issue.comments}`;
     } else {
-      el.innerHTML =  FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
+      el.innerHTML = FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
     }
   }catch(e){
     el.innerHTML =  FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
@@ -82,13 +82,13 @@ setInterval(updateGhosts, 15000);
   <div style="margin-top:14px; border-top:1px dashed #222; padding-top:14px;">
     <p style="color:#00ff41; font-size:10px; margin:0 0 8px 0;">🌎 DE DÓNDE NOS MIRAN</p>
     
-    <!-- CUADRO ARREGLADO: Visitors izquierda, bandera centrada -->
-    <div style="width:260px; height:38px; background:#000; border:1px solid #222; border-radius:4px; margin:0 auto; position:relative; overflow:hidden;">
-      <!-- Palabra Visitors a la izquierda -->
-      <div style="position:absolute; left:8px; top:4px; color:#00ff41; font-weight:bold; font-size:18px; text-shadow:0 0 5px #00ff41;">Visitors</div>
-      <!-- Bandera centrada - recortamos solo la bandera -->
-      <div style="position:absolute; left:50%; top:50%; transform:translate(-50%, -5%); width:80px; height:24px; overflow:hidden;">
-        <a href="https://info.flagcounter.com/RcH9"><img src="https://s11.flagcounter.com/count2/RcH9/bg_000000/txt_00ff41/border_222222/columns_3/maxflags_12/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0" style="display:block; margin-top:-32px; margin-left:-6px;"></a>
+    <!-- CUADRO EXACTO: 260x38 - Visitors izquierda - Bandera centrada COMPLETA -->
+    <div style="width:260px; height:38px; background:#000; border:1px solid #333; border-radius:6px; margin:0 auto; position:relative; overflow:hidden;">
+      <!-- VISITORS A LA IZQUIERDA -->
+      <div style="position:absolute; left:10px; top:8px; color:#39ff14; font-family:Consolas,monospace; font-weight:bold; font-size:19px; letter-spacing:0.5px; text-shadow:0 0 8px #39ff14;">Visitors</div>
+      <!-- BANDERA CENTRADA SIN CORTAR - MEDIDA EXACTA -->
+      <div style="position:absolute; left:50%; top:8px; transform:translateX(-10%); width:60px; height:22px; display:flex; align-items:center; justify-content:center; overflow:visible;">
+        <a href="https://info.flagcounter.com/RcH9" style="display:block; line-height:0;"><img src="https://s11.flagcounter.com/count2/RcH9/bg_000000/txt_00ff41/border_222222/columns_3/maxflags_12/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0" style="display:block; margin-top:-27px; width:auto; height:auto; max-width:none;"></a>
       </div>
     </div>
 
