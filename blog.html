@@ -63,7 +63,7 @@ async function updateGhosts(){
       el.innerHTML =  FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
     }
   }catch(e){
-    el.innerHTML = FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
+    el.innerHTML =  FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
   }
 }
 updateGhosts();
@@ -81,10 +81,17 @@ setInterval(updateGhosts, 15000);
 
   <div style="margin-top:14px; border-top:1px dashed #222; padding-top:14px;">
     <p style="color:#00ff41; font-size:10px; margin:0 0 8px 0;">🌎 DE DÓNDE NOS MIRAN</p>
-    <!-- AQUÍ ESTÁ EL CORTE - YA NO SE VE EL LOGO -->
-    <div style="width:260px; height:38px; overflow:hidden; margin:0 auto; background:#000; border-radius:3px; border:1px solid #222;">
-      <a href="https://info.flagcounter.com/RcH9"><img src="https://s11.flagcounter.com/count2/RcH9/bg_000000/txt_00ff41/border_222222/columns_3/maxflags_12/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0" style="display:block; width:260px;"></a>
+    
+    <!-- CUADRO ARREGLADO: Visitors izquierda, bandera centrada -->
+    <div style="width:260px; height:38px; background:#000; border:1px solid #222; border-radius:4px; margin:0 auto; position:relative; overflow:hidden;">
+      <!-- Palabra Visitors a la izquierda -->
+      <div style="position:absolute; left:8px; top:4px; color:#00ff41; font-weight:bold; font-size:18px; text-shadow:0 0 5px #00ff41;">Visitors</div>
+      <!-- Bandera centrada - recortamos solo la bandera -->
+      <div style="position:absolute; left:50%; top:50%; transform:translate(-50%, -5%); width:80px; height:24px; overflow:hidden;">
+        <a href="https://info.flagcounter.com/RcH9"><img src="https://s11.flagcounter.com/count2/RcH9/bg_000000/txt_00ff41/border_222222/columns_3/maxflags_12/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0" style="display:block; margin-top:-32px; margin-left:-6px;"></a>
+      </div>
     </div>
+
     <p style="font-size:9px; color:#888; margin:8px 0 0 0;">*Visitantes únicos por país (tú eres la bandera de México)</p>
   </div>
   
