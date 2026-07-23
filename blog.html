@@ -46,17 +46,47 @@ h2{color:var(--neon);font-size:2rem;text-shadow:0 0 10px var(--neon);margin-bott
   <p style="margin:0 0 15px 0;">Un círculo no es nada con un solo fantasma. Necesito tu sombra aquí.</p>
   <p style="margin:0 0 15px 0;"><span style="color:#00ff41; font-weight:bold;">ROMPE EL SILENCIO.</span> ¿Quién eres y de dónde nos miras?</p>
   <p style="margin:0 0 10px 0;">Deja tu marca abajo. Cada comentario crea un nuevo fantasma. 👇</p>
-  <p id="ghost-counter" style="margin-top:15px; border-top:1px dashed #00ff41; padding-top:10px; color:#00ff41; font-weight:bold; font-size:13px;">CARGANDO FANTASMAS...</p>
+  <p id="ghost-counter" style="margin-top:15px; border-top:1px dashed #00ff41; padding-top:10px; color:#00ff41; font-weight:bold; font-size:13px;"> FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero</p>
   <p style="font-size:10px; color:#888; margin:4px 0 0 0;">*Este contador sube solo cuando alguien deja un COMENTARIO abajo</p>
 </div>
+
+<script>
+async function updateGhosts(){
+  const el = document.getElementById('ghost-counter');
+  try{
+    const res = await fetch('https://api.github.com/repos/SpikeBlack009/SpikeBlack009.github.io/issues?state=all&per_page=100');
+    const data = await res.json();
+    const issue = data.find(i => i.title.includes('blog.html'));
+    if(issue && issue.comments > 0){
+      el.innerHTML = ` FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${issue.comments}`;
+    } else {
+      el.innerHTML = ` FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
+    }
+  }catch(e){
+    el.innerHTML = ` FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
+  }
+}
+updateGhosts();
+setInterval(updateGhosts, 15000);
+
+async function updateFlagCount(){
+  const el = document.getElementById('flag-count');
+  try{
+    const res = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://s11.flagcounter.com/more30/RcH9/'));
+    const text = await res.text();
+    const m = text.match(/Total[^0-9]*([0-9,]+)/i);
+    if(m) el.textContent = m[1].replace(/,/g,'');
+  }catch(e){}
+}
+updateFlagCount();
+</script>
 
 <div style="border:1px dashed #333; background:#0a0a0a; padding:18px; border-radius:8px; margin:25px 0; text-align:center; font-family:monospace;">
   <p style="color:#666; font-size:11px; margin:0 0 8px 0; letter-spacing:2px;">OJOS EN LA OSCURIDAD</p>
   <p style="color:#00ff41; font-size:12px; margin:0 0 12px 0;">SOMBRAS QUE HAN CRUZADO EL CÍRCULO</p>
 
   <div style="margin-bottom:8px;">
-    <span style="color:#000; background:#00ff41; padding:2px 8px; border-radius:4px; font-weight:bold; font-size:12px;">SOMBRAS</span>
-    <span id="total-counter" style="color:#00ff41; font-weight:bold; margin-left:6px;">...</span>
+    <img src="https://komarev.com/ghpvc/?username=SpikeBlack009&repo=SpikeBlack009.github.io&label=SOMBRAS&style=flat-square&color=00ff41" alt="visitas totales" />
   </div>
   <p style="font-size:9px; color:#888; margin:0 0 14px 0;">*Total de veces que se ha abierto el blog (visitas totales)</p>
 
@@ -89,44 +119,7 @@ async>
 </script>
 <p style="font-size:.75rem;opacity:.5;margin-top:12px">*Necesitas cuenta de GitHub para comentar. Así evitamos bots y tú controlas todo desde tu repo.</p>
 </div>
+
 </main>
-
-<script>
-// 1 - FANTASMAS = COMENTARIOS REALES (arreglado)
-async function updateGhosts(){
-  const el = document.getElementById('ghost-counter');
-  try{
-    const res = await fetch('https://api.github.com/search/issues?q=repo:SpikeBlack009/SpikeBlack009.github.io+blog.html+in:title');
-    const data = await res.json();
-    if(data.items && data.items.length > 0){
-      const total = data.items[0].comments;
-      if(total > 0){
-        el.innerHTML = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${total}`;
-      } else {
-        el.innerHTML = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
-      }
-    } else {
-      el.innerHTML = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
-    }
-  }catch(e){
-    el.innerHTML = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
-  }
-}
-updateGhosts();
-setInterval(updateGhosts, 15000);
-
-// 2 - SOMBRAS = VISITAS TOTALES (nuevo API que si sirve)
-async function updateTotal(){
-  const el = document.getElementById('total-counter');
-  try{
-    const res = await fetch('https://abacus.jasoncameron.dev/hit/spikeblack009-blog/total');
-    const data = await res.json();
-    el.textContent = data.value;
-  }catch(e){
-    el.textContent = '1';
-  }
-}
-updateTotal();
-</script>
 </body>
 </html>
