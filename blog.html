@@ -69,6 +69,7 @@ async function updateGhosts(){
 updateGhosts();
 setInterval(updateGhosts, 15000);
 
+// ESTO ES LO ÚNICO NUEVO - HACE QUE EL NÚMERO CAMBIE AUTOMÁTICO
 async function updateFlagCount(){
   const el = document.getElementById('flag-count');
   try{
@@ -92,6 +93,8 @@ updateFlagCount();
 
   <div style="margin-top:14px; border-top:1px dashed #222; padding-top:14px;">
     <p style="color:#00ff41; font-size:10px; margin:0 0 8px 0;">🌎 DE DÓNDE NOS MIRAN</p>
+
+    <!-- CUADRO LIMPIO FINAL - SIN CORTES Y SIN LOGO -->
     <div style="width:260px; height:38px; background:#000; border:1px solid #333; border-radius:6px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 12px;">
       <span style="color:#39ff14; font-weight:bold; font-size:19px; text-shadow:0 0 8px #39ff14;">Visitors</span>
       <span style="display:flex; align-items:center; gap:6px; margin:0 auto;">
@@ -100,11 +103,14 @@ updateFlagCount();
       </span>
       <span style="width:40px;"></span>
     </div>
+    <!-- Flag Counter sigue contando pero oculto -->
     <div style="width:1px; height:1px; overflow:hidden; opacity:0;">
       <img src="https://s11.flagcounter.com/count2/RcH9/bg_000000/txt_00ff41/border_222222/columns_3/maxflags_12/viewers_1/labels_0/pageviews_0/flags_1/percent_0/" alt="counter" />
     </div>
+
     <p style="font-size:9px; color:#888; margin:8px 0 0 0;">*Visitantes únicos por país (tú eres la bandera de México)</p>
   </div>
+
   <p style="color:#444; font-size:8px; margin-top:12px;">*contadores anónimos, no guardan IPs</p>
 </div>
 
