@@ -7,27 +7,15 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#000;color:#fff;font-family:-apple-system,sans-serif;padding-bottom:140px}
-.art{
-width:88%;max-width:380px;aspect-ratio:1/1;margin:18px auto 0;
-border-radius:22px;overflow:hidden;
-border:2px solid #00ff88;
-box-shadow:0 0 25px rgba(0,255,136,.9), 0 0 55px rgba(0,255,136,.45)
-}
+.art{width:88%;max-width:380px;aspect-ratio:1/1;margin:18px auto 0;border-radius:22px;overflow:hidden;border:2px solid #00ff88;box-shadow:0 0 25px rgba(0,255,136,.9), 0 0 55px rgba(0,255,136,.45)}
 .art img{width:100%;height:100%;object-fit:cover;display:block}
-.tt{text-align:center;margin-top:16px}
-.tt h1{font-size:26px;font-weight:800}.tt p{color:#a1a1a6;font-size:14px}.tt span{color:#555;font-size:11px;display:block;margin-top:3px}
-.ctrl{max-width:400px;margin:22px auto 0;display:flex;justify-content:space-between;align-items:center;padding:0 32px}
-.ctrl button{background:none;border:none}
+.tt{text-align:center;margin-top:16px}.tt h1{font-size:26px;font-weight:800}.tt p{color:#a1a1a6;font-size:14px}.tt span{color:#555;font-size:11px;display:block;margin-top:3px}
+.ctrl{max-width:400px;margin:22px auto 0;display:flex;justify-content:space-between;align-items:center;padding:0 32px}.ctrl button{background:none;border:none}
 .ic{width:22px;height:22px;stroke:#8e8e93;fill:none;stroke-width:1.7}.ht{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.7}
-.play{
-width:62px;height:62px;background:#00ff88 !important;border:3px solid #00ff88;border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-box-shadow:0 0 20px rgba(0,255,136,1), 0 0 40px rgba(0,255,136,.6)
-}
-.barW{max-width:400px;margin:20px auto 0;padding:0 24px}.bar{height:3px;background:#222;border-radius:10px}.fill{width:0%;height:100%;background:#00ff88;border-radius:10px}
+.play{width:62px;height:62px;background:#00ff88 !important;border:3px solid #00ff88;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,255,136,1), 0 0 40px rgba(0,255,136,.6)}
+.barW{max-width:400px;margin:20px auto 0;padding:0 24px}.bar{height:6px;background:#222;border-radius:10px;cursor:pointer}.fill{width:0%;height:100%;background:#00ff88;border-radius:10px}
 .time{display:flex;justify-content:space-between;font-size:11px;color:#555;margin-top:6px}.time b{color:#00ff88;font-weight:400}
-.acts{max-width:400px;margin:22px auto 0;display:flex;justify-content:space-between;padding:0 30px}
-.a{color:#6e6e73;font-size:9px;display:flex;flex-direction:column;align-items:center;gap:6px}.a svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.5}
+.acts{max-width:400px;margin:22px auto 0;display:flex;justify-content:space-between;padding:0 30px}.a{color:#6e6e73;font-size:9px;display:flex;flex-direction:column;align-items:center;gap:6px}.a svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.5}
 .lyrics{max-width:400px;margin:20px auto 0;padding:0 18px;text-align:left}.ly-h{display:flex;justify-content:space-between;font-size:10px;margin-bottom:8px}.ly-h b{color:#00ff88}.lyrics p{font-size:12px;color:#8e8e93;line-height:1.55}
 .cred{max-width:400px;margin:20px auto 0;padding:0 16px;text-align:left}.cred-h{display:flex;gap:8px;font-size:9px;color:#555;margin-bottom:12px}.cred-h b:last-child{margin-left:auto;color:#00ff88;font-weight:400}
 .grid{display:flex;gap:10px}.box{flex:1;background:#101010;border-radius:14px;border:1px solid #1e1e1e;padding:10px}.box img{width:100%;aspect-ratio:1/1;border-radius:10px;object-fit:cover;border:1px solid #00ff88;box-shadow:0 0 15px rgba(0,255,136,.4)}.box b{font-size:11px;display:block;margin-top:7px}.box span{font-size:10px;color:#555}
@@ -37,22 +25,20 @@ box-shadow:0 0 20px rgba(0,255,136,1), 0 0 40px rgba(0,255,136,.6)
 </head>
 <body>
 
-<audio id="rola" src="nuyoo.mp3" preload="auto"></audio>
+<audio id="rola" src="nuyoo.mp3" preload="auto" playsinline></audio>
 
 <div class="art"><img src="nuyoo.gif"></div>
 <div class="tt"><h1>Nuyoo</h1><p>Spike Black</p><span>Nuyoo • Single • 2:45 • 18 OCT 2024</span></div>
 
 <div class="ctrl">
-<button><svg class="ic" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20l7-7M21 3l-7 7M16 21h5v-5M4 4l7 7M21 21l-7-7"/></svg></button>
+<button id="backBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M11 19l-7-7 7-7M21 19l-7-7 7-7"/></svg></button>
 <button><svg class="ht" viewBox="0 0 24 24"><path d="M12 19l-1.3-1.2C6 14 2.5 11.3 2.5 7.5A4 4 0 0 1 6.5 3.5c1.5 0 3 .7 4 1.9C11 4.2 12.5 3.5 14 3.5A4 4 0 0 1 18.5 7.5c0 3.8-3.5 6.4-8.8 10.9L12 19z"/></svg></button>
-<button><svg class="ic" viewBox="0 0 24 24"><path d="M9 3H5v4M15 3h4v4M9 21H5v-4M15 21h4v-4"/></svg></button>
-<button class="play" onclick="document.getElementById('rola').play()">
-<svg width="28" height="28" viewBox="0 0 24 24"><path fill="#000000" d="M8 5.8v12.4L19 12z"/></svg>
-</button>
-<button><svg class="ic" viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg></button>
+<button class="play" id="playBtn"><svg id="ico" width="28" height="28" viewBox="0 0 24 24"><path fill="#000" d="M8 5.8v12.4L19 12z"/></svg></button>
+<button id="nextBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M13 5l7 7-7 7M3 5l7 7-7 7"/></svg></button>
+<button id="rewind10"><svg class="ic" viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg></button>
 </div>
 
-<div class="barW"><div class="bar"><div class="fill"></div></div><div class="time"><b>0:38</b><span>2:45</span></div></div>
+<div class="barW"><div class="bar" id="bar"><div class="fill" id="fill"></div></div><div class="time"><b id="cur">0:00</b><span id="dur">0:00</span></div></div>
 
 <div class="acts">
 <div class="a"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add to Library</div>
@@ -71,5 +57,37 @@ box-shadow:0 0 20px rgba(0,255,136,1), 0 0 40px rgba(0,255,136,.6)
 
 <div class="mini"><img src="nuyoo.gif"><span style="font-size:13px">Nuyoo • Spike Black</span></div>
 <div class="nav"><div class="on">♥<br>Library</div><div>◍<br>Browse</div><div>◍<br>Radio</div><div>⌕<br>Search</div><div>▶<br>Listen Now</div></div>
+
+<script>
+const rola = document.getElementById('rola');
+const playBtn = document.getElementById('playBtn');
+const backBtn = document.getElementById('backBtn');
+const nextBtn = document.getElementById('nextBtn');
+const ico = document.getElementById('ico');
+const fill = document.getElementById('fill');
+const bar = document.getElementById('bar');
+const cur = document.getElementById('cur');
+const dur = document.getElementById('dur');
+let sonando = false;
+function fmt(s){let m=Math.floor(s/60);let sc=Math.floor(s%60);return m+':'+(sc<10?'0'+sc:sc)}
+
+playBtn.onclick = () => {
+  if(!sonando){ rola.play(); sonando=true; ico.innerHTML='<rect x="6" y="5" width="4" height="14" rx="1" fill="#000"/><rect x="14" y="5" width="4" height="14" rx="1" fill="#000"/>'; }
+  else { rola.pause(); sonando=false; ico.innerHTML='<path fill="#000" d="M8 5.8v12.4L19 12z"/>'; }
+};
+backBtn.onclick = () => { rola.currentTime = Math.max(0, rola.currentTime - 10); };
+nextBtn.onclick = () => { rola.currentTime = Math.min(rola.duration, rola.currentTime + 10); };
+
+bar.onclick = (e) => {
+  const rect = bar.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  rola.currentTime = pct * rola.duration;
+};
+
+rola.addEventListener('timeupdate', ()=>{
+  if(rola.duration){ fill.style.width=(rola.currentTime/rola.duration*100)+'%'; cur.textContent=fmt(rola.currentTime); dur.textContent=fmt(rola.duration); }
+});
+rola.addEventListener('ended', ()=>{ sonando=false; ico.innerHTML='<path fill="#000" d="M8 5.8v12.4L19 12z"/>'; });
+</script>
 </body>
 </html>
