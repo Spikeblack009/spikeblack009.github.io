@@ -9,7 +9,11 @@
 body{background:#000;color:#fff;font-family:-apple-system,sans-serif;padding-bottom:80px}
 .art{width:88%;max-width:380px;aspect-ratio:1/1;margin:18px auto 0;border-radius:22px;overflow:hidden;border:2px solid #00ff88;box-shadow:0 0 25px rgba(0,255,136,.9), 0 0 55px rgba(0,255,136,.45)}
 .art img{width:100%;height:100%;object-fit:cover;display:block}
-.tt{text-align:center;margin-top:16px}.tt h1{font-size:26px;font-weight:800}.tt p{color:#a1a1a6;font-size:14px}.tt span{color:#555;font-size:11px;display:block;margin-top:3px}
+.tt{text-align:center;margin-top:16px;animation:slideIn .4s ease}.tt h1{font-size:26px;font-weight:800}.tt p{color:#a1a1a6;font-size:14px}.tt span{color:#555;font-size:11px;display:block;margin-top:3px}
+@keyframes slideInRight{from{opacity:0;transform:translateX(100px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-100px)}to{opacity:1;transform:translateX(0)}}
+.tt.slideRight{animation:slideInRight .4s ease}
+.tt.slideLeft{animation:slideInLeft .4s ease}
 .ctrl{max-width:400px;margin:22px auto 0;display:flex;justify-content:space-between;align-items:center;padding:0 32px}.ctrl button{background:none;border:none}
 .ic{width:22px;height:22px;stroke:#8e8e93;fill:none;stroke-width:1.7}.ht{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.7}
 .play{width:62px;height:62px;background:#00ff88 !important;border:3px solid #00ff88;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,255,136,1), 0 0 40px rgba(0,255,136,.6)}
@@ -34,7 +38,7 @@ body{background:#000;color:#fff;font-family:-apple-system,sans-serif;padding-bot
 <audio id="rola" playsinline crossorigin="anonymous"></audio>
 
 <div class="art"><img src="nuyoo.gif"></div>
-<div class="tt"><h1 id="songTitle">Nuyoo</h1><p id="songArtist">Spike Black</p><span id="songInfo">Nuyoo • Single • 2:45 • 18 OCT 2024</span></div>
+<div class="tt" id="ttContainer"><h1 id="songTitle">Nuyoo</h1><p id="songArtist">Spike Black</p><span id="songInfo">Nuyoo • Single • 2:45 • 18 OCT 2024</span></div>
 
 <div class="ctrl">
 <button id="backBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M11 19l-7-7 7-7M21 19l-7-7 7-7"/></svg></button>
@@ -76,9 +80,11 @@ const playlistContainer = document.getElementById('playlistContainer');
 const songTitle = document.getElementById('songTitle');
 const songArtist = document.getElementById('songArtist');
 const songInfo = document.getElementById('songInfo');
+const ttContainer = document.getElementById('ttContainer');
 
 let sonando = false;
 let currentTrackIndex = 0;
+let lastDirection = 'next';
 let tracks = [
   { name: 'Nuyoo', artist: 'Spike Black', src: 'nuyoo.mp3', info: 'Nuyoo • Single • 2:45 • 18 OCT 2024' },
   { name: 'Want You Bad', artist: 'The Offspring', src: 'The-Offspring-Want-You-Bad.mp3', info: 'The Offspring • Smash' }
@@ -103,7 +109,17 @@ function updatePlaylist() {
   });
 }
 
-function loadTrack(index) {
+function animateTitle(direction) {
+  ttContainer.classList.remove('slideRight', 'slideLeft');
+  void ttContainer.offsetWidth;
+  if(direction === 'next') {
+    ttContainer.classList.add('slideLeft');
+  } else {
+    ttContainer.classList.add('slideRight');
+  }
+}
+
+function loadTrack(index, direction = 'next') {
   currentTrackIndex = index;
   const track = tracks[index];
   
@@ -114,6 +130,7 @@ function loadTrack(index) {
   songTitle.textContent = track.name;
   songArtist.textContent = track.artist;
   songInfo.textContent = track.info;
+  animateTitle(direction);
   updatePlaylist();
   
   rola.src = track.src;
@@ -132,11 +149,11 @@ function loadTrack(index) {
 }
 
 function prevTrack() {
-  loadTrack((currentTrackIndex - 1 + tracks.length) % tracks.length);
+  loadTrack((currentTrackIndex - 1 + tracks.length) % tracks.length, 'prev');
 }
 
 function nextTrack() {
-  loadTrack((currentTrackIndex + 1) % tracks.length);
+  loadTrack((currentTrackIndex + 1) % tracks.length, 'next');
 }
 
 playBtn.onclick = () => {
