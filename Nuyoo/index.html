@@ -14,6 +14,8 @@ body{background:#000;color:#fff;font-family:-apple-system,sans-serif;padding-bot
 @keyframes slideInLeft{from{opacity:0;transform:translateX(-100px)}to{opacity:1;transform:translateX(0)}}
 .tt.slideRight{animation:slideInRight .4s ease}
 .tt.slideLeft{animation:slideInLeft .4s ease}
+.playlist.slideRight{animation:slideInRight .4s ease}
+.playlist.slideLeft{animation:slideInLeft .4s ease}
 .ctrl{max-width:400px;margin:22px auto 0;display:flex;justify-content:space-between;align-items:center;padding:0 32px}.ctrl button{background:none;border:none}
 .ic{width:22px;height:22px;stroke:#8e8e93;fill:none;stroke-width:1.7}.ht{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.7}
 .play{width:62px;height:62px;background:#00ff88 !important;border:3px solid #00ff88;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,255,136,1), 0 0 40px rgba(0,255,136,.6)}
@@ -57,9 +59,9 @@ body{background:#000;color:#fff;font-family:-apple-system,sans-serif;padding-bot
 <div class="a"><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.5" fill="#fff"/><circle cx="12" cy="12" r="1.5" fill="#fff"/><circle cx="18" cy="12" r="1.5" fill="#fff"/></svg>More</div>
 </div>
 
-<div class="playlist">
+<div class="playlist" id="playlistContainer">
 <div class="playlist-title">Lista de reproducción</div>
-<div id="playlistContainer"></div>
+<div id="songsContainer"></div>
 </div>
 
 <div class="lyrics"><div class="ly-h"><b>LYRICS</b><b>Show All</b></div><p>Silent howl through the neon night — Mixed by BLACKLAB • Mastered at Neon Coast Studio<br>Ghost drifts where the signal dies —<br>Static whisper, cold and quiet —<br>I'm only here to say goodbye.</p></div>
@@ -76,11 +78,12 @@ const fill = document.getElementById('fill');
 const bar = document.getElementById('bar');
 const cur = document.getElementById('cur');
 const dur = document.getElementById('dur');
-const playlistContainer = document.getElementById('playlistContainer');
+const songsContainer = document.getElementById('songsContainer');
 const songTitle = document.getElementById('songTitle');
 const songArtist = document.getElementById('songArtist');
 const songInfo = document.getElementById('songInfo');
 const ttContainer = document.getElementById('ttContainer');
+const playlistContainer = document.getElementById('playlistContainer');
 
 let sonando = false;
 let currentTrackIndex = 0;
@@ -93,7 +96,7 @@ let tracks = [
 function fmt(s){let m=Math.floor(s/60);let sc=Math.floor(s%60);return m+':'+(sc<10?'0'+sc:sc)}
 
 function updatePlaylist() {
-  playlistContainer.innerHTML = '';
+  songsContainer.innerHTML = '';
   tracks.forEach((track, index) => {
     const div = document.createElement('div');
     div.className = 'song-item' + (index === currentTrackIndex ? ' active' : '');
@@ -105,17 +108,20 @@ function updatePlaylist() {
       </div>
     `;
     div.onclick = () => loadTrack(index);
-    playlistContainer.appendChild(div);
+    songsContainer.appendChild(div);
   });
 }
 
-function animateTitle(direction) {
+function animateElements(direction) {
   ttContainer.classList.remove('slideRight', 'slideLeft');
+  playlistContainer.classList.remove('slideRight', 'slideLeft');
   void ttContainer.offsetWidth;
   if(direction === 'next') {
     ttContainer.classList.add('slideLeft');
+    playlistContainer.classList.add('slideLeft');
   } else {
     ttContainer.classList.add('slideRight');
+    playlistContainer.classList.add('slideRight');
   }
 }
 
@@ -130,7 +136,7 @@ function loadTrack(index, direction = 'next') {
   songTitle.textContent = track.name;
   songArtist.textContent = track.artist;
   songInfo.textContent = track.info;
-  animateTitle(direction);
+  animateElements(direction);
   updatePlaylist();
   
   rola.src = track.src;
