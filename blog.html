@@ -29,16 +29,11 @@ main{max-width:700px;margin:25px auto;padding:0 15px}
 <h1>GHOST DARK CIRCLE</h1>
 <a href="index.html">→ INICIO</a>
 </header>
-
 <main>
-
-<!-- CUADRO 1 - COMO EN LA FOTO -->
 <div class="card">
   Bienvenido al abismo. Este es GHOST DARK CIRCLE de SPIKE BLACK.<br><br>
   <em>"La oscuridad no es el final. Es donde comienza todo."</em>
 </div>
-
-<!-- CUADRO 2 - COMO EN LA FOTO -->
 <div class="card">
   <p class="post-meta">POST 001 - 11.05.2026 [SPIKE BLACK]</p>
   <h2 class="post-title">EL INICIO DEL CÍRCULO.</h2>
@@ -49,8 +44,6 @@ main{max-width:700px;margin:25px auto;padding:0 15px}
     <a href="#sombra" style="color:var(--neon);">Deja tu sombra abajo.</a>
   </p>
 </div>
-
-<!-- CUADRO 3 - COMO EN LA FOTO + INPUTS -->
 <div class="card" id="sombra">
   <p style="color:var(--neon);font-weight:bold;font-size:18px;margin-bottom:8px;">FUISTE ELEGIDO.</p>
   <p style="font-size:13px;margin-bottom:15px;">Esto es Un sub-mundo vivo para los que viven en las sombras.</p>
@@ -58,19 +51,14 @@ main{max-width:700px;margin:25px auto;padding:0 15px}
   <textarea id="ghostMsg" placeholder="Tu mensaje..."></textarea>
   <button class="btn-ghost" onclick="document.querySelector('.utterances').scrollIntoView()">DEJAR SOMBRA</button>
 </div>
-
-<!-- CONTADORES QUE YA TENIAMOS - NO SE ELIMINO NADA -->
 <div style="border:1px solid #00ff41; box-shadow:0 0 12px #00ff41; background:#0d0d0d; color:#e0e0e0; padding:20px; border-radius:10px; margin-bottom:25px; font-family:monospace; text-align:left;">
   <p id="ghost-counter" style="margin:0 0 10px 0; color:#00ff41; font-weight:bold; font-size:13px;">CARGANDO FANTASMAS...</p>
-  <p style="font-size:10px; color:#888; margin:0 0 15px 0;">*Este contador sube solo cuando alguien deja un COMENTARIO abajo</p>
   <div style="border-top:1px dashed #222; padding-top:15px;">
-    <p style="color:#666; font-size:11px; margin:0 0 8px 0; letter-spacing:2px; text-align:center;">OJOS EN LA OSCURIDAD</p>
     <p style="color:#00ff41; font-size:12px; margin:0 0 12px 0; text-align:center;">SOMBRAS QUE HAN CRUZADO EL CÍRCULO</p>
     <div style="margin-bottom:8px; text-align:center;">
       <span style="color:#000; background:#00ff41; padding:2px 8px; border-radius:4px; font-weight:bold; font-size:12px;">SOMBRAS</span>
       <span id="total-counter" style="color:#00ff41; font-weight:bold; margin-left:6px;">...</span>
     </div>
-    <p style="font-size:9px; color:#888; margin:0 0 14px 0; text-align:center;">*Total de veces que se ha abierto el blog</p>
     <div style="margin-top:14px; border-top:1px dashed #222; padding-top:14px; text-align:center;">
       <p style="color:#00ff41; font-size:10px; margin:0 0 8px 0;">🌎 DE DÓNDE NOS MIRAN</p>
       <div style="width:260px; height:38px; background:#000; border:1px solid #333; border-radius:6px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 12px;">
@@ -87,7 +75,6 @@ main{max-width:700px;margin:25px auto;padding:0 15px}
     </div>
   </div>
 </div>
-
 <div class="comments">
 <h3>Comentarios — Únete a la discusión</h3>
 <div class="utterances">
@@ -100,9 +87,7 @@ async>
 </script>
 </div>
 </div>
-
 </main>
-
 <script>
 async function updateGhosts(){
   const el = document.getElementById('ghost-counter');
@@ -121,7 +106,6 @@ async function updateGhosts(){
 }
 updateGhosts();
 setInterval(updateGhosts, 10000);
-
 async function updateTotal(){
   const el = document.getElementById('total-counter');
   try{
