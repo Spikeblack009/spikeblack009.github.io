@@ -31,7 +31,7 @@ body{background:#000;color:#fff;font-family:-apple-system,sans-serif;padding-bot
 </head>
 <body>
 
-<audio id="rola" preload="auto" playsinline></audio>
+<audio id="rola" playsinline crossorigin="anonymous"></audio>
 
 <div class="art"><img src="nuyoo.gif"></div>
 <div class="tt"><h1 id="songTitle">Nuyoo</h1><p id="songArtist">Spike Black</p><span id="songInfo">Nuyoo • Single • 2:45 • 18 OCT 2024</span></div>
@@ -106,17 +106,29 @@ function updatePlaylist() {
 function loadTrack(index) {
   currentTrackIndex = index;
   const track = tracks[index];
-  rola.src = track.src;
-  rola.load();
+  
+  rola.pause();
+  rola.currentTime = 0;
+  rola.src = '';
+  
   songTitle.textContent = track.name;
   songArtist.textContent = track.artist;
   songInfo.textContent = track.info;
   updatePlaylist();
-  setTimeout(() => {
-    rola.play();
-    sonando = true;
+  
+  rola.src = track.src;
+  
+  rola.addEventListener('canplay', function playWhenReady() {
+    if(sonando) {
+      rola.play().catch(e => console.log('Error al reproducir:', e));
+    }
+    rola.removeEventListener('canplay', playWhenReady);
+  }, {once: true});
+  
+  if(sonando) {
+    rola.play().catch(e => console.log('Error al reproducir:', e));
     ico.innerHTML = '<rect x="6" y="5" width="4" height="14" rx="1" fill="#000"/><rect x="14" y="5" width="4" height="14" rx="1" fill="#000"/>';
-  }, 100);
+  }
 }
 
 function prevTrack() {
@@ -128,8 +140,16 @@ function nextTrack() {
 }
 
 playBtn.onclick = () => {
-  if(!sonando){ rola.play(); sonando=true; ico.innerHTML='<rect x="6" y="5" width="4" height="14" rx="1" fill="#000"/><rect x="14" y="5" width="4" height="14" rx="1" fill="#000"/>'; }
-  else { rola.pause(); sonando=false; ico.innerHTML='<path fill="#000" d="M8 5.8v12.4L19 12z"/>'; }
+  if(!sonando){ 
+    rola.play().catch(e => console.log('Error:', e)); 
+    sonando=true; 
+    ico.innerHTML='<rect x="6" y="5" width="4" height="14" rx="1" fill="#000"/><rect x="14" y="5" width="4" height="14" rx="1" fill="#000"/>'; 
+  }
+  else { 
+    rola.pause(); 
+    sonando=false; 
+    ico.innerHTML='<path fill="#000" d="M8 5.8v12.4L19 12z"/>'; 
+  }
 };
 backBtn.onclick = () => { prevTrack(); };
 nextBtn.onclick = () => { nextTrack(); };
