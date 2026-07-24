@@ -107,13 +107,20 @@ function loadTrack(index) {
   currentTrackIndex = index;
   const track = tracks[index];
   rola.src = track.src;
+  rola.load();
   songTitle.textContent = track.name;
   songArtist.textContent = track.artist;
   songInfo.textContent = track.info;
   updatePlaylist();
-  rola.play();
-  sonando = true;
-  ico.innerHTML = '<rect x="6" y="5" width="4" height="14" rx="1" fill="#000"/><rect x="14" y="5" width="4" height="14" rx="1" fill="#000"/>';
+  setTimeout(() => {
+    rola.play();
+    sonando = true;
+    ico.innerHTML = '<rect x="6" y="5" width="4" height="14" rx="1" fill="#000"/><rect x="14" y="5" width="4" height="14" rx="1" fill="#000"/>';
+  }, 100);
+}
+
+function prevTrack() {
+  loadTrack((currentTrackIndex - 1 + tracks.length) % tracks.length);
 }
 
 function nextTrack() {
@@ -124,8 +131,8 @@ playBtn.onclick = () => {
   if(!sonando){ rola.play(); sonando=true; ico.innerHTML='<rect x="6" y="5" width="4" height="14" rx="1" fill="#000"/><rect x="14" y="5" width="4" height="14" rx="1" fill="#000"/>'; }
   else { rola.pause(); sonando=false; ico.innerHTML='<path fill="#000" d="M8 5.8v12.4L19 12z"/>'; }
 };
-backBtn.onclick = () => { rola.currentTime = Math.max(0, rola.currentTime - 10); };
-nextBtn.onclick = () => { rola.currentTime = Math.min(rola.duration, rola.currentTime + 10); };
+backBtn.onclick = () => { prevTrack(); };
+nextBtn.onclick = () => { nextTrack(); };
 bar.onclick = (e) => { const rect = bar.getBoundingClientRect(); const pct = (e.clientX - rect.left) / rect.width; rola.currentTime = pct * rola.duration; };
 rola.addEventListener('timeupdate', ()=>{ if(rola.duration){ fill.style.width=(rola.currentTime/rola.duration*100)+'%'; cur.textContent=fmt(rola.currentTime); dur.textContent=fmt(rola.duration); } });
 rola.addEventListener('ended', ()=>{ nextTrack(); });
