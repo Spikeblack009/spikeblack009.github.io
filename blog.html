@@ -3,121 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GHOST DARK CIRCLE - Bienvenidos al Dark Side</title>
+<title>GHOST DARK CIRCLE - BLOG</title>
 <style>
-:root{--bg:#000;--neon:#39ff14;--dim:#1a5c10;--text:#e6ffe6;}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:Consolas,monospace;line-height:1.7}
-header{background:#000;border-bottom:2px solid var(--neon);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
-header img{width:42px;height:42px;border-radius:50%;border:2px solid var(--neon);box-shadow:0 0 12px var(--neon);background:#111}
-header h1{color:var(--neon);font-size:1.1rem;letter-spacing:1px;text-shadow:0 0 8px var(--neon)}
-header a{margin-left:auto;color:var(--neon);border:1px solid var(--neon);padding:6px 12px;border-radius:6px;text-decoration:none}
-main{max-width:800px;margin:36px auto;padding:0 20px}
-h2{color:var(--neon);font-size:2rem;text-shadow:0 0 10px var(--neon);margin-bottom:18px}
-.post{border:1px solid var(--dim);background:#070707;padding:24px;border-radius:14px;box-shadow:0 0 22px rgba(57,255,20,.15)}
-.post p{margin-bottom:14px}
-.comments{margin-top:48px;border-top:1px solid var(--dim);padding-top:24px}
-.comments h3{color:var(--neon);margin-bottom:16px}
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+  body { background:#050805; color:#c8ffc8; font-family:'Share Tech Mono', monospace; margin:0; padding:0; }
+  .header { display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid #00ff41; background:#000; position:sticky; top:0; z-index:10; }
+  .logo { color:#00ff41; font-weight:bold; letter-spacing:2px; display:flex; align-items:center; gap:8px; }
+  .logo img { width:28px; height:28px; border-radius:50%; border:1px solid #00ff41; }
+  .btn-inicio { border:1px solid #00ff41; color:#00ff41; padding:6px 15px; text-decoration:none; font-size:14px; }
+  .container { max-width:650px; margin:0 auto; padding:15px; }
+  .card { border:1px solid #003a00; background:#0a120a; padding:18px; margin-bottom:20px; box-shadow:0 0 10px #001a00; }
+  .card-welcome { font-size:14px; line-height:1.6; border-color:#00ff41; }
+  .post-meta { color:#00ff41; font-size:12px; margin-bottom:8px; }
+  .post-title { color:#fff; font-size:20px; margin:10px 0; }
+  .post-body { font-size:14px; line-height:1.7; color:#a0c0a0; }
+  .cta-title { color:#00ff41; font-size:18px; margin-bottom:8px; }
+  input, textarea { width:100%; background:#000; border:1px solid #00ff41; color:#00ff41; padding:10px; margin:8px 0; font-family:inherit; box-sizing:border-box; }
+  .btn-post { width:100%; background:#00ff41; color:#000; border:none; padding:12px; font-weight:bold; cursor:pointer; }
+  .comment { border-top:1px dashed #003a00; padding:10px 0; font-size:13px; }
 </style>
 </head>
 <body>
-<header>
-<img src="logo.png" onerror="this.src='https://spikeblack009.github.io/logo.png'; this.onerror=null;" alt="G">
-<h1>GHOST DARK CIRCLE</h1>
-<a href="index.html">← INICIO</a>
-</header>
-<main>
-<h2>Bienvenidos al Dark Side</h2>
-<article class="post">
-<p>Bienvenido, viajero del abismo... Este es el punto de entrada a GHOST DARK CIRCLE SPIKE BLACK, donde las sombras hablan y el neón verde es nuestro faro en la oscuridad.</p>
-<p>Este blog es para todos los que sienten que la oscuridad no es el final. Es donde comienza todo. Aquí encontrarás cultura oscura, reseñas sin filtro, historias del underground y reflexiones en la penumbra.</p>
-<p><em>"La oscuridad no es el final. Es donde comienza todo."</em> — Spike Black</p>
-</article>
 
-<div style="background:#111; border-left:3px solid #00ff41; padding:20px; margin:30px 0; font-family:monospace;">
-  <p style="color:#00ff41; font-size:12px; margin:0 0 10px 0;">[POST 001 - 11.05.2026] [SPIKE BLACK]</p>
-  <h2 style="color:#fff; margin:0 0 15px 0; font-size:20px;">EL INICIO DEL CÍRCULO.</h2>
-  <p style="color:#ccc; line-height:1.6; margin:0 0 10px 0;">Hoy se abre.<br><br>Esto no es un blog más. Es un registro de lo que pasa cuando nadie mira.<br><br>Si llegaste aquí, no fue por accidente. Ya eres parte.<br><br><span style="color:#00ff41; font-weight:bold;">Deja tu sombra abajo.</span></p>
+<div class="header">
+  <div class="logo"><img src="logo.png"> GHOST DARK CIRCLE</div>
+  <a href="index.html" class="btn-inicio">→ INICIO</a>
 </div>
 
-<div style="border:1px solid #00ff41; box-shadow:0 0 12px #00ff41; background:#0d0d0d; color:#e0e0e0; padding:20px; border-radius:10px; margin-bottom:25px; font-family:monospace; text-align:left;">
-  <p style="color:#00ff41; font-weight:bold; font-size:18px; margin:0 0 10px 0;">FUISTE ELEGIDO.</p>
-  <p style="margin:0 0 15px 0;">Esto es GHOST DARK CIRCLE. Un submundo vivo para los que viven en las sombras.</p>
-  <p style="margin:0 0 15px 0;">Un círculo no es nada con un solo fantasma. Necesito tu sombra aquí.</p>
-  <p style="margin:0 0 15px 0;"><span style="color:#00ff41; font-weight:bold;">ROMPE EL SILENCIO.</span> ¿Quién eres y de dónde nos miras?</p>
-  <p style="margin:0 0 10px 0;">Deja tu marca abajo. Cada comentario crea un nuevo fantasma. 👇</p>
-  <p id="ghost-counter" style="margin-top:15px; border-top:1px dashed #00ff41; padding-top:10px; color:#00ff41; font-weight:bold; font-size:13px;">CARGANDO FANTASMAS...</p>
-  <p style="font-size:10px; color:#888; margin:4px 0 0 0;">*Este contador sube solo cuando alguien deja un COMENTARIO abajo</p>
-</div>
+<div class="container">
 
-<div style="border:1px dashed #333; background:#0a0a0a; padding:18px; border-radius:8px; margin:25px 0; text-align:center; font-family:monospace;">
-  <p style="color:#666; font-size:11px; margin:0 0 8px 0; letter-spacing:2px;">OJOS EN LA OSCURIDAD</p>
-  <p style="color:#00ff41; font-size:12px; margin:0 0 12px 0;">SOMBRAS QUE HAN CRUZADO EL CÍRCULO</p>
-  <div style="margin-bottom:8px;">
-    <span style="color:#000; background:#00ff41; padding:2px 8px; border-radius:4px; font-weight:bold; font-size:12px;">SOMBRAS</span>
-    <span id="total-counter" style="color:#00ff41; font-weight:bold; margin-left:6px;">...</span>
+  <div class="card card-welcome">
+    Bienvenido al abismo. Este es GHOST DARK CIRCLE de SPIKE BLACK.<br><br>
+    <em>"La oscuridad no es el final. Es donde comienza todo."</em>
   </div>
-  <p style="font-size:9px; color:#888; margin:0 0 14px 0;">*Total de veces que se ha abierto el blog (visitas totales)</p>
-  <div style="margin-top:14px; border-top:1px dashed #222; padding-top:14px;">
-    <p style="color:#00ff41; font-size:10px; margin:0 0 8px 0;">🌎 DE DÓNDE NOS MIRAN</p>
-    <div style="width:260px; height:38px; background:#000; border:1px solid #333; border-radius:6px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 12px;">
-      <span style="color:#39ff14; font-weight:bold; font-size:19px; text-shadow:0 0 8px #39ff14;">Visitors</span>
-      <span style="display:flex; align-items:center; gap:6px; margin:0 auto;">
-        <span style="font-size:20px; line-height:1;">🇲🇽</span>
-        <span id="flag-count" style="color:#39ff14; font-weight:bold; font-size:18px;">2</span>
-      </span>
-      <span style="width:40px;"></span>
+
+  <div class="card">
+    <div class="post-meta">POST 001 - 11.05.2026 [SPIKE BLACK]</div>
+    <div class="post-title">EL INICIO DEL CÍRCULO.</div>
+    <div class="post-body">
+      Hoy se abre.<br><br>
+      Esto no es un blog más. Es un registro de lo que pasa cuando nadie mira.<br><br>
+      Si llegaste aquí, no fue por accidente. Ya eres parte.
+      <br><br>
+      <a href="#" style="color:#00ff41;">Deja tu sombra abajo.</a>
     </div>
-    <div style="width:1px; height:1px; overflow:hidden; opacity:0;">
-      <img src="https://s11.flagcounter.com/count2/RcH9/bg_000000/txt_00ff41/border_222222/columns_3/maxflags_12/viewers_1/labels_0/pageviews_0/flags_1/percent_0/" alt="counter" />
-    </div>
-    <p style="font-size:9px; color:#888; margin:8px 0 0 0;">*Visitantes únicos por país</p>
   </div>
-  <p style="color:#444; font-size:8px; margin-top:12px;">*contadores anónimos</p>
+
+  <div class="card">
+    <div class="cta-title">FUISTE ELEGIDO.</div>
+    <div style="font-size:13px; margin-bottom:12px;">Esto es GHOST DARK CIRCLE. Un sub-mundo vivo para los que viven en las sombras.</div>
+    <input type="text" placeholder="Tu nombre">
+    <textarea placeholder="Tu mensaje..."></textarea>
+    <button class="btn-post">DEJAR SOMBRA</button>
+  </div>
+
 </div>
 
-<div class="comments">
-<h3>Comentarios — Únete a la discusión</h3>
-<script src="https://utteranc.es/client.js"
-repo="SpikeBlack009/SpikeBlack009.github.io"
-issue-term="pathname"
-theme="github-dark"
-crossorigin="anonymous"
-async>
-</script>
-</div>
-</main>
-
-<script>
-async function updateGhosts(){
-  const el = document.getElementById('ghost-counter');
-  try{
-    const res = await fetch('https://api.github.com/repos/SpikeBlack009/SpikeBlack009.github.io/issues?state=all&per_page=100');
-    const data = await res.json();
-    const issue = data.find(i => i.title.includes('blog.html'));
-    if(issue && issue.comments > 0){
-      el.innerHTML = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${issue.comments}`;
-    } else {
-      el.innerHTML = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
-    }
-  }catch(e){
-    el.innerHTML = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
-  }
-}
-updateGhosts();
-setInterval(updateGhosts, 10000);
-
-async function updateTotal(){
-  const el = document.getElementById('total-counter');
-  try{
-    const res = await fetch('https://abacus.jasoncameron.dev/hit/spikeblack009-blog/total');
-    const data = await res.json();
-    el.textContent = data.value;
-  }catch(e){
-    el.textContent = '1';
-  }
-}
-updateTotal();
-</script>
 </body>
 </html>
