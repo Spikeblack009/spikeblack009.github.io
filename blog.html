@@ -1,132 +1,120 @@
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GHOST DARK CIRCLE - Bienvenidos al Dark Side</title>
+<style>
+:root{--bg:#000;--neon:#00ff41;--dim:#1a5c10;--text:#e6ffe6;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:Consolas,monospace;line-height:1.7}
+header{background:#000;border-bottom:2px solid var(--neon);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+header img{width:42px;height:42px;border-radius:50%;border:2px solid var(--neon);box-shadow:0 0 12px var(--neon);background:#111}
+header h1{color:var(--neon);font-size:1.1rem;letter-spacing:2px;text-shadow:0 0 8px var(--neon)}
+header a{margin-left:auto;color:var(--neon);border:1px solid var(--neon);padding:6px 12px;border-radius:6px;text-decoration:none}
+main{max-width:700px;margin:25px auto;padding:0 15px}
+.card{border:1px solid var(--neon);background:#0a0f0a;padding:20px;margin-bottom:18px;box-shadow:0 0 12px rgba(0,255,65,.15);}
+.post-meta{color:var(--neon);font-size:12px;margin-bottom:10px}
+.post-title{color:#fff;font-size:20px;letter-spacing:1px;margin-bottom:12px}
+.card input, .card textarea{width:100%;background:#000;border:1px solid var(--neon);color:var(--neon);padding:12px;margin:8px 0;font-family:inherit;box-sizing:border-box}
+.card textarea{min-height:80px;resize:vertical}
+.btn-ghost{width:100%;background:var(--neon);color:#000;border:none;padding:13px;font-weight:bold;cursor:pointer;letter-spacing:1px;margin-top:8px}
+.comments{margin-top:20px;border-top:1px solid #111;padding-top:24px}
+.comments h3{color:var(--neon);margin-bottom:16px;font-size:16px}
+</style>
+</head>
+<body>
+<header>
+<img src="logo.png" onerror="this.src='https://spikeblack009.github.io/logo.png'; this.onerror=null;" alt="G">
+<h1>GHOST DARK CIRCLE</h1>
+<a href="index.html">→ INICIO</a>
+</header>
+<main>
+<div class="card">
+  Bienvenido al abismo. Este es GHOST DARK CIRCLE de SPIKE BLACK.<br><br>
+  <em>"La oscuridad no es el final. Es donde comienza todo."</em>
+</div>
+<div class="card">
+  <p class="post-meta">POST 001 - 11.05.2026 [SPIKE BLACK]</p>
+  <h2 class="post-title">EL INICIO DEL CÍRCULO.</h2>
+  <p style="color:#a0c0a0;font-size:14px;line-height:1.6;">
+    Esto no es un blog más. Es un registro de lo que pasa cuando nadie mira.<br><br>
+    Si llegaste aquí, no fue por accidente. Ya eres parte.<br><br>
+    <a href="#sombra" style="color:var(--neon);">Deja tu sombra abajo.</a>
+  </p>
+</div>
+<div class="card" id="sombra">
+  <p style="color:var(--neon);font-weight:bold;font-size:18px;margin-bottom:8px;">FUISTE ELEGIDO.</p>
+  <p style="font-size:13px;margin-bottom:15px;">Esto es Un sub-mundo vivo para los que viven en las sombras.</p>
+  <input type="text" id="ghostName" placeholder="Tu nombre">
+  <textarea id="ghostMsg" placeholder="Tu mensaje..."></textarea>
+  <button class="btn-ghost" onclick="document.querySelector('.utterances').scrollIntoView()">DEJAR SOMBRA</button>
+</div>
+<div style="border:1px solid #00ff41; box-shadow:0 0 12px #00ff41; background:#0d0d0d; color:#e0e0e0; padding:20px; border-radius:10px; margin-bottom:25px; font-family:monospace; text-align:left;">
+  <p id="ghost-counter" style="margin:0 0 10px 0; color:#00ff41; font-weight:bold; font-size:13px;">CARGANDO FANTASMAS...</p>
+  <div style="border-top:1px dashed #222; padding-top:15px;">
+    <p style="color:#00ff41; font-size:12px; margin:0 0 12px 0; text-align:center;">SOMBRAS QUE HAN CRUZADO EL CÍRCULO</p>
+    <div style="margin-bottom:8px; text-align:center;">
+      <span style="color:#000; background:#00ff41; padding:2px 8px; border-radius:4px; font-weight:bold; font-size:12px;">SOMBRAS</span>
+      <span id="total-counter" style="color:#00ff41; font-weight:bold; margin-left:6px;">...</span>
+    </div>
+    <div style="margin-top:14px; border-top:1px dashed #222; padding-top:14px; text-align:center;">
+      <p style="color:#00ff41; font-size:10px; margin:0 0 8px 0;">🌎 DE DÓNDE NOS MIRAN</p>
+      <div style="width:260px; height:38px; background:#000; border:1px solid #333; border-radius:6px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 12px;">
+        <span style="color:#39ff14; font-weight:bold; font-size:19px; text-shadow:0 0 8px #39ff14;">Visitors</span>
+        <span style="display:flex; align-items:center; gap:6px;">
+          <span style="font-size:20px;">🇲🇽</span>
+          <span id="flag-count" style="color:#39ff14; font-weight:bold; font-size:18px;">2</span>
+        </span>
+        <span style="width:40px;"></span>
+      </div>
+      <div style="width:1px; height:1px; overflow:hidden; opacity:0;">
+        <img src="https://s11.flagcounter.com/count2/RcH9/bg_000000/txt_00ff41/border_222222/columns_3/maxflags_12/viewers_1/labels_0/pageviews_0/flags_1/percent_0/" alt="counter" />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="comments">
+<h3>Comentarios — Únete a la discusión</h3>
+<div class="utterances">
+<script src="https://utteranc.es/client.js"
+repo="SpikeBlack009/SpikeBlack009.github.io"
+issue-term="pathname"
+theme="github-dark"
+crossorigin="anonymous"
+async>
+</script>
+</div>
+</div>
+</main>
 <script>
-/*
-  Versión final consolidada:
-  - Contador global: CountAPI (api.countapi.xyz) -> incrementa en cada carga.
-  - Contador por país: ipapi.co + CountAPI por país (key visitors-xx).
-  - "Fantasmas" (comentarios): lee comments de un issue en tu repo GitHub (maneja rate-limits).
-  - Frecuencias reducidas para evitar hitting rate limits.
-  - No se usan tokens en el cliente.
-*/
-
-/* ---------- CONFIG ---------- */
-const GITHUB_OWNER = 'Spikeblack009';
-const GITHUB_REPO = 'spikeblack009.github.io';
-const COUNTAPI_NAMESPACE = 'spikeblack009.github.io'; // usado en CountAPI: /hit/namespace/key
-/* ---------------------------- */
-
-/* --- updateGhosts: obtiene comentarios del issue relacionado (utterances) --- */
 async function updateGhosts(){
   const el = document.getElementById('ghost-counter');
-
-  // Candidate strings para identificar el issue asociado a esta página
-  const path = (location.pathname || '/blog.html');
-  const candidates = [
-    path,
-    path.replace(/^\//,''),
-    'blog.html',
-    'post 001',
-    'el inicio del círculo',
-    'inicio del círculo'
-  ].map(s => String(s).toLowerCase());
-
   try{
-    const apiUrl = `https://api.github.com/repos/${encodeURIComponent(GITHUB_OWNER)}/${encodeURIComponent(GITHUB_REPO)}/issues?state=all&per_page=100`;
-    const res = await fetch(apiUrl);
-    if(!res.ok){
-      if(res.status === 403){
-        // revisar cabeceras de rate limit si están disponibles
-        const remaining = res.headers.get('X-RateLimit-Remaining');
-        const reset = res.headers.get('X-RateLimit-Reset');
-        if(remaining === '0'){
-          const resetTs = reset ? new Date(parseInt(reset,10)*1000) : null;
-          el.textContent = 'FANTASMAS EN EL CÍRCULO: límite API GitHub alcanzado (intenta más tarde)';
-          console.warn('GitHub rate limit reached. Reset at', resetTs);
-          return;
-        }
-      }
-      el.textContent = 'FANTASMAS EN EL CÍRCULO: error al consultar GitHub';
-      console.error('GitHub API error', res.status, await res.text());
-      return;
-    }
-
+    const res = await fetch('https://api.github.com/repos/SpikeBlack009/SpikeBlack009.github.io/issues?state=all&per_page=100');
     const data = await res.json();
-    const issue = data.find(i => {
-      const text = ((i.title||'') + ' ' + (i.body||'')).toLowerCase();
-      return candidates.some(c => text.includes(c));
-    });
-
-    const comments = issue ? issue.comments : 0;
-    el.textContent = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${comments}`;
+    const issue = data.find(i => i.title.includes('blog.html'));
+    if(issue && issue.comments > 0){
+      el.innerHTML = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${issue.comments}`;
+    } else {
+      el.innerHTML = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
+    }
   }catch(e){
-    console.error('updateGhosts error', e);
-    el.textContent = 'FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero';
+    el.innerHTML = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): 0 - Sé el primero`;
   }
 }
-// Ejecutar al cargar y luego cada 5 minutos (12 req/h < 60/h limit)
 updateGhosts();
-setInterval(updateGhosts, 5 * 60 * 1000);
-
-
-/* --- updateTotal: incrementa y muestra total global usando CountAPI --- */
+setInterval(updateGhosts, 10000);
 async function updateTotal(){
   const el = document.getElementById('total-counter');
   try{
-    // Incrementa el contador en CountAPI y devuelve {value: N}
-    const res = await fetch(`https://api.countapi.xyz/hit/${encodeURIComponent(COUNTAPI_NAMESPACE)}/visits`);
-    if(!res.ok) throw new Error('countapi error ' + res.status);
+    const res = await fetch('https://abacus.jasoncameron.dev/hit/spikeblack009-blog/total');
     const data = await res.json();
     el.textContent = data.value;
   }catch(e){
-    console.error('updateTotal error', e);
-    el.textContent = '—';
+    el.textContent = '1';
   }
 }
 updateTotal();
-// Refrescar sólo cada 10 minutos (lectura).
-setInterval(updateTotal, 10 * 60 * 1000);
-
-
-/* --- updateCountryCount: detecta país del visitante y actualiza contador por país --- */
-async function updateCountryCount(){
-  const flagEmojiEl = document.getElementById('flag-emoji');
-  const flagCountEl = document.getElementById('flag-count');
-
-  try{
-    // Servicio geo IP (público, puede tener límites). ipapi.co suele permitir consultas simples.
-    const geoRes = await fetch('https://ipapi.co/json/');
-    if(!geoRes.ok) throw new Error('geo lookup failed ' + geoRes.status);
-    const geo = await geoRes.json();
-    const countryCode = (geo.country_code || '').toLowerCase();
-    const countryName = geo.country_name || geo.country || 'Desconocido';
-
-    // Convertir a emoji de bandera
-    function countryCodeToEmoji(cc){
-      if(!cc || cc.length !== 2) return '🏳️';
-      const OFFSET = 127397;
-      return cc.toUpperCase().split('').map(c => String.fromCodePoint(c.charCodeAt(0) + OFFSET)).join('');
-    }
-    flagEmojiEl.textContent = countryCodeToEmoji(countryCode || 'UN');
-
-    // Incrementar contador por país en CountAPI (key: visitors-xx)
-    const key = `visitors-${countryCode || 'unknown'}`;
-    const res = await fetch(`https://api.countapi.xyz/hit/${encodeURIComponent(COUNTAPI_NAMESPACE)}/${encodeURIComponent(key)}`);
-    if(!res.ok) throw new Error('countapi country error ' + res.status);
-    const data = await res.json(); // {value: N}
-    flagCountEl.textContent = `${data.value} (${countryName})`;
-  }catch(e){
-    console.error('updateCountryCount error', e);
-    flagEmojiEl.textContent = '🏳️';
-    flagCountEl.textContent = '—';
-  }
-}
-updateCountryCount();
-setInterval(updateCountryCount, 30 * 60 * 1000); // actualizar cada 30 min
-
-
-/* ---------- SUGERENCIAS/NOTAS ----------
-- CountAPI es práctico y sin servidor, pero es público y manipulable. Para métricas serias, guárdalas en un backend propio.
-- Si necesitas más cuota para llamadas a GitHub (por ejemplo, para soporte real-time), crea una función serverless que haga la llamada con un token y exponga un endpoint público que el cliente consulte.
-- Para evitar contar tus propias visitas, añade una comprobación (cookie, parámetro ?debug, IP whitelist) antes de llamar a CountAPI.
-- Si ves 403 desde GitHub en el navegador, revisa la consola y las cabeceras X-RateLimit-*.
--------------------------------------- */
 </script>
+</body>
+</html>
