@@ -3,57 +3,63 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SPIKE BLACK - OFICIAL</title>
+<title>GHOST DARK CIRCLE - Spike Black</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif;min-height:100vh;text-align:center}
-header{padding:25px 15px 10px;border-bottom:1px solid #222}
-.logo{width:140px;height:140px;border-radius:50%;border:3px solid #fff;background:#111;margin:0 auto 15px;display:block;object-fit:cover}
-h1{letter-spacing:6px;font-size:28px}
-p.sub{color:#888;letter-spacing:3px;font-size:12px;margin-top:6px}
-nav{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;padding:18px;background:#050505;border-bottom:1px solid #222;position:sticky;top:0;z-index:10}
-nav a{color:#fff;text-decoration:none;border:1px solid #333;padding:8px 14px;border-radius:20px;font-size:13px}
-nav a:hover{border-color:#fff;background:#fff;color:#000}
-main{max-width:900px;margin:30px auto;padding:0 15px}
-.card{border:1px solid #222;background:#0a0a0a;padding:20px;border-radius:12px;margin-bottom:20px}
-audio{width:100%;margin-top:15px}
-.btn{border:1px solid #fff;color:#fff;padding:10px 18px;border-radius:20px;text-decoration:none;display:inline-block;margin:5px}
-.btn:hover{background:#fff;color:#000}
+body{background:#000;color:#fff;font-family:Arial,sans-serif;padding:20px 12px}
+.logo-wrap{width:210px;height:210px;margin:10px auto 18px;border-radius:50%;background:#000;border:3px solid #0a2;box-shadow:0 0 25px #0f6,0 0 60px #0a2;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.logo-wrap img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+h1{color:#c00;text-align:center;letter-spacing:2px;font-size:28px;text-shadow:0 0 10px #600}
+.sub{text-align:center;color:#888;font-size:13px;letter-spacing:2px;margin:6px 0 18px}
+.card{border:1.5px solid #1f6;border-radius:18px;background:#080808;padding:14px;margin:16px auto;max-width:520px;box-shadow:0 0 15px #0f5a inset}
+.nuyoo{display:flex;align-items:center;gap:12px}
+.nuyoo img{width:62px;height:62px;border-radius:12px;border:1.5px solid #1f6}
+.nuyoo-info{flex:1;text-align:left}
+.nuyoo-info b{font-size:16px}
+.nuyoo-info span{display:block;font-size:12px;color:#aaa;margin-top:2px}
+.nuyoo-info small{color:#1f6;font-size:11px;letter-spacing:1px}
+.play{width:42px;height:42px;border-radius:50%;background:#1f6;border:none;font-size:18px;cursor:pointer;box-shadow:0 0 10px #1f6}
+.blog-title{color:#1f6;text-align:center;font-weight:bold;font-size:18px;margin-bottom:10px}
+.blog-text{text-align:center;color:#ddd;font-size:14px;line-height:1.4;margin-bottom:14px}
+.btn-dark{width:100%;border:1.5px solid #1f6;background:#000;color:#1f6;border-radius:22px;padding:12px;font-weight:bold;letter-spacing:1px;cursor:pointer}
+.btn-dark:hover{background:#1f6;color:#000}
+.welcome{color:#c00;text-align:center;font-weight:bold;font-size:18px;margin-bottom:8px}
+.welcome-text{text-align:center;color:#ccc;font-size:14px;margin-bottom:14px}
+.btn-green{width:100%;background:#0f6;color:#000;border:none;border-radius:22px;padding:13px;font-weight:bold;cursor:pointer}
 </style>
 </head>
 <body>
-<header>
-<img class="logo" src="logo.png" onerror="this.src='https://spikeblack009.github.io/logo.png'" alt="SPIKE BLACK">
-<h1>SPIKE BLACK</h1>
-<p class="sub">GHOST DARK CIRCLE</p>
-</header>
+<div class="logo-wrap">
+<img src="https://spikeblack009.github.io/logo.png" onerror="this.src='https://i.imgur.com/8Km9tLL.png'" alt="GHOST DARK CIRCLE">
+</div>
+<h1>GHOST DARK CIRCLE</h1>
+<p class="sub">MURO OFICIAL DE SPIKE BLACK</p>
 
-<nav>
-<a href="index.html">INICIO</a>
-<a href="#musica">MÚSICA</a>
-<a href="#videos">VIDEOS</a>
-<a href="ghost.html">CÍRCULO</a>
-<a href="nuyoo.html">NUYOO</a>
-<a href="#contacto">CONTACTO</a>
-</nav>
-
-<main>
-<div class="card" id="musica">
-<h2>🎵 MÚSICA</h2>
-<p style="color:#888;margin:10px 0">Escucha lo último de Spike Black</p>
-<audio controls><source src="musica.mp3" type="audio/mpeg">Tu navegador no soporta audio</audio>
+<div class="card">
+<div class="nuyoo">
+<img src="https://spikeblack009.github.io/logo.png" alt="cover">
+<div class="nuyoo-info">
+<b>Nuyoo</b>
+<span>Spike Black • Single • 2024</span>
+<small>▶ REPRODUCIR AHORA - APPLE STYLE</small>
+</div>
+<button class="play" onclick="document.getElementById('audio').play()">▶</button>
+</div>
+<audio id="audio" style="width:100%;margin-top:10px" controls>
+<source src="https://spikeblack009.github.io/nuyoo.mp3" type="audio/mpeg">
+</audio>
 </div>
 
-<div class="card" id="videos">
-<h2>🎬 VIDEOS</h2>
-<p style="color:#888;">Próximamente...</p>
+<div class="card" style="text-align:center">
+<div class="blog-title">📖 DARK BLOG</div>
+<div class="blog-text">Entra al blog oficial donde las sombras hablan. Cultura oscura, reseñas sin filtro e historias del underground.</div>
+<button class="btn-dark" onclick="location.href='blog.html'">👁️ ENTRAR AL BLOG - DARK SIDE</button>
 </div>
 
-<div class="card" id="contacto">
-<h2>CONTACTO</h2>
-<p style="margin:10px 0"><a class="btn" href="ghost.html">ENTRAR AL CÍRCULO 👁️</a></p>
-<p style="color:#666;font-size:12px;margin-top:15px;">spikeblack009.github.io</p>
+<div class="card" style="text-align:center">
+<div class="welcome">Bienvenido al Dark Circle</div>
+<div class="welcome-text">Aquí se junta la música, el muro de fans y la comunidad Dark Circle.</div>
+<button class="btn-green" onclick="window.open('https://github.com/spikeblack009','_blank')">Seguir en GitHub</button>
 </div>
-</main>
 </body>
 </html>
