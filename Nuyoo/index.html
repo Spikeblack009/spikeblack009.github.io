@@ -26,14 +26,14 @@ body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF
 .playlist.goL{animation:L.32s ease}
 .playlist.goR{animation:R.32s ease}
 .ctrl{max-width:360px;margin:18px auto 0;display:flex;justify-content:space-between;align-items:center;padding:0 20px}
-.ctrl button{background:none;border:none;color:#fff;font-size:20px}
+.ctrl button{background:none;border:none;color:#fff;font-size:20px;cursor:pointer}
 .btn-heart svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.6}
 .btn-small{opacity:.7}
 .play{width:62px;height:62px;background:#00ff88!important;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px #00ff88,0 0 35px rgba(0,255,136,.8);border:none;flex-shrink:0}
 #ico{width:26px;height:26px;display:block}
 .barW{max-width:360px;margin:22px auto 0;padding:0 20px}
 .bar{height:4px;background:#222;border-radius:10px;position:relative;cursor:pointer}
-.fill{height:100%;background:#00ff88;width:12%;border-radius:10px;box-shadow:0 0 6px #00ff88}
+.fill{height:100%;background:#00ff88;width:0%;border-radius:10px;box-shadow:0 0 6px #00ff88}
 .time{display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:#666}
 .time b{color:#00ff88;font-weight:400}
 .actions{max-width:360px;margin:22px auto 0;display:flex;justify-content:space-between;padding:0 24px}
@@ -54,49 +54,6 @@ body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF
 </style>
 </head>
 <body>
-<audio id="rola" preload="auto"></audio>
-<div class="cover"><img src="nuyoo.gif" onerror="this.src='https://i.imgur.com/8Km9tLL.png'"></div>
-<div class="tt" id="ttContainer">
-<h1 id="songTitle">Nuyoo</h1>
-<p id="songArtist">Spike Black</p>
-<span id="songInfo">Nuyoo • Single • 2:45 • 18 OCT 2024</span>
-</div>
-<div class="ctrl">
-<button class="btn-small" id="backBtn">≪</button>
-<button class="btn-heart"><svg viewBox="0 0 24 24"><path d="M12 19l-1.4-1.3C6 14.2 2.5 11.3 2.5 7.7A4 4 0 0 1 6.5 3.6c1.5 0 2.9.9 3.9 2 1-1.1 2.4-2 3.9-2a4 4 0 0 1 4 4.1c0 3.6-3.5 6.5-8 10L12 19z"/></svg></button>
-<button class="play" id="playBtn"><svg id="ico" viewBox="0 0 24 24"><path d="M9 5.5 L19 12 L9 18.5 Z" fill="#000"/></svg></button>
-<button class="btn-small" id="nextBtn">≫</button>
-<button class="btn-small" style="font-size:18px">⇄</button>
-</div>
-<div class="barW">
-<div class="bar" id="bar"><div class="fill" id="fill"></div></div>
-<div class="time"><b id="cur">0:00</b><span id="dur">0:00</span></div>
-</div>
-<div class="actions">
-<div class="act"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Add to Library</div>
-<div class="act"><svg viewBox="0 0 24 24"><path d="M12 4v12M12 16l-3-3M12 16l3-3M4 20h16"/></svg>Download</div>
-<div class="act"><svg viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4M4 13v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/></svg>Share</div>
-<div class="act"><svg viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.2" fill="#888"/><circle cx="12" cy="12" r="1.2" fill="#888"/><circle cx="18" cy="12" r="1.2" fill="#888"/></svg>More</div>
-</div>
-<div class="playlist" id="playlistContainer">
-<div class="pl-title">PLAYLIST</div>
-<div id="songsContainer"></div>
-</div>
-<div class="lyrics">
-<div class="ly-head"><b>LYRICS</b><b>Show All</b></div>
-<p>Silent howl through the neon night — Mixed by BLACKLAB • Mastered at Neon Coast Studio<br>
-Ghost drifts where the signal dies —<br>
-Static whisper, cold and quiet —<br>
-I'm only here to say goodbye.</p>
-</div>
-<div class="nav">
-<div class="on">♥<br>Library</div><div>◎<br>Browse</div><div>◉<br>Radio</div><div>⌕<br>Search</div><div>▶<br>Listen Now</div>
-</div>
-<script>
-const rola=document.getElementById('rola'),playBtn=document.getElementById('playBtn'),backBtn=document.getElementById('backBtn'),nextBtn=document.getElementById('nextBtn'),ico=document.getElementById('ico'),fill=document.getElementById('fill'),bar=document.getElementById('bar'),cur=document.getElementById('cur'),dur=document.getElementById('dur'),songsContainer=document.getElementById('songsContainer'),songTitle=document.getElementById('songTitle'),songArtist=document.getElementById('songArtist'),songInfo=document.getElementById('songInfo'),ttContainer=document.getElementById('ttContainer'),playlistContainer=document.getElementById('playlistContainer');
-let sonando=false,current=0;
-let tracks=[
- {name:'Nuyoo',artist:'Spike Black',src:'nuyoo.mp3',info:'Nuyoo • Single • 2:45 • 18 OCT 2024'},
- {name:'Want You Bad',artist:'The Offspring',src:'The-Offspring-Want-You-Bad.mp3',info:'The Offspring • Single • 3:18 • 2000'}
-];
-function fmt(s){let m=Math.floor(s/60),sc=Math.floor(s%60);return m
+<audio id="rola" preload="auto" playsinline></audio>
+<div class="cover"><img src="nuyoo.gif"></div>
+<div class="
