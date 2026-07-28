@@ -3,51 +3,116 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nuyoo - Apple Style</title>
+<title>Nuyoo - Spike Black</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#f5f5f7;color:#1d1d1f;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;-webkit-font-smoothing:antialiased;padding-bottom:90px}
-/* COVER ESTILO APPLE - FIJO */
-.art{width:82%;max-width:340px;aspect-ratio:1/1;margin:24px auto 0;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.15),0 2px 8px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:center}
-.art img{width:100%;height:100%;object-fit:cover;display:block}
-
-.tt{text-align:left;max-width:380px;margin:20px auto 0;padding:0 24px}
-.tt h1{font-size:22px;font-weight:700;letter-spacing:-.4px;color:#1d1d1f}
-.tt p{color:#fa243c;font-size:15px;font-weight:400;margin-top:2px}
-.tt span{color:#86868b;font-size:12px;margin-top:4px;display:block;font-weight:400}
-
-@keyframes left{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
-@keyframes right{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
-.tt.slideL{animation:left.35s cubic-bezier(.2,.8,.2,1)}
-.tt.slideR{animation:right.35s cubic-bezier(.2,.8,.2,1)}
-.playlist.slideL{animation:left.35s cubic-bezier(.2,.8,.2,1)}
-.playlist.slideR{animation:right.35s cubic-bezier(.2,.8,.2,1)}
-
-.ctrl{max-width:380px;margin:24px auto 0;display:flex;justify-content:center;align-items:center;gap:38px;padding:0 24px}
-.ctrl button{background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.ic{width:26px;height:26px;fill:#1d1d1f}
-.play{width:56px;height:56px;background:#1d1d1f!important;border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,.2)}
-
-.barW{max-width:380px;margin:20px auto 0;padding:0 24px}
-.bar{height:3px;background:#e5e5ea;border-radius:10px;cursor:pointer}
-.fill{height:100%;background:#1d1d1f;width:0%;border-radius:10px}
-.time{display:flex;justify-content:space-between;font-size:10px;color:#86868b;margin-top:8px;font-weight:500;letter-spacing:.3px}
-
-.playlist{max-width:380px;margin:28px auto 0;padding:0 24px}
-.playlist-title{font-size:13px;font-weight:600;color:#1d1d1f;margin-bottom:12px}
-.song-item{background:#fff;border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#1d1d1f;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid transparent;transition:.2s}
-.song-item.active{background:#1d1d1f;color:#fff}
-.song-item span:last-child{font-size:11px;opacity:.6}
+body{background:#0a0a0a;color:#fff;font-family:-apple-system,sans-serif;padding-bottom:90px}
+.art{width:88%;max-width:380px;aspect-ratio:1/1;margin:18px auto 0;border-radius:22px;overflow:hidden;border:2px solid #00ff88;box-shadow:0 0 25px #00ff88;background:#111;display:flex;align-items:center;justify-content:center}
+.art img{width:100%;height:100%;object-fit:cover;display:block;background:#111}
+.tt{text-align:center;margin-top:16px}.tt h1{font-size:26px;font-weight:800}.tt p{color:#aaa;font-size:14px}.tt span{color:#555;font-size:11px;display:block;margin-top:3px}
+@keyframes left{from{opacity:0;transform:translateX(80px)}to{opacity:1;transform:translateX(0)}}
+@keyframes right{from{opacity:0;transform:translateX(-80px)}to{opacity:1;transform:translateX(0)}}
+.tt.slideL{animation:left.35s ease}
+.tt.slideR{animation:right.35s ease}
+.playlist.slideL{animation:left.35s ease}
+.playlist.slideR{animation:right.35s ease}
+.ctrl{max-width:400px;margin:22px auto 0;display:flex;justify-content:space-between;align-items:center;padding:0 32px}.ctrl button{background:none;border:none}
+.play{width:62px;height:62px;background:#00ff88!important;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.barW{max-width:400px;margin:20px auto 0;padding:0 24px}.bar{height:6px;background:#222;border-radius:10px}.fill{width:0%;height:100%;background:#00ff88;border-radius:10px}
+.time{display:flex;justify-content:space-between;font-size:11px;color:#555;margin-top:6px}.time b{color:#00ff88}
+.playlist{max-width:400px;margin:20px auto 0;padding:0 18px}.song-item{background:#1a1a1a;border:1px solid #222;border-radius:10px;padding:10px 14px;margin-bottom:8px;cursor:pointer;display:flex;gap:10px;font-size:11px;color:#fff}
+.song-item.active{background:#00ff88;color:#000;border-color:#00ff88}
 </style>
 </head>
 <body>
 <audio id="rola" preload="auto"></audio>
 
-<div class="art" id="artLogo"><img src="nuyoo.gif" onerror="this.src='nuyoo.GIF'"></div>
+<!-- LOGO FIJO, NO SE MUEVE -->
+<div class="art" id="artLogo"><img id="logoImg" src="nuyoo.gif" onerror="this.onerror=null; this.src='nuyoo.GIF'; this.onerror=function(){this.src='https://i.imgur.com/8Km9tLL.png'}"></div>
 
-<div class="tt" id="ttContainer"><h1 id="songTitle">Nuyoo</h1><p id="songArtist">Spike Black</p><span id="songInfo">Nuyoo • Single • 2024</span></div>
+<div class="tt" id="ttContainer"><h1 id="songTitle">Nuyoo</h1><p id="songArtist">Spike Black</p><span id="songInfo">Nuyoo • Single</span></div>
 
 <div class="ctrl">
-<button id="backBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M7 12L19 4v16L7 12zM5 4h2v16H5z"/></svg></button>
-<button class="play" id="playBtn"><svg id="ico" width="24" height="24" viewBox="0 0 24 24"><path fill="#fff" d="M8 5.8v12.4L19 12z"/></svg></button>
-<button id="nextBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12l12-8v16L5 12zM19 4h2v16h
+<button id="backBtn" style="font-size:26px;color:#888">⏮</button>
+<button class="play" id="playBtn"><svg id="ico" width="28" height="28" viewBox="0 0 24 24"><path fill="#000" d="M8 5.8v12.4L19 12z"/></svg></button>
+<button id="nextBtn" style="font-size:26px;color:#888">⏭</button>
+</div>
+
+<div class="barW"><div class="bar" id="bar"><div class="fill" id="fill"></div></div><div class="time"><b id="cur">0:00</b><span id="dur">0:00</span></div></div>
+
+<div class="playlist" id="playlistContainer">
+<div style="font-size:10px;color:#00ff88;margin-bottom:10px">LISTA</div>
+<div id="songsContainer"></div>
+</div>
+
+<script>
+const rola=document.getElementById('rola');
+const playBtn=document.getElementById('playBtn');
+const backBtn=document.getElementById('backBtn');
+const nextBtn=document.getElementById('nextBtn');
+const ico=document.getElementById('ico');
+const fill=document.getElementById('fill');
+const bar=document.getElementById('bar');
+const cur=document.getElementById('cur');
+const dur=document.getElementById('dur');
+const songsContainer=document.getElementById('songsContainer');
+const songTitle=document.getElementById('songTitle');
+const songArtist=document.getElementById('songArtist');
+const songInfo=document.getElementById('songInfo');
+const ttContainer=document.getElementById('ttContainer');
+const playlistContainer=document.getElementById('playlistContainer');
+
+let sonando=false;
+let current=0;
+let tracks=[
+  {name:'Nuyoo',artist:'Spike Black',src:'nuyoo.mp3',info:'Nuyoo • Single • 2:45'},
+  {name:'Want You Bad',artist:'The Offspring',src:'The-Offspring-Want-You-Bad.mp3',info:'The Offspring • Smash'}
+];
+
+function fmt(s){let m=Math.floor(s/60);let sc=Math.floor(s%60);return m+':'+(sc<10?'0'+sc:sc)}
+function updateList(){
+  songsContainer.innerHTML='';
+  tracks.forEach((t,i)=>{
+    const d=document.createElement('div');
+    d.className='song-item'+(i===current?' active':'');
+    d.textContent=t.name+' - '+t.artist;
+    d.onclick=()=>load(i, i>current?'next':'prev');
+    songsContainer.appendChild(d);
+  });
+}
+function anim(dir){
+  ttContainer.classList.remove('slideL','slideR');
+  playlistContainer.classList.remove('slideL','slideR');
+  void ttContainer.offsetWidth;
+  if(dir==='next'){ttContainer.classList.add('slideL');playlistContainer.classList.add('slideL');}
+  else{ttContainer.classList.add('slideR');playlistContainer.classList.add('slideR');}
+}
+function load(i,dir='next'){
+  current=i;
+  const t=tracks[i];
+  songTitle.textContent=t.name;
+  songArtist.textContent=t.artist;
+  songInfo.textContent=t.info;
+  anim(dir);
+  updateList();
+  rola.src=t.src;
+  rola.load();
+  if(sonando) rola.play().catch(()=>{});
+}
+playBtn.onclick=()=>{
+  if(!sonando){
+    rola.play().then(()=>{sonando=true;ico.innerHTML='<rect x="6" y="5" width="4" height="14" rx="1" fill="#000"/><rect x="14" y="5" width="4" height="14" rx="1" fill="#000"/>';}).catch(()=>alert('No carga: '+tracks[current].src+' revisa que el mp3 esté en la misma carpeta'));
+  }else{rola.pause();sonando=false;ico.innerHTML='<path fill="#000" d="M8 5.8v12.4L19 12z"/>';}
+};
+backBtn.onclick=()=>load((current-1+tracks.length)%tracks.length,'prev');
+nextBtn.onclick=()=>load((current+1)%tracks.length,'next');
+bar.onclick=e=>{const r=bar.getBoundingClientRect();rola.currentTime=((e.clientX-r.left)/r.width)*rola.duration;};
+rola.addEventListener('timeupdate',()=>{if(rola.duration){fill.style.width=(rola.currentTime/rola.duration*100)+'%';cur.textContent=fmt(rola.currentTime);dur.textContent=fmt(rola.duration);}});
+rola.addEventListener('ended',()=>nextBtn.click());
+
+// inicio
+rola.src=tracks[0].src;
+updateList();
+</script>
+</body>
+</html>
