@@ -1,127 +1,89 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GHOST DARK CIRCLE</title>
 <style>
-:root{--bg:#000;--neon:#00ff41;--dim:#1a5c10;--text:#e6ffe6;}
+:root{--neon:#00ff41;--dim:#1a5c10}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:monospace;min-height:100vh}
-header{display:flex;align-items:center;gap:12px;padding:12px 15px;background:#050505;border-bottom:1px solid var(--neon);position:sticky;top:0;z-index:10}
-header img{width:42px;height:42px;border-radius:50%;border:2px solid var(--neon);background:#111}
-header h1{color:var(--neon);font-size:1.1rem;letter-spacing:2px}
-header a{margin-left:auto;color:var(--neon);border:1px solid var(--neon);padding:6px 12px;border-radius:6px;text-decoration:none}
-main{max-width:700px;margin:25px auto;padding:0 15px}
-.card{border:1px solid var(--neon);background:#0a0f0a;padding:20px;margin-bottom:18px;border-radius:8px}
-.card input, .card textarea{width:100%;background:#000;border:1px solid var(--dim);color:var(--neon);padding:12px;margin:8px 0;border-radius:6px;outline:none}
-.btn-ghost{width:100%;background:var(--neon);color:#000;border:none;padding:13px;font-weight:bold;cursor:pointer;border-radius:6px;box-shadow:0 0 10px var(--neon)}
-.sombra-real{border:1px solid #222;border-left:3px solid #00ff41;background:#000;padding:12px;margin:12px 0;border-radius:6px;}
+body{background:#000;color:#e6ffe6;font-family:monospace}
+header{display:flex;align-items:center;gap:10px;padding:12px;background:#050505;border-bottom:1px solid var(--neon);position:sticky;top:0}
+header img{width:40px;height:40px;border-radius:50%;border:2px solid var(--neon)}
+header h1{color:var(--neon);font-size:1rem}
+main{max-width:700px;margin:20px auto;padding:0 12px}
+.card{border:1px solid var(--neon);background:#0a0f0a;padding:18px;margin-bottom:15px;border-radius:8px}
+.card input,.card textarea{width:100%;background:#000;border:1px solid var(--dim);color:var(--neon);padding:12px;margin:6px 0;border-radius:6px}
+.btn{width:100%;background:var(--neon);color:#000;border:none;padding:13px;font-weight:bold;cursor:pointer;border-radius:6px}
+.sombra{border:1px solid #222;border-left:3px solid #00ff41;background:#000;padding:12px;margin:10px 0;border-radius:6px;word-break:break-word}
+.sombra a{color:#00ff41;text-decoration:underline;word-break:break-all}
 </style>
 </head>
 <body>
-<header><img src="logo.png" alt="G"><h1>GHOST DARK CIRCLE</h1><a href="index.html">→ INICIO</a></header>
+<header><img src="logo.png"><h1>GHOST DARK CIRCLE</h1></header>
 <main>
-
+<div class="card">Bienvenido al abismo. GHOST DARK CIRCLE de SPIKE BLACK.<br><em>"La oscuridad no es el final. Es donde comienza todo."</em></div>
 <div class="card">
-Bienvenido al abismo. Este es GHOST DARK CIRCLE de SPIKE BLACK.<br><br>
-<em>"La oscuridad no es el final. Es donde comienza todo."</em>
+<p style="color:var(--neon)">FUISTE ELEGIDO.</p>
+<input id="ghostName" placeholder="Tu nombre">
+<textarea id="ghostMsg" placeholder="Tu mensaje + link https://..."></textarea>
+<button class="btn" id="btnSombra">DEJAR SOMBRA</button>
+<p id="status" style="font-size:11px;color:#888;text-align:center;margin-top:8px"></p>
 </div>
-
-<div class="card">
-<p style="color:var(--neon);font-size:12px;">POST 001 - 11.05.2026 [SPIKE BLACK]</p>
-<h2 style="color:#fff;margin:10px 0;">EL INICIO DEL CÍRCULO.</h2>
-<p style="color:#a0c0a0;font-size:14px;">Esto no es un blog más. Es un registro de lo que pasa cuando nadie mira. Si estás aquí, es porque fuiste elegido. No por ser el mejor. Sino por atreverte a mirar la oscuridad de frente.</p>
+<div style="border:1px solid #00ff41;padding:18px;border-radius:10px;background:#0d0d0d">
+<p id="counter" style="color:#00ff41;font-weight:bold">CARGANDO...</p>
+<div id="lista"></div>
+<div style="border-top:1px dashed #222;margin-top:15px;padding-top:10px;text-align:center">
+<span style="background:#00ff41;color:#000;padding:2px 8px;border-radius:4px;font-weight:bold">SOMBRAS</span> <span id="total" style="color:#00ff41">0</span>
+<p id="visitas" style="color:#666;font-size:11px;margin-top:8px">Visitas: 82</p>
 </div>
-
-<div class="card" id="sombra">
-<p style="color:var(--neon);font-weight:bold;">FUISTE ELEGIDO.</p>
-<p style="font-size:12px;color:#888;margin-bottom:10px;">Deja tu sombra en el círculo. Tu mensaje quedará para siempre.</p>
-<input type="text" id="ghostName" placeholder="Tu nombre">
-<textarea id="ghostMsg" placeholder="Tu mensaje..."></textarea>
-<button class="btn-ghost" id="btnDejarSombra">DEJAR SOMBRA</button>
-<p id="statusMsg" style="font-size:11px;color:#888;margin-top:8px;text-align:center;"></p>
 </div>
-
-<div style="border:1px solid #00ff41;background:#0d0d0d;padding:20px;border-radius:10px;margin-bottom:25px;">
-<p id="ghost-counter" style="color:#00ff41;font-weight:bold;font-size:13px;">CARGANDO FANTASMAS...</p>
-<div id="lista-sombras" style="margin:15px 0;"></div>
-<div style="border-top:1px dashed #222;padding-top:15px;text-align:center;">
-<p style="color:#00ff41;font-size:12px;margin-bottom:10px;">SOMBRAS QUE HAN CRUZADO EL CÍRCULO</p>
-<span style="background:#00ff41;color:#000;padding:2px 8px;border-radius:4px;font-weight:bold;font-size:12px;">SOMBRAS</span>
-<span id="total-counter" style="color:#00ff41;font-weight:bold;margin-left:6px;">0</span>
-<div style="margin-top:14px;border-top:1px dashed #222;padding-top:14px;">
-<p style="color:#00ff41;font-size:10px;">🌎 DE DÓNDE NOS MIRAN</p>
-<div style="width:260px;height:38px;background:#000;border:1px solid #333;border-radius:6px;margin:10px auto;display:flex;align-items:center;justify-content:space-between;padding:0 12px;">
-<span style="color:#39ff14;font-weight:bold;">Visitors</span>
-<span><span id="flag-emoji">🏳️</span> <span id="flag-count" style="color:#39ff14;font-weight:bold;">--</span></span>
-</div></div></div></div>
-
-<div style="margin-top:20px;"><h3 style="color:var(--neon)">Comentarios</h3><div class="utterances"><script src="https://utteranc.es/client.js" repo="Spikeblack009/spikeblack009.github.io" issue-term="pathname" theme="github-dark" crossorigin="anonymous" async></script></div></div>
-
 </main>
-
-<script>
-fetch('https://ipapi.co/json/').then(r=>r.json()).then(geo=>{
-  const toEmoji=c=>c.toUpperCase().split('').map(x=>String.fromCodePoint(x.charCodeAt(0)+127397)).join('');
-  try{
-    document.getElementById('flag-emoji').textContent=toEmoji(geo.country_code||'MX');
-    document.getElementById('flag-count').textContent=geo.country_name||'Mexico';
-  }catch(e){}
-}).catch(()=>{});
-</script>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, push, get, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 const firebaseConfig = {
-  apiKey: "AIzaSyAR7kW0MKkAu8gT1uDaQXM5TYBrNcZKU",
+  apiKey: "AIzaSyAR7kW0NoMCaOaGF1iuD5qWXGTYhFhC2KU",
   authDomain: "ghost-dark-circle.firebaseapp.com",
   databaseURL: "https://ghost-dark-circle-default-rtdb.firebaseio.com",
   projectId: "ghost-dark-circle",
   storageBucket: "ghost-dark-circle.firebasestorage.app",
   messagingSenderId: "1049315311255",
-  appId: "1:1049315311255:web:c005c42fbffbd00beccb3d2"
+  appId: "1:1049315311255:web:00bc42fbffbd00beccb3d2"
 };
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-const lista = document.getElementById('lista-sombras');
-const totalEl = document.getElementById('total-counter');
-const counterEl = document.getElementById('ghost-counter');
-async function cargarSombras(){
+const lista = document.getElementById('lista');
+function linkify(t){ return t.replace(/(https?:\/\/[^\s]+)/g,'<a href="$1" target="_blank">$1</a>') }
+async function cargar(){
   try{
-    const snapshot = await get(child(ref(db), 'sombras'));
-    lista.innerHTML = "";
-    if(!snapshot.exists()){
-      counterEl.textContent = "FANTASMAS EN EL CÍRCULO: 0 - Sé el primero";
-      totalEl.textContent = "0 almas"; return;
-    }
-    const sombras = Object.values(snapshot.val()).reverse();
-    counterEl.textContent = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${sombras.length}`;
-    totalEl.textContent = sombras.length + " almas";
-    sombras.forEach(s=>{
-      const div = document.createElement('div');
-      div.className = 'sombra-real';
-      div.innerHTML = `<b style="color:#00ff41;">${s.nombre||'Anónimo'}</b> <span style="color:#666;font-size:10px;">· ${s.pais||''}</span><br><span style="color:#bbb;">${s.mensaje||''}</span>`;
-      lista.appendChild(div);
+    const snap = await get(child(ref(db),'muro_dark_circle'));
+    const v = await get(child(ref(db),'visitas_contador'));
+    if(v.exists()) document.getElementById('visitas').textContent = 'Visitas: ' + v.val() + ' almas';
+    lista.innerHTML="";
+    if(!snap.exists()){ document.getElementById('counter').textContent="0 FANTASMAS - Sé el primero"; document.getElementById('total').textContent="0 almas"; return; }
+    const arr = Object.values(snap.val()).reverse();
+    document.getElementById('counter').textContent = 'FANTASMAS EN EL CÍRCULO: ' + arr.length;
+    document.getElementById('total').textContent = arr.length + ' almas';
+    arr.forEach(s=>{
+      const d=document.createElement('div'); d.className='sombra';
+      d.innerHTML = `<b style="color:#00ff41">${s.nombre||'Anónimo'}</b> <span style="color:#555;font-size:10px">${s.pais||''}</span><br><span style="color:#bbb">${linkify(s.mensaje||s.texto||'')}</span>`;
+      lista.appendChild(d);
     });
-  }catch(e){ counterEl.textContent = "Error: "+e.message; }
+  }catch(e){ document.getElementById('counter').textContent = 'Error: '+e.message }
 }
-document.getElementById('btnDejarSombra').addEventListener('click', async ()=>{
-  const nombre = document.getElementById('ghostName').value.trim();
-  const mensaje = document.getElementById('ghostMsg').value.trim();
-  const statusMsg = document.getElementById('statusMsg');
-  if(!nombre||!mensaje){ statusMsg.textContent="⚠️ Escribe nombre y sombra"; return; }
-  statusMsg.textContent="Guardando...";
+document.getElementById('btnSombra').addEventListener('click', async ()=>{
+  const nombre=document.getElementById('ghostName').value.trim();
+  const mensaje=document.getElementById('ghostMsg').value.trim();
+  const st=document.getElementById('status');
+  if(!nombre||!mensaje){ st.textContent='Escribe nombre y mensaje'; return; }
+  st.textContent='Guardando...';
   try{
-    let pais="Mexico"; try{ const geo=await fetch('https://ipapi.co/json/').then(r=>r.json()); pais=geo.country_name||"Mexico"; }catch(e){}
-    await push(ref(db, 'sombras'), { nombre, mensaje, pais, fecha: Date.now() });
-    statusMsg.textContent="🕯️ Guardada para siempre";
-    document.getElementById('ghostName').value=""; document.getElementById('ghostMsg').value="";
-    cargarSombras();
-  }catch(e){ statusMsg.textContent="Error: "+e.message; }
+    let pais='México'; try{ const r=await fetch('https://ipapi.co/json/').then(r=>r.json()); pais=r.country_name||'México'; }catch{}
+    await push(ref(db,'muro_dark_circle'),{nombre,mensaje,pais,fecha:Date.now()});
+    st.textContent='🕯️ Guardada para siempre'; document.getElementById('ghostName').value=''; document.getElementById('ghostMsg').value=''; cargar();
+  }catch(e){ st.textContent='Error: '+e.message }
 });
-cargarSombras();
+cargar();
 </script>
 </body>
 </html>
