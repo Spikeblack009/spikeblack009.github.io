@@ -3,37 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nuyoo - Spike Black</title>
+<title>Spike Black</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#000;color:#fff;font-family:-apple-system,sans-serif;padding-bottom:80px}
-.art{width:88%;max-width:380px;aspect-ratio:1/1;margin:18px auto 0;border-radius:22px;overflow:hidden;border:2px solid #00ff88;box-shadow:0 0 25px rgba(0,255,136,.9), 0 0 55px rgba(0,255,136,.45)}
-.art img{width:100%;height:100%;object-fit:cover;display:block}
+body{background:#000;color:#fff;font-family:-apple-system,sans-serif;padding-bottom:80px;overflow-x:hidden}
+.art{width:88%;max-width:380px;aspect-ratio:1/1;margin:18px auto 0;border-radius:22px;overflow:hidden;border:2px solid #00ff88;box-shadow:0 0 25px rgba(0,255,136,.9);transition:transform.3s}
+.art img{width:100%;height:100%;object-fit:cover}
 .tt{text-align:center;margin-top:16px}.tt h1{font-size:26px;font-weight:800}.tt p{color:#a1a1a6;font-size:14px}.tt span{color:#555;font-size:11px;display:block;margin-top:3px}
 .ctrl{max-width:400px;margin:22px auto 0;display:flex;justify-content:space-between;align-items:center;padding:0 32px}.ctrl button{background:none;border:none}
-.ic{width:22px;height:22px;stroke:#8e8e93;fill:none;stroke-width:1.7}.ht{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.7}
-.play{width:62px;height:62px;background:#00ff88 !important;border:3px solid #00ff88;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,255,136,1), 0 0 40px rgba(0,255,136,.6)}
-.barW{max-width:400px;margin:20px auto 0;padding:0 24px}.bar{height:6px;background:#222;border-radius:10px;cursor:pointer}.fill{width:0%;height:100%;background:#00ff88;border-radius:10px}
-.time{display:flex;justify-content:space-between;font-size:11px;color:#555;margin-top:6px}.time b{color:#00ff88;font-weight:400}
-.lyrics{max-width:400px;margin:30px auto 0;padding:0 18px;text-align:left}.ly-h{display:flex;justify-content:space-between;font-size:10px;margin-bottom:8px}.ly-h b{color:#00ff88}.lyrics p{font-size:12px;color:#8e8e93;line-height:1.7}
-.nav{position:fixed;bottom:0;left:0;right:0;background:#0a0a0a;border-top:1px solid #1e1e1e;display:flex;justify-content:space-around;padding:7px 0 5px;font-size:8px;color:#666}.nav div{display:flex;flex-direction:column;align-items:center;gap:3px}.nav .on{color:#00ff88}
+.ic{width:30px;height:30px;stroke:#fff;fill:none;stroke-width:2}
+.play{width:68px;height:68px;background:#00ff88!important;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.barW{max-width:400px;margin:20px auto 0;padding:0 24px}.bar{height:6px;background:#222;border-radius:10px}.fill{width:0%;height:100%;background:#00ff88;border-radius:10px}
+.time{display:flex;justify-content:space-between;font-size:11px;color:#555;margin-top:6px}.time b{color:#00ff88}
 </style>
 </head>
 <body>
-
 <audio id="rola" preload="auto" playsinline></audio>
-
-<div class="art"><img src="nuyoo.gif"></div>
-<div class="tt"><h1 id="songTitle">Nuyoo</h1><p id="songArtist">Spike Black</p><span id="songInfo">1 / 2</span></div>
-
+<div class="art" id="artBox"><img src="nuyoo.gif"></div>
+<div class="tt"><h1 id="title">Nuyoo</h1><p id="artist">Spike Black</p><span id="info">1 / 2</span></div>
 <div class="ctrl">
-<button id="backBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M11 19l-7-7 7-7M21 19l-7-7 7-7"/></svg></button>
-<button><svg class="ht" viewBox="0 0 24 24"><path d="M12 19l-1.3-1.2C6 14 2.5 11.3 2.5 7.5A4 4 0 0 1 6.5 3.5c1.5 0 3 .7 4 1.9C11 4.2 12.5 3.5 14 3.5A4 4 0 0 1 18.5 7.5c0 3.8-3.5 6.4-8.8 10.9L12 19z"/></svg></button>
-<button class="play" id="playBtn"><svg id="ico" width="28" height="28" viewBox="0 0 24 24"><path fill="#000" d="M8 5.8v12.4L19 12z"/></svg></button>
+<button id="prevBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M11 19l-7-7 7-7M21 19l-7-7 7-7"/></svg></button>
+<button class="play" id="playBtn"><svg id="ico" width="30" height="30" viewBox="0 0 24 24"><path fill="#000" d="M8 5.8v12.4L19 12z"/></svg></button>
 <button id="nextBtn"><svg class="ic" viewBox="0 0 24 24"><path d="M13 5l7 7-7 7M3 5l7 7-7 7"/></svg></button>
-<button><svg class="ic" viewBox="0 0 24 24"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg></button>
 </div>
-
 <div class="barW"><div class="bar" id="bar"><div class="fill" id="fill"></div></div><div class="time"><b id="cur">0:00</b><span id="dur">0:00</span></div></div>
-
-<div class="lyrics"><div class="ly-h"><b>LYRICS</
+<script>
+const rola=document.getElementById('rola'),playBtn=document.getElementById('playBtn'),prevBtn=document.getElementById('prevBtn'),nextBtn=document.getElementById('nextBtn'),ico=document.getElementById('ico'),fill=document.getElementById('fill'),bar=document.getElementById('bar'),cur=document.getElementById('cur'),dur=document.getElementById('dur'),title=document.getElementById('title'),artist=document.getElementById('artist'),info=document.getElementById('info'),artBox=document.getElementById('artBox');
+const playlist=[{file:"nuyoo.mp3",title:"Nuyoo",artist:"Spike Black"},{file:"The-Offspring-Want-You-Bad.mp3",title:"Want You Bad",artist:"The Offspring"}];
+let current=0,sonando=false;
+function fmt(s){let m=Math.floor(s/60),sc=Math.floor(s%60);return m+':'+(sc<10?'0'+sc:sc);}
+function loadSong(i,dir){if(dir==='next')artBox.style.transform='translateX(-80%)';if(dir==='prev')artBox.style.transform='translateX(80%)';setTimeout(()=>{rola.src=playlist[i].file;title.textContent=playlist[i].title;artist.textContent=playlist[i].artist;info.textContent=(i+1)+' / '+playlist.length;rola.load();artBox.style.transform='translateX(0)';if(sonando)rola.play();},dir?180:0);}
+loadSong(0);
+playBtn.onclick=async()=>{if(!sonando){await rola.play();sonando=true;ico.innerHTML='<rect x="6" y="5" width="4" height="14" rx="1" fill="#000"/><rect x="14" y="5" width="4" height="14" rx="1" fill="#000"/>';}else{rola.pause();sonando=false;ico.innerHTML='<path fill="#000" d="M8 5.8v12.4L19 12z"/>';}};
+nextBtn.onclick=()=>{current=(current+1)%playlist.length;loadSong(current,'next');};
+prevBtn.onclick=()=>{current=(current-1+playlist.length)%playlist.length;loadSong(current,'prev');};
+bar.onclick=e=>{const r=bar.getBoundingClientRect();rola.currentTime=((e.clientX-r.left)/r.width)*rola.duration;};
+rola.addEventListener('timeupdate',()=>{if(rola.duration){fill.style.width=(rola.currentTime/rola.duration*100)+'%';cur.textContent=fmt(rola.currentTime);dur.textContent=fmt(rola.duration);}});
+rola.addEventListener('ended',()=>nextBtn.click());
+let startX=0;artBox.addEventListener('touchstart',e=>startX=e.touches[0].clientX);artBox.addEventListener('touchend',e=>{let endX=e.changedTouches[0].clientX;if(endX-startX<-50)nextBtn.click();if(endX-startX>50)prevBtn.click();});
+</script>
+</body>
+</html>
