@@ -24,6 +24,8 @@ main{max-width:700px;margin:25px auto;padding:0 15px}
 .btn-ghost:hover{filter:brightness(1.2)}
 .comments{margin-top:20px;border-top:1px solid #111;padding-top:24px}
 .small-muted{color:#99b088;font-size:12px}
+.sombra-firebase{border:1px solid #222; border-left:3px solid var(--neon); background:#000; padding:12px; margin:10px 0; border-radius:6px; animation: aparecer .4s ease;}
+@keyframes aparecer{from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -52,11 +54,16 @@ main{max-width:700px;margin:25px auto;padding:0 15px}
     <p style="font-size:13px;margin-bottom:15px;">Esto es un sub-mundo vivo para los que viven en las sombras.</p>
     <input type="text" id="ghostName" placeholder="Tu nombre">
     <textarea id="ghostMsg" placeholder="Tu mensaje..."></textarea>
-    <button class="btn-ghost" onclick="document.querySelector('.utterances').scrollIntoView({behavior:'smooth'})">DEJAR SOMBRA</button>
+    <button class="btn-ghost" id="btnDejarSombra">DEJAR SOMBRA</button>
+    <p id="statusMsg" style="font-size:11px; color:#888; margin-top:10px; text-align:center;"></p>
   </div>
 
   <div style="border:1px solid #00ff41; box-shadow:0 0 12px #00ff41; background:#0d0d0d; color:#e0e0e0; padding:20px; border-radius:10px; margin-bottom:25px; font-family:monospace;">
     <p id="ghost-counter" style="margin:0 0 10px 0; color:#00ff41; font-weight:bold; font-size:13px;">CARGANDO FANTASMAS...</p>
+    
+    <!-- AQUÍ APARECERÁN LAS SOMBRAS GUARDADAS PARA SIEMPRE -->
+    <div id="lista-sombras-firebase" style="margin:15px 0;"></div>
+
     <div style="border-top:1px dashed #222; padding-top:15px;">
       <p style="color:#00ff41; font-size:12px; margin:0 0 12px 0; text-align:center;">SOMBRAS QUE HAN CRUZADO EL CÍRCULO</p>
       <div style="text-align:center;">
@@ -85,6 +92,7 @@ main{max-width:700px;margin:25px auto;padding:0 15px}
   </div>
 </main>
 
+<!-- ========= TU CÓDIGO ORIGINAL QUE NO BORRÉ ========= -->
 <script>
 const GITHUB_OWNER = 'Spikeblack009';
 const GITHUB_REPO = 'spikeblack009.github.io';
@@ -97,7 +105,11 @@ async function updateGhosts(){
     const data = await res.json();
     const path = location.pathname.toLowerCase();
     const issue = data.find(i => ((i.title||'') + ' ' + (i.body||'')).toLowerCase().includes(path) || (i.title||'').toLowerCase().includes('círculo') );
-    el.textContent = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${issue ? issue.comments : 0}`;
+    if(issue){
+      el.textContent = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${issue.comments}`;
+    } else {
+      el.textContent = `FANTASMAS EN EL CÍRCULO: Cargando...`;
+    }
   }catch(e){
     el.textContent = 'FANTASMAS EN EL CÍRCULO: 0 - Sé el primero';
   }
@@ -108,7 +120,6 @@ async function updateCounters(){
   const flagEmojiEl = document.getElementById('flag-emoji');
   const flagCountEl = document.getElementById('flag-count');
   try{
-    // Contador local que no falla (ya que countapi.xyz está muerto)
     let total = localStorage.getItem('ghost_total') || 0;
     total = parseInt(total)+1;
     localStorage.setItem('ghost_total', total);
@@ -123,9 +134,76 @@ async function updateCounters(){
     totalEl.textContent = '666+';
   }
 }
-
 updateGhosts();
 updateCounters();
+</script>
+
+<!-- ========= NUEVO: FIREBASE PARA QUE SE GUARDE PARA SIEMPRE ========= -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "PEGAR_AQUI",
+    authDomain: "PEGAR_AQUI",
+    projectId: "PEGAR_AQUI",
+    storageBucket: "PEGAR_AQUI",
+    messagingSenderId: "PEGAR_AQUI",
+    appId: "PEGAR_AQUI"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const lista = document.getElementById('lista-sombras-firebase');
+  const totalEl = document.getElementById('total-counter');
+  const btn = document.getElementById('btnDejarSombra');
+  const statusMsg = document.getElementById('statusMsg');
+
+  async function cargarSombrasFirebase(){
+    try{
+      const q = query(collection(db, "sombras"), orderBy("fecha", "desc"));
+      const snap = await getDocs(q);
+      lista.innerHTML = "";
+      
+      if(snap.size > 0){
+        totalEl.textContent = snap.size + ' almas';
+        document.getElementById('ghost-counter').textContent = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${snap.size}`;
+      }
+
+      snap.forEach(docu => {
+        const d = docu.data();
+        const div = document.createElement('div');
+        div.className = 'sombra-firebase';
+        div.innerHTML = `<b style="color:#00ff41;">${d.nombre}</b> <span style="color:#555;font-size:10px;">- ${d.pais || ''}</span><br><span style="color:#ccc;">${d.mensaje}</span>`;
+        lista.appendChild(div);
+      });
+    }catch(e){ console.log("Error Firebase", e); }
+  }
+
+  btn.addEventListener('click', async () => {
+    const nombre = document.getElementById('ghostName').value.trim();
+    const mensaje = document.getElementById('ghostMsg').value.trim();
+    if(!nombre || !mensaje){ statusMsg.textContent = "⚠️ Pon nombre y sombra"; return; }
+
+    statusMsg.textContent = "Guardando en el abismo...";
+    btn.disabled = true;
+    try{
+      let pais = "Desconocido";
+      try{ const geo = await fetch('https://ipapi.co/json/').then(r=>r.json()); pais = geo.country_name || pais; }catch(e){}
+
+      await addDoc(collection(db, "sombras"), { nombre, mensaje, pais, fecha: serverTimestamp() });
+      statusMsg.textContent = "🕯️ Sombra guardada para siempre";
+      document.getElementById('ghostName').value = "";
+      document.getElementById('ghostMsg').value = "";
+      cargarSombrasFirebase();
+    }catch(e){
+      statusMsg.textContent = "Error: " + e.message;
+    }
+    btn.disabled = false;
+  });
+
+  cargarSombrasFirebase();
 </script>
 </body>
 </html>
