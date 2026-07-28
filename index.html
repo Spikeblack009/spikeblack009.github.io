@@ -15,17 +15,16 @@ header a{margin-left:auto;color:var(--neon);border:1px solid var(--neon);padding
 main{max-width:700px;margin:25px auto;padding:0 15px}
 .card{border:1px solid var(--neon);background:#0a0f0a;padding:20px;margin-bottom:18px;border-radius:8px}
 .card input, .card textarea{width:100%;background:#000;border:1px solid var(--dim);color:var(--neon);padding:12px;margin:8px 0;border-radius:6px;outline:none}
-.btn-ghost{width:100%;background:var(--neon);color:#000;border:none;padding:13px;font-weight:bold;cursor:pointer;border-radius:6px}
-.sombra-real{border:1px solid #222;border-left:3px solid #00ff41;background:#000;padding:12px;margin:10px 0;border-radius:6px}
+.btn-ghost{width:100%;background:var(--neon);color:#000;border:none;padding:13px;font-weight:bold;cursor:pointer;border-radius:6px;box-shadow:0 0 10px var(--neon)}
+.sombra-real{border:1px solid #222;border-left:3px solid #00ff41;background:#000;padding:12px;margin:12px 0;border-radius:6px;}
 </style>
 </head>
 <body>
 <header><img src="logo.png" onerror="this.src='https://spikeblack009.github.io/logo.png'" alt="G"><h1>GHOST DARK CIRCLE</h1><a href="index.html">→ INICIO</a></header>
 <main>
 <div class="card">Bienvenido al abismo. Este es GHOST DARK CIRCLE de SPIKE BLACK.<br><br><em>"La oscuridad no es el final. Es donde comienza todo."</em></div>
-<div class="card"><p style="color:var(--neon);font-size:12px;">POST 001 - 11.05.2026 [SPIKE BLACK]</p><h2 style="color:#fff;margin:10px 0;">EL INICIO DEL CÍRCULO.</h2><p style="color:#a0c0a0;font-size:14px;">Esto no es un blog más. Es un registro de lo que pasa cuando nadie mira.</p></div>
 <div class="card" id="sombra">
-<p style="color:var(--neon);font-weight:bold;">FUISTE ELEGIDO.</p>
+<p style="color:var(--neon);font-weight:bold;margin-bottom:10px;">FUISTE ELEGIDO.</p>
 <input type="text" id="ghostName" placeholder="Tu nombre">
 <textarea id="ghostMsg" placeholder="Tu mensaje..."></textarea>
 <button class="btn-ghost" id="btnDejarSombra">DEJAR SOMBRA</button>
@@ -33,29 +32,25 @@ main{max-width:700px;margin:25px auto;padding:0 15px}
 </div>
 <div style="border:1px solid #00ff41;background:#0d0d0d;padding:20px;border-radius:10px;margin-bottom:25px;">
 <p id="ghost-counter" style="color:#00ff41;font-weight:bold;font-size:13px;">CARGANDO FANTASMAS...</p>
-<div id="lista-sombras" style="margin:15px 0;"></div>
+<div id="lista-sombras" style="margin:15px 0;min-height:20px;"></div>
 <div style="border-top:1px dashed #222;padding-top:15px;text-align:center;">
+<p style="color:#00ff41;font-size:12px;margin-bottom:10px;">SOMBRAS QUE HAN CRUZADO EL CÍRCULO</p>
 <span style="background:#00ff41;color:#000;padding:2px 8px;border-radius:4px;font-weight:bold;font-size:12px;">SOMBRAS</span>
 <span id="total-counter" style="color:#00ff41;font-weight:bold;margin-left:6px;">0</span>
 <div style="margin-top:14px;border-top:1px dashed #222;padding-top:14px;">
 <p style="color:#00ff41;font-size:10px;">🌎 DE DÓNDE NOS MIRAN</p>
-<div style="width:260px;height:38px;background:#000;border:1px solid #333;border-radius:6px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 12px;">
+<div style="width:260px;height:38px;background:#000;border:1px solid #333;border-radius:6px;margin:10px auto;display:flex;align-items:center;justify-content:space-between;padding:0 12px;">
 <span style="color:#39ff14;font-weight:bold;">Visitors</span>
 <span><span id="flag-emoji">🏳️</span> <span id="flag-count" style="color:#39ff14;font-weight:bold;">--</span></span>
 </div></div></div></div>
 <div style="margin-top:20px;"><h3 style="color:var(--neon)">Comentarios</h3><div class="utterances"><script src="https://utteranc.es/client.js" repo="Spikeblack009/spikeblack009.github.io" issue-term="pathname" theme="github-dark" crossorigin="anonymous" async></script></div></div>
 </main>
 <script>
-async function updateFlag(){
-  try{
-    const geo = await fetch('https://ipapi.co/json/').then(r=>r.json());
-    const cc = (geo.country_code||'UN').toLowerCase();
-    const toEmoji = c => c.toUpperCase().split('').map(x=>String.fromCodePoint(x.charCodeAt(0)+127397)).join('');
-    document.getElementById('flag-emoji').textContent = toEmoji(cc);
-    document.getElementById('flag-count').textContent = geo.country_name||'Desconocido';
-  }catch(e){}
-}
-updateFlag();
+fetch('https://ipapi.co/json/').then(r=>r.json()).then(geo=>{
+  const toEmoji=c=>c.toUpperCase().split('').map(x=>String.fromCodePoint(x.charCodeAt(0)+127397)).join('');
+  document.getElementById('flag-emoji').textContent=toEmoji(geo.country_code||'MX');
+  document.getElementById('flag-count').textContent=geo.country_name||'Mexico';
+}).catch(()=>{});
 </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -81,22 +76,23 @@ async function cargarSombras(){
     const snap = await getDocs(collection(db, "sombras"));
     lista.innerHTML = "";
     let docs = [];
-    snap.forEach(d => docs.push(d.data()));
-    docs.sort((a,b)=>(b.fecha?.seconds||0)-(a.fecha?.seconds||0));
-    if(docs.length>0){
-      totalEl.textContent = docs.length+' almas';
-      counterEl.textContent = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${docs.length}`;
-    } else {
-      totalEl.textContent = '0 almas';
-      counterEl.textContent = 'FANTASMAS EN EL CÍRCULO: 0 - Sé el primero';
+    snap.forEach(d=>docs.push(d.data()));
+    totalEl.textContent = docs.length + ' almas';
+    counterEl.textContent = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${docs.length}`;
+    if(docs.length===0){
+      lista.innerHTML = "<p style='color:#555;text-align:center;font-size:12px;'>Aún no hay sombras... Sé el primero</p>";
+      return;
     }
     docs.forEach(data=>{
       const div = document.createElement('div');
       div.className = 'sombra-real';
-      div.innerHTML = `<b style="color:#00ff41;">${data.nombre}</b> ${data.pais?'· '+data.pais:''}<br><span style="color:#bbb;">${data.mensaje}</span>`;
+      div.innerHTML = `<b style="color:#00ff41;">${data.nombre || 'Anónimo'}</b> <span style="color:#666;font-size:10px;">${data.pais ? '· '+data.pais : ''}</span><br><span style="color:#bbb;">${data.mensaje || ''}</span>`;
       lista.appendChild(div);
     });
-  }catch(e){ counterEl.textContent = "Error: "+e.message; }
+  }catch(e){ 
+    counterEl.textContent = "Error: "+e.message; 
+    console.error(e);
+  }
 }
 btn.addEventListener('click', async ()=>{
   const nombre = document.getElementById('ghostName').value.trim();
@@ -104,7 +100,7 @@ btn.addEventListener('click', async ()=>{
   if(!nombre||!mensaje){ statusMsg.textContent="⚠️ Escribe nombre y sombra"; return; }
   statusMsg.textContent="Guardando..."; btn.disabled=true;
   try{
-    let pais=""; try{ const geo=await fetch('https://ipapi.co/json/').then(r=>r.json()); pais=geo.country_name||""; }catch(e){}
+    let pais="Mexico"; try{ const geo=await fetch('https://ipapi.co/json/').then(r=>r.json()); pais=geo.country_name||"Mexico"; }catch(e){}
     await addDoc(collection(db, "sombras"), { nombre, mensaje, pais, fecha: serverTimestamp() });
     statusMsg.textContent="🕯️ Guardada para siempre";
     document.getElementById('ghostName').value=""; document.getElementById('ghostMsg').value="";
