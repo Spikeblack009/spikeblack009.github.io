@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>GHOST DARK CIRCLE</title>
 <style>
-:root{--bg:#000;--neon:#00ff41;--dim:#1a5c10;--text:#e6ffe6;}
+:root{--bg:#000;--neon:#00ff41;--dim:#1a5c10;}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:monospace;min-height:100vh}
-header{display:flex;align-items:center;gap:12px;padding:12px 15px;background:#050505;border-bottom:1px solid var(--neon);position:sticky;top:0;z-index:10}
-header img{width:42px;height:42px;border-radius:50%;border:2px solid var(--neon);background:#111}
-header h1{color:var(--neon);font-size:1.1rem;letter-spacing:2px}
+body{background:#000;color:#e6ffe6;font-family:monospace;min-height:100vh}
+header{display:flex;align-items:center;gap:12px;padding:12px 15px;background:#050505;border-bottom:1px solid var(--neon);position:sticky;top:0}
+header img{width:42px;height:42px;border-radius:50%;border:2px solid var(--neon)}
+header h1{color:var(--neon);font-size:1.1rem}
 header a{margin-left:auto;color:var(--neon);border:1px solid var(--neon);padding:6px 12px;border-radius:6px;text-decoration:none}
 main{max-width:700px;margin:25px auto;padding:0 15px}
 .card{border:1px solid var(--neon);background:#0a0f0a;padding:20px;margin-bottom:18px;border-radius:8px}
@@ -20,30 +20,29 @@ main{max-width:700px;margin:25px auto;padding:0 15px}
 </style>
 </head>
 <body>
-<header><img src="logo.png" onerror="this.src='https://spikeblack009.github.io/logo.png'" alt="G"><h1>GHOST DARK CIRCLE</h1><a href="index.html">→ INICIO</a></header>
+<header><img src="logo.png" onerror="this.src='https://spikeblack009.github.io/logo.png'"><h1>GHOST DARK CIRCLE</h1><a href="index.html">→ INICIO</a></header>
 <main>
-<div class="card">Bienvenido al abismo. Este es GHOST DARK CIRCLE de SPIKE BLACK.<br><br><em>"La oscuridad no es el final. Es donde comienza todo."</em></div>
-<div class="card" id="sombra">
-<p style="color:var(--neon);font-weight:bold;margin-bottom:10px;">FUISTE ELEGIDO.</p>
+<div class="card">Bienvenido al abismo. Este es GHOST DARK CIRCLE de SPIKE BLACK.</div>
+<div class="card">
+<p style="color:var(--neon);font-weight:bold;">FUISTE ELEGIDO.</p>
 <input type="text" id="ghostName" placeholder="Tu nombre">
 <textarea id="ghostMsg" placeholder="Tu mensaje..."></textarea>
 <button class="btn-ghost" id="btnDejarSombra">DEJAR SOMBRA</button>
 <p id="statusMsg" style="font-size:11px;color:#888;margin-top:8px;text-align:center;"></p>
 </div>
-<div style="border:1px solid #00ff41;background:#0d0d0d;padding:20px;border-radius:10px;margin-bottom:25px;">
-<p id="ghost-counter" style="color:#00ff41;font-weight:bold;font-size:13px;">CARGANDO FANTASMAS...</p>
-<div id="lista-sombras" style="margin:15px 0;min-height:20px;"></div>
+<div style="border:1px solid #00ff41;background:#0d0d0d;padding:20px;border-radius:10px;">
+<p id="ghost-counter" style="color:#00ff41;font-weight:bold;">CARGANDO FANTASMAS...</p>
+<div id="lista-sombras" style="margin:15px 0;"></div>
 <div style="border-top:1px dashed #222;padding-top:15px;text-align:center;">
-<p style="color:#00ff41;font-size:12px;margin-bottom:10px;">SOMBRAS QUE HAN CRUZADO EL CÍRCULO</p>
+<p style="color:#00ff41;font-size:12px;">SOMBRAS QUE HAN CRUZADO EL CÍRCULO</p>
 <span style="background:#00ff41;color:#000;padding:2px 8px;border-radius:4px;font-weight:bold;font-size:12px;">SOMBRAS</span>
 <span id="total-counter" style="color:#00ff41;font-weight:bold;margin-left:6px;">0</span>
-<div style="margin-top:14px;border-top:1px dashed #222;padding-top:14px;">
+<div style="margin-top:14px;">
 <p style="color:#00ff41;font-size:10px;">🌎 DE DÓNDE NOS MIRAN</p>
-<div style="width:260px;height:38px;background:#000;border:1px solid #333;border-radius:6px;margin:10px auto;display:flex;align-items:center;justify-content:space-between;padding:0 12px;">
+<div style="width:260px;height:38px;background:#000;border:1px solid #333;border-radius:6px;margin:8px auto;display:flex;align-items:center;justify-content:space-between;padding:0 12px;">
 <span style="color:#39ff14;font-weight:bold;">Visitors</span>
 <span><span id="flag-emoji">🏳️</span> <span id="flag-count" style="color:#39ff14;font-weight:bold;">--</span></span>
 </div></div></div></div>
-<div style="margin-top:20px;"><h3 style="color:var(--neon)">Comentarios</h3><div class="utterances"><script src="https://utteranc.es/client.js" repo="Spikeblack009/spikeblack009.github.io" issue-term="pathname" theme="github-dark" crossorigin="anonymous" async></script></div></div>
 </main>
 <script>
 fetch('https://ipapi.co/json/').then(r=>r.json()).then(geo=>{
@@ -54,7 +53,8 @@ fetch('https://ipapi.co/json/').then(r=>r.json()).then(geo=>{
 </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getDatabase, ref, push, get, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAR7kW0MKkAu8gT1uDaQXM5TYBrNcZKU",
   authDomain: "ghost-dark-circle.firebaseapp.com",
@@ -64,50 +64,54 @@ const firebaseConfig = {
   messagingSenderId: "1049315311255",
   appId: "1:1049315311255:web:c005c42fbffbd00beccb3d2"
 };
+
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = getDatabase(app);
 const lista = document.getElementById('lista-sombras');
 const totalEl = document.getElementById('total-counter');
 const counterEl = document.getElementById('ghost-counter');
-const btn = document.getElementById('btnDejarSombra');
-const statusMsg = document.getElementById('statusMsg');
+
 async function cargarSombras(){
   try{
-    const snap = await getDocs(collection(db, "sombras"));
+    const snapshot = await get(child(ref(db), 'sombras'));
     lista.innerHTML = "";
-    let docs = [];
-    snap.forEach(d=>docs.push(d.data()));
-    totalEl.textContent = docs.length + ' almas';
-    counterEl.textContent = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${docs.length}`;
-    if(docs.length===0){
-      lista.innerHTML = "<p style='color:#555;text-align:center;font-size:12px;'>Aún no hay sombras... Sé el primero</p>";
+    if(!snapshot.exists()){
+      counterEl.textContent = "FANTASMAS EN EL CÍRCULO: 0 - Sé el primero";
+      totalEl.textContent = "0 almas";
+      lista.innerHTML = "<p style='color:#555;text-align:center;'>Aún no hay sombras</p>";
       return;
     }
-    docs.forEach(data=>{
+    const data = snapshot.val();
+    const sombras = Object.values(data).reverse();
+    counterEl.textContent = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${sombras.length}`;
+    totalEl.textContent = sombras.length + " almas";
+    sombras.forEach(s=>{
       const div = document.createElement('div');
       div.className = 'sombra-real';
-      div.innerHTML = `<b style="color:#00ff41;">${data.nombre || 'Anónimo'}</b> <span style="color:#666;font-size:10px;">${data.pais ? '· '+data.pais : ''}</span><br><span style="color:#bbb;">${data.mensaje || ''}</span>`;
+      div.innerHTML = `<b style="color:#00ff41;">${s.nombre||'Anónimo'}</b> <span style="color:#666;font-size:10px;">· ${s.pais||''}</span><br><span style="color:#bbb;">${s.mensaje||''}</span>`;
       lista.appendChild(div);
     });
-  }catch(e){ 
-    counterEl.textContent = "Error: "+e.message; 
-    console.error(e);
+  }catch(e){
+    counterEl.textContent = "Error: "+e.message;
   }
 }
-btn.addEventListener('click', async ()=>{
+
+document.getElementById('btnDejarSombra').addEventListener('click', async ()=>{
   const nombre = document.getElementById('ghostName').value.trim();
   const mensaje = document.getElementById('ghostMsg').value.trim();
+  const statusMsg = document.getElementById('statusMsg');
   if(!nombre||!mensaje){ statusMsg.textContent="⚠️ Escribe nombre y sombra"; return; }
-  statusMsg.textContent="Guardando..."; btn.disabled=true;
+  statusMsg.textContent="Guardando...";
   try{
     let pais="Mexico"; try{ const geo=await fetch('https://ipapi.co/json/').then(r=>r.json()); pais=geo.country_name||"Mexico"; }catch(e){}
-    await addDoc(collection(db, "sombras"), { nombre, mensaje, pais, fecha: serverTimestamp() });
+    await push(ref(db, 'sombras'), { nombre, mensaje, pais, fecha: Date.now() });
     statusMsg.textContent="🕯️ Guardada para siempre";
-    document.getElementById('ghostName').value=""; document.getElementById('ghostMsg').value="";
+    document.getElementById('ghostName').value=""; 
+    document.getElementById('ghostMsg').value="";
     cargarSombras();
   }catch(e){ statusMsg.textContent="Error: "+e.message; }
-  btn.disabled=false;
 });
+
 cargarSombras();
 </script>
 </body>
