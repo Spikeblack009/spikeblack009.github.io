@@ -2,33 +2,67 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Nuyoo - Spike Black</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuyoo</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;min-height:100vh;padding-bottom:90px}
-.wrap{max-width:420px;margin:0 auto;padding:16px 18px 0}
-.art-box{width:100%;aspect-ratio:1/1;background:#080808;border-radius:28px;border:2px solid #1aff80;box-shadow:0 0 20px rgba(26,255,128,.8),0 0 50px rgba(26,255,128,.35),inset 0 0 20px rgba(26,255,128,.1);overflow:hidden;display:flex;align-items:center;justify-content:center;transition:transform .32s cubic-bezier(.4,0,.2,1)}
-.art-box img{width:92%;height:92%;object-fit:contain;border-radius:50%;filter:drop-shadow(0 0 12px rgba(26,255,128,.8))}
-.meta{text-align:center;margin-top:18px}
-.meta h1{font-size:30px;font-weight:800;letter-spacing:-.5px}
-.meta .artist{color:#aaa;font-size:15px;margin-top:2px}
-.meta .sub{color:#555;font-size:12px;margin-top:4px}
-.controls{display:flex;justify-content:space-between;align-items:center;margin-top:26px;padding:0 10px}
-.controls button{background:none;border:none}
-.ic{width:24px;height:24px;stroke:#999;stroke-width:1.6;fill:none}
-.ic.active{stroke:#1aff80}
-.play{width:74px;height:74px;background:#1aff80;border-radius:50%;box-shadow:0 0 22px #1aff80,0 0 45px rgba(26,255,128,.6);display:flex;align-items:center;justify-content:center}
-.bar-wrap{margin-top:22px}
-.bar{height:4px;background:#222;border-radius:10px;position:relative;cursor:pointer}
-.fill{height:100%;background:#1aff80;width:0%;border-radius:10px;box-shadow:0 0 6px #1aff80}
-.times{display:flex;justify-content:space-between;margin-top:7px;font-size:12px;color:#777}
-.times b{color:#1aff80;font-weight:500}
-.actions{display:flex;justify-content:space-between;margin-top:18px;padding:0 8px}
-.act{display:flex;flex-direction:column;align-items:center;gap:6px;color:#666;font-size:10px}
-.act svg{width:20px;height:20px;stroke:#888;fill:none;stroke-width:1.7}
-.lyrics{margin-top:26px}
-.lyrics .head{display:flex;justify-content:space-between;color:#1aff80;font-size:11px;font-weight:700;letter-spacing:1px}
-.lyrics .head span:last-child{color:#1aff80;font-weight:400;cursor:pointer}
-.lyrics p{color:#8a8a8a;font-size:13px;line-height:1.7;margin-top:10px}
-.nav{position:fixed;bottom:0;left:0;right:0;background:#0a0a0a;border-top:1px solid #1a1a1a;display:flex;justify-content
+body{background:#0e0e0e;color:#fff;font-family:Arial,sans-serif}
+.art{width:92%;max-width:380px;aspect-ratio:1/1;margin:20px auto 0;border-radius:30px;border:3px solid #00ff88;box-shadow:0 0 25px #00ff88;overflow:hidden;background:#111;display:flex;align-items:center;justify-content:center;transition:.3s}
+.art img{width:100%;height:100%;object-fit:cover;display:block}
+h1{text-align:center;margin-top:16px;font-size:28px}
+p{text-align:center;color:#aaa}
+.ctrl{display:flex;justify-content:space-around;align-items:center;max-width:380px;margin:20px auto;padding:0 20px}
+button{background:none;border:none;color:#fff;font-size:28px}
+.play{width:70px;height:70px;background:#00ff88;border-radius:50%;color:#000;font-size:34px;box-shadow:0 0 20px #00ff88}
+.barW{max-width:380px;margin:20px auto;padding:0 20px}
+.bar{height:5px;background:#333;border-radius:10px}
+.fill{height:100%;background:#00ff88;width:0%;border-radius:10px}
+</style>
+</head>
+<body>
+<audio id="rola" preload="auto"></audio>
+<div class="art" id="box"><img id="cover" src="nuyoo.gif?v=2" onerror="this.src='https://via.placeholder.com/400x400/111/00ff88?text=NUYOO'"></div>
+<h1 id="title">Nuyoo</h1>
+<p id="artist">Spike Black - 1 / 2</p>
+
+<div class="ctrl">
+<button id="prev">⏮️</button>
+<button class="play" id="play">▶️</button>
+<button id="next">⏭️</button>
+</div>
+
+<div class="barW"><div class="bar" id="bar"><div class="fill" id="fill"></div></div></div>
+
+<script>
+const rola=document.getElementById('rola'),play=document.getElementById('play'),prev=document.getElementById('prev'),next=document.getElementById('next'),fill=document.getElementById('fill'),bar=document.getElementById('bar'),title=document.getElementById('title'),box=document.getElementById('box');
+
+const list=[
+ {file:"nuyoo.mp3",title:"Nuyoo"},
+ {file:"The-Offspring-Want-You-Bad.mp3",title:"Want You Bad - Offspring"}
+];
+let i=0,playin=false;
+function load(n,dir){
+ if(dir=='next') box.style.transform='translateX(-100%)';
+ if(dir=='prev') box.style.transform='translateX(100%)';
+ setTimeout(()=>{
+  rola.src=list[n].file;
+  title.textContent=list[n].title;
+  document.getElementById('artist').textContent='Spike Black - '+(n+1)+' / 2';
+  rola.load();
+  box.style.transform='translateX(0)';
+  if(playin) rola.play();
+ },dir?200:0);
+}
+load(0);
+play.onclick=async()=>{
+ if(!playin){await rola.play(); playin=true; play.textContent='⏸️';}else{rola.pause(); playin=false; play.textContent='▶️';}
+};
+next.onclick=()=>{i=(i+1)%list.length; load(i,'next');};
+prev.onclick=()=>{i=(i-1+list.length)%list.length; load(i,'prev');};
+rola.addEventListener('timeupdate',()=>{if(rola.duration) fill.style.width=(rola.currentTime/rola.duration*100)+'%';});
+rola.addEventListener('ended',()=>next.click());
+bar.onclick=e=>{const r=bar.getBoundingClientRect(); rola.currentTime=((e.clientX-r.left)/r.width)*rola.duration;};
+let sx=0; box.addEventListener('touchstart',e=>sx=e.touches[0].clientX); box.addEventListener('touchend',e=>{let ex=e.changedTouches[0].clientX; if(ex-sx<-50) next.click(); if(ex-sx>50) prev.click();});
+</script>
+</body>
+</html>
