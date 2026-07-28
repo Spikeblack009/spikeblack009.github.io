@@ -3,66 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nuyoo</title>
+<title>Nuyoo - Spike Black</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0e0e0e;color:#fff;font-family:Arial,sans-serif}
-.art{width:92%;max-width:380px;aspect-ratio:1/1;margin:20px auto 0;border-radius:30px;border:3px solid #00ff88;box-shadow:0 0 25px #00ff88;overflow:hidden;background:#111;display:flex;align-items:center;justify-content:center;transition:.3s}
+body{background:#000;color:#fff;font-family:-apple-system,sans-serif;padding-bottom:90px}
+.art{width:88%;max-width:380px;aspect-ratio:1/1;margin:18px auto 0;border-radius:22px;overflow:hidden;border:2px solid #00ff88;box-shadow:0 0 25px rgba(0,255,136,.9),0 0 55px rgba(0,255,136,.45);background:#111}
 .art img{width:100%;height:100%;object-fit:cover;display:block}
-h1{text-align:center;margin-top:16px;font-size:28px}
-p{text-align:center;color:#aaa}
-.ctrl{display:flex;justify-content:space-around;align-items:center;max-width:380px;margin:20px auto;padding:0 20px}
-button{background:none;border:none;color:#fff;font-size:28px}
-.play{width:70px;height:70px;background:#00ff88;border-radius:50%;color:#000;font-size:34px;box-shadow:0 0 20px #00ff88}
-.barW{max-width:380px;margin:20px auto;padding:0 20px}
-.bar{height:5px;background:#333;border-radius:10px}
-.fill{height:100%;background:#00ff88;width:0%;border-radius:10px}
-</style>
-</head>
-<body>
-<audio id="rola" preload="auto"></audio>
-<div class="art" id="box"><img id="cover" src="nuyoo.gif?v=2" onerror="this.src='https://via.placeholder.com/400x400/111/00ff88?text=NUYOO'"></div>
-<h1 id="title">Nuyoo</h1>
-<p id="artist">Spike Black - 1 / 2</p>
-
-<div class="ctrl">
-<button id="prev">⏮️</button>
-<button class="play" id="play">▶️</button>
-<button id="next">⏭️</button>
-</div>
-
-<div class="barW"><div class="bar" id="bar"><div class="fill" id="fill"></div></div></div>
-
-<script>
-const rola=document.getElementById('rola'),play=document.getElementById('play'),prev=document.getElementById('prev'),next=document.getElementById('next'),fill=document.getElementById('fill'),bar=document.getElementById('bar'),title=document.getElementById('title'),box=document.getElementById('box');
-
-const list=[
- {file:"nuyoo.mp3",title:"Nuyoo"},
- {file:"The-Offspring-Want-You-Bad.mp3",title:"Want You Bad - Offspring"}
-];
-let i=0,playin=false;
-function load(n,dir){
- if(dir=='next') box.style.transform='translateX(-100%)';
- if(dir=='prev') box.style.transform='translateX(100%)';
- setTimeout(()=>{
-  rola.src=list[n].file;
-  title.textContent=list[n].title;
-  document.getElementById('artist').textContent='Spike Black - '+(n+1)+' / 2';
-  rola.load();
-  box.style.transform='translateX(0)';
-  if(playin) rola.play();
- },dir?200:0);
-}
-load(0);
-play.onclick=async()=>{
- if(!playin){await rola.play(); playin=true; play.textContent='⏸️';}else{rola.pause(); playin=false; play.textContent='▶️';}
-};
-next.onclick=()=>{i=(i+1)%list.length; load(i,'next');};
-prev.onclick=()=>{i=(i-1+list.length)%list.length; load(i,'prev');};
-rola.addEventListener('timeupdate',()=>{if(rola.duration) fill.style.width=(rola.currentTime/rola.duration*100)+'%';});
-rola.addEventListener('ended',()=>next.click());
-bar.onclick=e=>{const r=bar.getBoundingClientRect(); rola.currentTime=((e.clientX-r.left)/r.width)*rola.duration;};
-let sx=0; box.addEventListener('touchstart',e=>sx=e.touches[0].clientX); box.addEventListener('touchend',e=>{let ex=e.changedTouches[0].clientX; if(ex-sx<-50) next.click(); if(ex-sx>50) prev.click();});
-</script>
-</body>
-</html>
+.tt{text-align:center;margin-top:16px}.tt h1{font-size:26px;font-weight:800}.tt p{color:#a1a1a6;font-size:14px}.tt span{color:#555;font-size:11px;display:block;margin-top:3px}
+@keyframes slideInRight{from{opacity:0;transform:translateX(100px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-100px)}to{opacity:1;transform:translateX(0)}}
+.tt.slideRight{animation:slideInRight .35s ease}
+.tt.slideLeft{animation:slideInLeft .35s ease}
+.playlist.slideRight{animation:slideInRight .35s ease}
+.playlist.slideLeft{animation:slideInLeft .35s ease}
+.ctrl{max-width:400px;margin:22px auto 0;display:flex;justify-content:space-between;align-items:center;padding:0 32px}.ctrl button{background:none;border:none;cursor:pointer}
+.ic{width:22px;height:22px;stroke:#8e8e93;fill:none;stroke-width:1.7}.ht{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.7}
+.play{width:62px;height:62px;background:#00ff88!important;border:3px solid #00ff88;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,255,136,1)}
+.barW{max-width:400px;margin:20px auto 0;padding:0 24px}.bar{height:6px;background:#222;border-radius:10px;cursor:pointer}.fill{width:0%;height:100%;background:#00ff88;border-radius:10px}
+.time{display:flex;justify-content:space-between;font-size:11px;color:#555;margin-top:6px}.time b{color:#00ff88}
+.acts{max-width:400px;margin:22px auto 0;display:flex;justify-content:space-between;padding:0 30px}.a{color:#6e6e73;font-size:9px;display:flex;flex-direction:column;align-items:center;gap:6px}.a svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.5}
+.lyrics{max-width:400px;margin:30px auto 0;padding:0 18px}.ly-h{display:flex;justify-content:space-between;font-size:10px;margin-bottom:8px}.ly-h b{color:#00ff88}.lyrics p{font-size:12px;color
