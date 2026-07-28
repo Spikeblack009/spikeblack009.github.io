@@ -1,71 +1,131 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GHOST DARK CIRCLE</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GHOST DARK CIRCLE - Bienvenidos al Dark Side</title>
 <style>
-:root{--neon:#00ff41;--bg:#000;--card:#0a0a0a}
+:root{--bg:#000;--neon:#00ff41;--dim:#1a5c10;--text:#e6ffe6;}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:#c8ffc8;font-family:monospace}
-header{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#050505;border-bottom:2px solid var(--neon);position:sticky;top:0;z-index:10}
-header img{width:42px;height:42px;border-radius:50%;border:2px solid var(--neon);box-shadow:0 0 10px var(--neon)}
+body{background:var(--bg);color:var(--text);font-family:monospace;min-height:100vh}
+header{display:flex;align-items:center;gap:12px;padding:12px 15px;background:#050505;border-bottom:1px solid var(--neon);position:sticky;top:0;z-index:10;box-shadow:0 0 15px rgba(0,255,65,.2)}
+header img{width:42px;height:42px;border-radius:50%;border:2px solid var(--neon);box-shadow:0 0 12px var(--neon);background:#111}
 header h1{color:var(--neon);font-size:1.1rem;letter-spacing:2px;text-shadow:0 0 8px var(--neon)}
-header a{margin-left:auto;color:var(--neon);border:1px solid var(--neon);padding:6px 14px;border-radius:20px;text-decoration:none;font-size:12px}
-main{max-width:750px;margin:20px auto;padding:0 12px}
-.box{border:1.5px solid var(--neon);background:var(--card);padding:18px;border-radius:12px;margin-bottom:16px;box-shadow:0 0 12px #00ff4144}
-.box input,.box textarea{width:100%;background:#000;border:1px solid #00ff4166;color:var(--neon);padding:14px;margin:8px 0;border-radius:8px;outline:none}
-.box input:focus,.box textarea:focus{border-color:var(--neon);box-shadow:0 0 8px var(--neon)}
-.btn{width:100%;background:var(--neon);color:#000;border:none;padding:14px;font-weight:bold;letter-spacing:1px;cursor:pointer;border-radius:8px;box-shadow:0 0 15px var(--neon)}
-.sombra{border:1px solid #222;border-left:4px solid var(--neon);background:#000;padding:12px;margin:10px 0;border-radius:8px;word-break:break-word}
-.sombra a{color:var(--neon);text-decoration:underline}
-.titulo-verde{color:var(--neon);font-weight:bold;font-size:14px;margin-bottom:10px}
+header a{margin-left:auto;color:var(--neon);border:1px solid var(--neon);padding:6px 12px;border-radius:6px;text-decoration:none;transition:.2s}
+header a:hover{background:var(--neon);color:#000;box-shadow:0 0 10px var(--neon)}
+main{max-width:700px;margin:25px auto;padding:0 15px}
+.card{border:1px solid var(--neon);background:#0a0f0a;padding:20px;margin-bottom:18px;box-shadow:0 0 12px rgba(0,255,65,.15);border-radius:8px}
+.post-meta{color:var(--neon);font-size:12px;margin-bottom:10px;opacity:.8}
+.post-title{color:#fff;font-size:20px;letter-spacing:1px;margin-bottom:12px}
+.card input, .card textarea{width:100%;background:#000;border:1px solid var(--dim);color:var(--neon);padding:12px;margin:8px 0;font-family:inherit;border-radius:6px;outline:none}
+.card input:focus, .card textarea:focus{border-color:var(--neon);box-shadow:0 0 8px var(--neon)}
+.card textarea{min-height:80px;resize:vertical}
+.btn-ghost{width:100%;background:var(--neon);color:#000;border:none;padding:13px;font-weight:bold;cursor:pointer;letter-spacing:1px;margin-top:8px;border-radius:6px;box-shadow:0 0 10px var(--neon)}
+.btn-ghost:hover{filter:brightness(1.2)}
+.comments{margin-top:20px;border-top:1px solid #111;padding-top:24px}
+.small-muted{color:#99b088;font-size:12px}
 </style>
 </head>
 <body>
 <header>
-<img src="logo.png">
-<h1>GHOST DARK CIRCLE</h1>
-<a href="index.html">→ INICIO</a>
+  <img src="logo.png" onerror="this.src='https://spikeblack009.github.io/logo.png'; this.onerror=null;" alt="G">
+  <h1>GHOST DARK CIRCLE</h1>
+  <a href="index.html">→ INICIO</a>
 </header>
-
 <main>
-<!-- BIENVENIDA -->
-<div class="box">
-Bienvenido al abismo. GHOST DARK CIRCLE de SPIKE BLACK.<br>
-<em>"La oscuridad no es el final. Es donde comienza todo."</em>
-</div>
+  <div class="card">
+    Bienvenido al abismo. Este es GHOST DARK CIRCLE de SPIKE BLACK.<br><br>
+    <em>"La oscuridad no es el final. Es donde comienza todo."</em>
+  </div>
+  <div class="card">
+    <p class="post-meta">POST 001 - 11.05.2026 [SPIKE BLACK]</p>
+    <h2 class="post-title">EL INICIO DEL CÍRCULO.</h2>
+    <p style="color:#a0c0a0;font-size:14px;line-height:1.6;">
+      Esto no es un blog más. Es un registro de lo que pasa cuando nadie mira.<br><br>
+      Si llegaste aquí, no fue por accidente. Ya eres parte.<br><br>
+      <a href="#sombra" style="color:var(--neon);">Deja tu sombra abajo.</a>
+    </p>
+  </div>
 
-<!-- DEJAR SOMBRA -->
-<div class="box">
-<p class="titulo-verde">FUISTE ELEGIDO.</p>
-<input id="ghostName" placeholder="Tu nombre">
-<textarea id="ghostMsg" rows="3" placeholder="Tu mensaje + link https://..."></textarea>
-<button class="btn" id="btnSombra">DEJAR SOMBRA</button>
-<p id="status" style="text-align:center;font-size:11px;color:#666;margin-top:8px"></p>
-</div>
+  <div class="card" id="sombra">
+    <p style="color:var(--neon);font-weight:bold;font-size:18px;margin-bottom:8px;">FUISTE ELEGIDO.</p>
+    <p style="font-size:13px;margin-bottom:15px;">Esto es un sub-mundo vivo para los que viven en las sombras.</p>
+    <input type="text" id="ghostName" placeholder="Tu nombre">
+    <textarea id="ghostMsg" placeholder="Tu mensaje..."></textarea>
+    <button class="btn-ghost" onclick="document.querySelector('.utterances').scrollIntoView({behavior:'smooth'})">DEJAR SOMBRA</button>
+  </div>
 
-<!-- FANTASMAS -->
-<div class="box">
-<p class="titulo-verde" id="counter">FANTASMAS EN EL CÍRCULO: CARGANDO...</p>
-<div id="lista"></div>
-<div style="text-align:center;border-top:1px dashed #222;margin-top:15px;padding-top:12px">
-<span style="background:var(--neon);color:#000;padding:3px 10px;border-radius:6px;font-weight:bold;font-size:12px">SOMBRAS</span>
-<span id="total" style="color:var(--neon);font-weight:bold;margin-left:6px">0 almas</span>
-<p id="visitas" style="color:#666;font-size:11px;margin-top:6px">Visitas: 82 almas</p>
-</div>
+  <div style="border:1px solid #00ff41; box-shadow:0 0 12px #00ff41; background:#0d0d0d; color:#e0e0e0; padding:20px; border-radius:10px; margin-bottom:25px; font-family:monospace;">
+    <p id="ghost-counter" style="margin:0 0 10px 0; color:#00ff41; font-weight:bold; font-size:13px;">CARGANDO FANTASMAS...</p>
+    <div style="border-top:1px dashed #222; padding-top:15px;">
+      <p style="color:#00ff41; font-size:12px; margin:0 0 12px 0; text-align:center;">SOMBRAS QUE HAN CRUZADO EL CÍRCULO</p>
+      <div style="text-align:center;">
+        <span style="color:#000; background:#00ff41; padding:2px 8px; border-radius:4px; font-weight:bold; font-size:12px;">SOMBRAS</span>
+        <span id="total-counter" style="color:#00ff41; font-weight:bold; margin-left:6px;">0</span>
+      </div>
+      <div style="margin-top:14px; border-top:1px dashed #222; padding-top:14px; text-align:center;">
+        <p style="color:#00ff41; font-size:10px; margin:0 0 8px 0;">🌎 DE DÓNDE NOS MIRAN</p>
+        <div style="width:260px; height:38px; background:#000; border:1px solid #333; border-radius:6px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:0 12px;">
+          <span style="color:#39ff14; font-weight:bold; font-size:14px; text-shadow:0 0 8px #39ff14;">Visitors</span>
+          <span style="display:flex; align-items:center; gap:6px;">
+            <span id="flag-emoji" style="font-size:20px;">🏳️</span>
+            <span id="flag-count" style="color:#39ff14; font-weight:bold; font-size:18px;">--</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<!-- VISITANTES MAPA -->
-<div style="margin-top:18px;text-align:center">
-<p class="titulo-verde" style="font-size:11px">🌎 DE DÓNDE NOS MIRAN</p>
-<div style="border:1px solid #333;border-radius:8px;padding:8px;background:#000;display:inline-block">
-<!-- Tu contador de visitors que ya tenias -->
-<a href="https://info.flagcounter.com/xxxx" target="_blank"><img src="https://s11.flagcounter.com/count2/xxxx/bg_000000/txt_00FF41/border_333333/columns_2/maxflags_10/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter"></a>
-<p style="color:#00ff41;font-size:13px;margin-top:6px">Visitors <span style="margin-left:20px">🇲🇽 Mexico</span></p>
-</div>
-</div>
-</div>
+  <div class="comments">
+    <h3 style="color:var(--neon)">Comentarios — Únete a la discusión</h3>
+    <div class="small-muted" style="margin-bottom:8px;">(Los comentarios se muestran vía utterances/GitHub Issues)</div>
+    <div class="utterances">
+      <script src="https://utteranc.es/client.js" repo="Spikeblack009/spikeblack009.github.io" issue-term="pathname" theme="github-dark" crossorigin="anonymous" async></script>
+    </div>
+  </div>
+</main>
 
-<!-- COMENTARIOS UTTERANCES -->
-<div class="box">
-<p style="color:var(--neon);font-weight:bold">Comentarios - Únete a la discusión</p>
-<p style="font-size:11px
+<script>
+const GITHUB_OWNER = 'Spikeblack009';
+const GITHUB_REPO = 'spikeblack009.github.io';
+
+async function updateGhosts(){
+  const el = document.getElementById('ghost-counter');
+  try{
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/issues?state=all&per_page=100`);
+    if(!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    const path = location.pathname.toLowerCase();
+    const issue = data.find(i => ((i.title||'') + ' ' + (i.body||'')).toLowerCase().includes(path) || (i.title||'').toLowerCase().includes('círculo') );
+    el.textContent = `FANTASMAS EN EL CÍRCULO (Almas que han hablado): ${issue ? issue.comments : 0}`;
+  }catch(e){
+    el.textContent = 'FANTASMAS EN EL CÍRCULO: 0 - Sé el primero';
+  }
+}
+
+async function updateCounters(){
+  const totalEl = document.getElementById('total-counter');
+  const flagEmojiEl = document.getElementById('flag-emoji');
+  const flagCountEl = document.getElementById('flag-count');
+  try{
+    // Contador local que no falla (ya que countapi.xyz está muerto)
+    let total = localStorage.getItem('ghost_total') || 0;
+    total = parseInt(total)+1;
+    localStorage.setItem('ghost_total', total);
+    totalEl.textContent = total + ' almas';
+
+    const geo = await fetch('https://ipapi.co/json/').then(r=>r.json());
+    const cc = (geo.country_code || 'UN').toLowerCase();
+    function toEmoji(c){ if(!c || c.length!=2) return '🏳️'; return c.toUpperCase().split('').map(x=>String.fromCodePoint(x.charCodeAt(0)+127397)).join(''); }
+    flagEmojiEl.textContent = toEmoji(cc);
+    flagCountEl.textContent = (geo.country_name || 'Desconocido');
+  }catch(e){
+    totalEl.textContent = '666+';
+  }
+}
+
+updateGhosts();
+updateCounters();
+</script>
+</body>
+</html>
