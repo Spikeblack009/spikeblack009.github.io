@@ -45,7 +45,7 @@ input,textarea{background:#000!important;border:1px solid #333!important;color:w
 
 <div class="card" style="max-width:650px">
 <h2 style="color:#00ff88">🌎 MAPA MUNDIAL EN VIVO</h2>
-<p style="font-size:12px;color:#888">Haz zoom, arrastra. Cada pulso verde es una sombra que entró.</p>
+<p style="font-size:12px;color:#888">Cada pulso verde es una sombra que entró. Toca un punto.</p>
 <div id="worldMap"></div>
 <div id="paisesLista" style="margin-top:12px;font-size:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center"></div>
 </div>
@@ -58,49 +58,12 @@ input,textarea{background:#000!important;border:1px solid #333!important;color:w
 <footer style="color:#444;font-size:11px;">Spike Black - Ghost Dark Circle © 2026</footer>
 
 <script>
-// MATRIX LENTA SIN CABEZA BLANCA - SOLO VERDE
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
-let fontSize = 14;
-let columns, drops, speeds;
-
-function resize(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  columns = Math.floor(canvas.width / fontSize);
-  drops = [];
-  speeds = [];
-  for(let i=0;i<columns;i++){
-    drops[i] = Math.random() * -100;
-    speeds[i] = Math.random() * 0.18 + 0.06; // 0.06 a 0.24 = ULTRA LENTO
-  }
-}
-resize();
-window.addEventListener('resize', resize);
-
-const chars = "アカサタナハマヤラワガザダバパイキシチニヒミリギジヂビピウクスツヌフムユルグズヅブプエケセテネヘメレゲゼデベペオコソトノホモヨロゴゾドボポ0123456789GHOSTDARKCIRCLE".split("");
-
-function draw(){
-  ctx.fillStyle = "rgba(0,0,0,0.08)";
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = "#00ff88";
-  ctx.font = "13px monospace";
-
-  for(let i=0;i<drops.length;i++){
-    const x = i * fontSize;
-    const y = drops[i] * fontSize;
-    const char = chars[Math.floor(Math.random()*chars.length)];
-    ctx.fillText(char, x, y);
-
-    if(y > canvas.height && Math.random() > 0.985){
-      drops[i] = 0;
-      speeds[i] = Math.random() * 0.18 + 0.06;
-    }
-    drops[i] += speeds[i];
-  }
-  requestAnimationFrame(draw);
-}
-draw();
+let fontSize = 14, columns, drops, speeds;
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;columns=Math.floor(canvas.width/fontSize);drops=[];speeds=[];for(let i=0;i<columns;i++){drops[i]=Math.random()*-100;speeds[i]=Math.random()*0.18+0.06;}}resize();window.addEventListener('resize',resize);
+const chars="アカサタナハマヤラワガザダバパイキシチニヒミリギジヂビピウクスツヌフムユルグズヅブプエケセテネヘメレゲゼデベペオコソトノホモヨロゴゾドボポ0123456789GHOSTDARKCIRCLE".split("");
+(function draw(){ctx.fillStyle="rgba(0,0,0,0.08)";ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle="#00ff88";ctx.font="13px monospace";for(let i=0;i<drops.length;i++){const x=i*fontSize,y=drops[i]*fontSize;ctx.fillText(chars[Math.floor(Math.random()*chars.length)],x,y);if(y>canvas.height&&Math.random()>0.985){drops[i]=0;speeds[i]=Math.random()*0.18+0.06;}drops[i]+=speeds[i];}requestAnimationFrame(draw);})();
 </script>
 
 <script type="module">
@@ -110,6 +73,7 @@ import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://ww
 import { getFirestore, doc, setDoc, increment, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyAR7kUWo6MKaOUgFTiuDaQXM5TYbfNcZKU",authDomain:"ghost-dark-circle.firebaseapp.com",databaseURL:"https://ghost-dark-circle-default-rtdb.firebaseio.com",projectId:"ghost-dark-circle",storageBucket:"ghost-dark-circle.firebasestorage.app",messagingSenderId:"1049315311255",appId:"1:1049315311255:web:005c42fbf8bd00bec6b3d2"};
 const app=initializeApp(firebaseConfig);const db=getDatabase(app);const storage=getStorage(app);const fdb=getFirestore(app);
+
 const muroRef=ref(db,'muro_dark_circle');
 window.publicar=async()=>{const n=document.getElementById('nombre').value.trim(),m=document.getElementById('mensaje').value.trim(),file=document.getElementById('foto').files[0];if(!n||!m)return alert('Pon AKA y mensaje');let url='';if(file){const r=sRef(storage,'muro/'+Date.now()+'_'+file.name);await uploadBytes(r,file);url=await getDownloadURL(r);}push(muroRef,{nombre:n,mensaje:m,fotoUrl:url,fecha:Date.now()});document.getElementById('nombre').value='';document.getElementById('mensaje').value='';document.getElementById('foto').value='';alert('Publicado!');};
 onValue(muroRef,s=>{const c=document.getElementById('muro');c.innerHTML='';const d=s.val();if(!d){c.innerHTML='<p style=color:#666>Sé el primero 💀</p>';return;}Object.values(d).reverse().forEach(f=>{c.innerHTML+=`<div class="post"><b>${f.nombre}</b><p style="color:#ddd">${f.mensaje}</p>${f.fotoUrl?`<img src="${f.fotoUrl}">`:''}</div>`;});});
@@ -117,11 +81,88 @@ const libroRef=ref(db,'libro_visitas');
 window.firmarLibro=async()=>{const p=document.getElementById('placaLibro').value.trim()||"Anonimo",m=document.getElementById('mensajeLibro').value.trim();if(!m)return alert('Escribe mensaje');await push(libroRef,{placa:p,mensaje:m,fecha:Date.now()});document.getElementById('placaLibro').value='';document.getElementById('mensajeLibro').value='';};
 onValue(libroRef,s=>{const c=document.getElementById('listaLibro');c.innerHTML='';const d=s.val();if(!d)return;Object.values(d).reverse().forEach(f=>{c.innerHTML+=`<div class="post"><b>${f.placa}</b><p>${f.mensaje}</p></div>`;});});
 const contadorRT=ref(db,"visitas_contador");get(contadorRT).then(s=>{if(!s.exists())set(contadorRT,1);else set(contadorRT,s.val()+1);});onValue(contadorRT,s=>{if(s.exists())document.getElementById('contador').innerText=s.val();});
+
+// MAPA MUNDIAL FIX
 const map=L.map('worldMap',{worldCopyJump:true}).setView([20,0],2);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:18}).addTo(map);
-const countryCoords={MX:[23,-102],US:[39.8,-98.5],CA:[56,-106],BR:[-14.2,-51.9],AR:[-38.4,-63.6],CO:[4.5,-74],PE:[-9.1,-75],CL:[-35.6,-71.5],VE:[6.4,-66.5],ES:[40.4,-3.7],FR:[46.2,2.2],DE:[51.1,10.4],IT:[41.8,12.5],GB:[55.3,-3.4],RU:[61,-105],CN:[35.8,104],JP:[36.2,138],IN:[20.5,78.9],AU:[-25.2,133.7],EC:[-1.8,-78.1],GT:[15.7,-90.2],CR:[9.7,-83.7],PT:[39.3,-8.2],UY:[-32.5,-55.7]};
-async function cargarMapaMundial(){const snap=await getDocs(collection(fdb,"paises"));let listaHtml="";map.eachLayer(l=>{if(l instanceof L.CircleMarker)map.removeLayer(l);});snap.forEach(d=>{const code=d.id.toUpperCase();const data=d.data();const coords=countryCoords[code]||[Math.random()*140-70,Math.random()*360-180];L.circleMarker(coords,{radius:6+Math.min(data.total,10),color:'#00ff88',fillColor:'#00ff41',fillOpacity:0.9,weight:2}).addTo(map).bindPopup(`<b style="color:#00ff88">${code} - ${data.nombre}</b><br>Visitas: ${data.total}`);const flag=code.replace(/./g,c=>String.fromCodePoint(127397+c.charCodeAt()));listaHtml+=`<span style="border:1px solid #00ff88;padding:4px 8px;background:#000;border-radius:6px">${flag} ${data.nombre} <b style="color:#00ff88">${data.total}</b></span>`;});document.getElementById('paisesLista').innerHTML=listaHtml||"Aún no hay marcas";}
-async function registrarPais(){try{const ip=await fetch('https://ipapi.co/json/').then(r=>r.json()).catch(()=>({country_code:'MX',country_name:'Mexico'}));const code=(ip.country_code||'MX').toUpperCase();await setDoc(doc(fdb,"paises",code),{nombre:ip.country_name||code,total:increment(1)},{merge:true});cargarMapaMundial();}catch(e){cargarMapaMundial();}}registrarPais();
+const markersLayer = L.layerGroup().addTo(map);
+
+const countryCoords={
+MX:[23,-102],US:[39.8,-98.5],CA:[56,-106],BR:[-14.2,-51.9],AR:[-38.4,-63.6],CO:[4.5,-74],PE:[-9.1,-75],CL:[-35.6,-71.5],VE:[6.4,-66.5],BO:[-16.2,-63.5],PY:[-23.4,-58.4],UY:[-32.5,-55.7],EC:[-1.8,-78.1],GT:[15.7,-90.2],HN:[15.2,-86.2],SV:[13.7,-88.8],NI:[12.8,-85],CR:[9.7,-83.7],PA:[8.5,-80],DO:[18.7,-70.1],PR:[18.2,-66.5],
+ES:[40.4,-3.7],FR:[46.2,2.2],DE:[51.1,10.4],IT:[41.8,12.5],GB:[55.3,-3.4],PT:[39.3,-8.2],NL:[52.1,5.3],BE:[50.5,4.4],CH:[46.8,8.2],RU:[61,-105],UA:[48.3,31],PL:[51.9,19.1],RO:[45.9,24.9],SE:[60.1,18.6],NO:[60.4,8.4],DK:[56.2,9.5],TR:[38.9,35.2],
+CN:[35.8,104],JP:[36.2,138],IN:[20.5,78.9],KR:[35.9,127.7],ID:[-0.7,113.9],PH:[12.8,121.7],AU:[-25.2,133.7],NZ:[-40.9,174.8],ZA:[-30.5,22.9],NG:[9.0,8.6],EG:[26.8,30.8],MA:[31.7,-7.0],AE:[23.4,53.8],SA:[23.8,45.0]
+};
+
+function flagEmoji(code){
+  return code.toUpperCase().replace(/./g,c=>String.fromCodePoint(127397+c.charCodeAt()));
+}
+
+async function cargarMapaMundial(){
+  try{
+    const snap = await getDocs(collection(fdb,"paises"));
+    markersLayer.clearLayers();
+    let listaHtml = "";
+    if(snap.empty){
+      document.getElementById('paisesLista').innerHTML="Aún no hay marcas, recargando...";
+      return;
+    }
+    snap.forEach(d=>{
+      const code = d.id.toUpperCase();
+      const data = d.data();
+      const coords = countryCoords[code] || [data.lat||20, data.lng||0];
+      const size = 7 + Math.min(data.total||1, 12);
+      L.circleMarker(coords,{
+        radius:size,
+        color:'#00ff88',
+        fillColor:'#00ff41',
+        fillOpacity:0.85,
+        weight:2
+      }).addTo(markersLayer).bindPopup(`<b style="color:#00ff88">${flagEmoji(code)} ${data.nombre||code}</b><br>Visitas: ${data.total}`);
+      listaHtml+=`<span style="border:1px solid #00ff88;padding:4px 8px;background:#000;border-radius:6px">${flagEmoji(code)} ${data.nombre||code} <b style="color:#00ff88">${data.total}</b></span>`;
+    });
+    document.getElementById('paisesLista').innerHTML=listaHtml;
+  }catch(e){
+    console.error("Error mapa:", e);
+  }
+}
+
+async function obtenerPais(){
+  // intenta 2 servicios por si uno falla
+  try{
+    let data = await fetch('https://ipwho.is/').then(r=>r.json());
+    if(data && data.country_code){
+      return {code:data.country_code, name:data.country, lat:data.latitude, lng:data.longitude};
+    }
+  }catch(e){}
+  try{
+    let data = await fetch('https://ipapi.co/json/').then(r=>r.json());
+    if(data && data.country_code){
+      return {code:data.country_code, name:data.country_name, lat:data.latitude, lng:data.longitude};
+    }
+  }catch(e){}
+  return {code:'MX', name:'Mexico', lat:23, lng:-102};
+}
+
+async function registrarPais(){
+  try{
+    const info = await obtenerPais();
+    const code = (info.code||'MX').toUpperCase();
+    await setDoc(doc(fdb,"paises",code),{
+      nombre:info.name||code,
+      total:increment(1),
+      lat: info.lat||countryCoords[code]?.[0]||0,
+      lng: info.lng||countryCoords[code]?.[1]||0
+    },{merge:true});
+  }catch(e){
+    console.error("Error registrar pais", e);
+  } finally {
+    cargarMapaMundial();
+  }
+}
+
+// carga inicial y luego cada vez que cambia
+cargarMapaMundial();
+registrarPais();
 </script>
 </body>
 </html>
