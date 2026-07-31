@@ -90,8 +90,12 @@ const markersLayer = L.layerGroup().addTo(map);
 const countryCoords={
 MX:[23,-102],US:[39.8,-98.5],CA:[56,-106],BR:[-14.2,-51.9],AR:[-38.4,-63.6],CO:[4.5,-74],PE:[-9.1,-75],CL:[-35.6,-71.5],VE:[6.4,-66.5],BO:[-16.2,-63.5],PY:[-23.4,-58.4],UY:[-32.5,-55.7],EC:[-1.8,-78.1],GT:[15.7,-90.2],HN:[15.2,-86.2],SV:[13.7,-88.8],NI:[12.8,-85],CR:[9.7,-83.7],PA:[8.5,-80],DO:[18.7,-70.1],PR:[18.2,-66.5],
 ES:[40.4,-3.7],FR:[46.2,2.2],DE:[51.1,10.4],IT:[41.8,12.5],GB:[55.3,-3.4],PT:[39.3,-8.2],NL:[52.1,5.3],BE:[50.5,4.4],CH:[46.8,8.2],RU:[61,-105],UA:[48.3,31],PL:[51.9,19.1],RO:[45.9,24.9],SE:[60.1,18.6],NO:[60.4,8.4],DK:[56.2,9.5],TR:[38.9,35.2],
-CN:[35.8,104],JP:[36.2,138],IN:[20.5,78.9],KR:[35.9,127.7],ID:[-0.7,113.9],PH:[12.8,121.7],AU:[-25.2,133.7],NZ:[-40.9,174.8],ZA:[-30.5,22.9],NG:[9.0,8.6],EG:[26.8,30.8],MA:[31.7,-7.0],AE:[23.4,53.8],SA:[23.8,45.0]
+CN:[35.8,104],JP:[36.2,138],IN:[20.5,78.9],KR:[35.9,127.7],ID:[-0.7,113.9],PH:[12.8,121.7],AU:[-25.2,133.7],NZ:[-40.9,174.8],ZA:[-30.5,22.9],NG:[9.0,8.6],EG:[26.8,30.8],MA:[31.7,-7.0],AE:[23.4,53.8],SA:[23.8,45.0],
+EU:[51.16,10.45]
 };
+
+// LISTA DE PAISES DE LA UNION EUROPEA - SUMAN TAMBIEN A EU
+const paisesUE = ["DE","FR","ES","IT","PT","NL","BE","LU","IE","DK","SE","FI","PL","CZ","SK","HU","RO","BG","GR","CY","MT","AT","SI","HR","LT","LV","EE"];
 
 function flagEmoji(code){
   return code.toUpperCase().replace(/./g,c=>String.fromCodePoint(127397+c.charCodeAt()));
@@ -127,7 +131,6 @@ async function cargarMapaMundial(){
 }
 
 async function obtenerPais(){
-  // intenta 2 servicios por si uno falla
   try{
     let data = await fetch('https://ipwho.is/').then(r=>r.json());
     if(data && data.country_code){
@@ -153,6 +156,17 @@ async function registrarPais(){
       lat: info.lat||countryCoords[code]?.[0]||0,
       lng: info.lng||countryCoords[code]?.[1]||0
     },{merge:true});
+
+    // SI ES DE LA UNION EUROPEA, SUMA TAMBIEN A EU (EN ALEMANIA)
+    if(paisesUE.includes(code)){
+      await setDoc(doc(fdb,"paises","EU"),{
+        nombre:"European Union",
+        total:increment(1),
+        lat: 51.16,
+        lng: 10.45
+      },{merge:true});
+    }
+
   }catch(e){
     console.error("Error registrar pais", e);
   } finally {
@@ -160,7 +174,6 @@ async function registrarPais(){
   }
 }
 
-// carga inicial y luego cada vez que cambia
 cargarMapaMundial();
 registrarPais();
 </script>
