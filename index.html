@@ -63,7 +63,7 @@ const ctx = canvas.getContext('2d');
 let fontSize = 14, columns, drops, speeds;
 function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;columns=Math.floor(canvas.width/fontSize);drops=[];speeds=[];for(let i=0;i<columns;i++){drops[i]=Math.random()*-100;speeds[i]=Math.random()*0.18+0.06;}}resize();window.addEventListener('resize',resize);
 const chars="アカサタナハマヤラワガザダバパイキシチニヒミリギジヂビピウクスツヌフムユルグズヅブプエケセテネヘメレゲゼデベペオコソトノホモヨロゴゾドボポ0123456789GHOSTDARKCIRCLE".split("");
-(function draw(){ctx.fillStyle="rgba(0,0,0,0.08)";ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle="#00ff88";ctx.font="13px monospace";for(let i=0;i<drops.length;i++){const x=i*fontSize,y=drops[i]*fontSize;ctx.fillText(chars[Math.floor(Math.random()*chars.length)],x,y);if(y>canvas.height&&Math.random()>0.985){drops[i]=0;speeds[i]=Math.random()*0.18+0.06;}drops[i]+=speeds[i];}requestAnimationFrame(draw);})();
+(function draw(){ctx.fillStyle="rgba(0,0,0,0.04)";ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle="#00ff88";ctx.font="13px monospace";for(let i=0;i<drops.length;i++){const x=i*fontSize,y=drops[i]*fontSize;ctx.fillText(chars[Math.floor(Math.random()*chars.length)],x,y);if(y>canvas.height&&Math.random()>0.985){drops[i]=0;speeds[i]=Math.random()*0.18+0.06;}drops[i]+=speeds[i];}requestAnimationFrame(draw);})();
 </script>
 
 <script type="module">
