@@ -45,7 +45,7 @@ input,textarea{background:#000!important;border:1px solid #333!important;color:w
 
 <div class="card" style="max-width:650px">
 <h2 style="color:#00ff88">🌎 MAPA MUNDIAL EN VIVO</h2>
-<p style="font-size:12px;color:#888"> </p>
+<p style="font-size:12px;color:#888">Haz zoom, arrastra. Cada pulso verde es una sombra que entró.</p>
 <div id="worldMap"></div>
 <div id="paisesLista" style="margin-top:12px;font-size:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center"></div>
 </div>
@@ -58,7 +58,7 @@ input,textarea{background:#000!important;border:1px solid #333!important;color:w
 <footer style="color:#444;font-size:11px;">Spike Black - Ghost Dark Circle © 2026</footer>
 
 <script>
-// MATRIX PERFECCIONADA - EFECTO CINE
+// MATRIX LENTA SIN CABEZA BLANCA - SOLO VERDE
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 let fontSize = 14;
@@ -72,37 +72,29 @@ function resize(){
   speeds = [];
   for(let i=0;i<columns;i++){
     drops[i] = Math.random() * -100;
-    speeds[i] = Math.random() * 0.4 + 0.15; // velocidad lenta variada 0.15 a 0.55
+    speeds[i] = Math.random() * 0.18 + 0.06; // 0.06 a 0.24 = ULTRA LENTO
   }
 }
 resize();
 window.addEventListener('resize', resize);
 
-const chars = "アカサタナハマヤラワガザダバパイキシチニヒミリギジヂビピウクスツヌフムユルグズヅブプエケセテネヘメレゲゼデベペオコソトノホモヨロゴゾドボポ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const chars = "アカサタナハマヤラワガザダバパイキシチニヒミリギジヂビピウクスツヌフムユルグズヅブプエケセテネヘメレゲゼデベペオコソトノホモヨロゴゾドボポ0123456789GHOSTDARKCIRCLE".split("");
 
 function draw(){
-  ctx.fillStyle = "rgba(0,0,0,0.06)";
+  ctx.fillStyle = "rgba(0,0,0,0.08)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "#00ff88";
+  ctx.font = "13px monospace";
 
   for(let i=0;i<drops.length;i++){
     const x = i * fontSize;
     const y = drops[i] * fontSize;
+    const char = chars[Math.floor(Math.random()*chars.length)];
+    ctx.fillText(char, x, y);
 
-    // cabeza blanca brillante
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 14px monospace";
-    ctx.fillText(chars[Math.floor(Math.random()*chars.length)], x, y);
-
-    // estela verde
-    ctx.fillStyle = "#00ff88";
-    ctx.font = "13px monospace";
-    ctx.fillText(chars[Math.floor(Math.random()*chars.length)], x, y - fontSize);
-    ctx.fillStyle = "rgba(0,255,136,0.5)";
-    ctx.fillText(chars[Math.floor(Math.random()*chars.length)], x, y - fontSize*2);
-
-    if(y > canvas.height && Math.random() > 0.975){
+    if(y > canvas.height && Math.random() > 0.985){
       drops[i] = 0;
-      speeds[i] = Math.random() * 0.4 + 0.15;
+      speeds[i] = Math.random() * 0.18 + 0.06;
     }
     drops[i] += speeds[i];
   }
