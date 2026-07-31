@@ -8,7 +8,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 body{background:#000;color:white;font-family:Arial,sans-serif;margin:0;padding:15px;text-align:center;position:relative;overflow-x:hidden}
-#matrix{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:0.55;pointer-events:none}
+#matrix{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:1;pointer-events:none}
 .logo{width:260px;height:260px;margin:15px auto;border-radius:50%;overflow:hidden;box-shadow:0 0 35px #00ff88,0 0 60px #00ff88;background:#000;border:2px solid #00ff88}
 .logo img{width:100%;height:100%;object-fit:cover}
 h1{color:#ff0000;font-size:34px;font-weight:900;margin:10px 0 5px;text-shadow:0 0 15px #00ff88;letter-spacing:2px}
@@ -45,7 +45,7 @@ input,textarea{background:#000!important;border:1px solid #333!important;color:w
 
 <div class="card" style="max-width:650px">
 <h2 style="color:#00ff88">🌎 MAPA MUNDIAL EN VIVO</h2>
-<p style="font-size:12px;color:#888">Haz zoom, arrastra. Cada pulso verde es una sombra que entró.</p>
+<p style="font-size:12px;color:#888"> </p>
 <div id="worldMap"></div>
 <div id="paisesLista" style="margin-top:12px;font-size:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center"></div>
 </div>
@@ -58,33 +58,57 @@ input,textarea{background:#000!important;border:1px solid #333!important;color:w
 <footer style="color:#444;font-size:11px;">Spike Black - Ghost Dark Circle © 2026</footer>
 
 <script>
-// MATRIX ULTRA DENSA + ULTRA LENTA - FINAL CORREGIDO
-const canvas=document.getElementById('matrix');
-const ctx=canvas.getContext('2d');
-function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}resize();window.addEventListener('resize',resize);
-const chars="アカサタナハマヤラワガザダバパイキシチニヒミリギジヂビピウクスツヌフムユルグズヅブプエケセテネヘメレゲゼデベペオコソトノホモヨロゴゾドボポ0123456789GHOSTDARK".split("");
-let drops=[];
-function init(){
-  drops=[];
-  let cols = Math.floor(window.innerWidth / 9);
-  for(let i=0;i<cols;i++) drops[i]=Math.random()*-150;
+// MATRIX PERFECCIONADA - EFECTO CINE
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+let fontSize = 14;
+let columns, drops, speeds;
+
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  columns = Math.floor(canvas.width / fontSize);
+  drops = [];
+  speeds = [];
+  for(let i=0;i<columns;i++){
+    drops[i] = Math.random() * -100;
+    speeds[i] = Math.random() * 0.4 + 0.15; // velocidad lenta variada 0.15 a 0.55
+  }
 }
-init();window.addEventListener('resize',init);
-(function draw(){
-  ctx.fillStyle="rgba(0,0,0,0.05)";
+resize();
+window.addEventListener('resize', resize);
+
+const chars = "アカサタナハマヤラワガザダバパイキシチニヒミリギジヂビピウクスツヌフムユルグズヅブプエケセテネヘメレゲゼデベペオコソトノホモヨロゴゾドボポ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
+function draw(){
+  ctx.fillStyle = "rgba(0,0,0,0.06)";
   ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="#00ff88";
-  ctx.font="12px monospace";
+
   for(let i=0;i<drops.length;i++){
-    const char1 = chars[Math.floor(Math.random()*chars.length)];
-    const char2 = chars[Math.floor(Math.random()*chars.length)];
-    ctx.fillText(char1, i*9, drops[i]*12);
-    ctx.fillText(char2, i*9, drops[i]*12 + 12);
-    if(drops[i]*12 > canvas.height && Math.random() > 0.96) drops[i]=0;
-    drops[i] += 0.12;
+    const x = i * fontSize;
+    const y = drops[i] * fontSize;
+
+    // cabeza blanca brillante
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 14px monospace";
+    ctx.fillText(chars[Math.floor(Math.random()*chars.length)], x, y);
+
+    // estela verde
+    ctx.fillStyle = "#00ff88";
+    ctx.font = "13px monospace";
+    ctx.fillText(chars[Math.floor(Math.random()*chars.length)], x, y - fontSize);
+    ctx.fillStyle = "rgba(0,255,136,0.5)";
+    ctx.fillText(chars[Math.floor(Math.random()*chars.length)], x, y - fontSize*2);
+
+    if(y > canvas.height && Math.random() > 0.975){
+      drops[i] = 0;
+      speeds[i] = Math.random() * 0.4 + 0.15;
+    }
+    drops[i] += speeds[i];
   }
   requestAnimationFrame(draw);
-})();
+}
+draw();
 </script>
 
 <script type="module">
