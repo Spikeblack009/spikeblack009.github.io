@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GHOST DARK CIRCLE - Bienvenidos al Dark Side</title>
+<title>GHOST DARK CIRCLE</title>
 <style>
 :root{--bg:#000;--neon:#00ff41;--text:#e6ffe6;}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -20,7 +20,7 @@ main{max-width:700px;margin:25px auto;padding:0 15px}
 .card textarea{min-height:80px;resize:vertical}
 .btn-ghost{width:100%;background:var(--neon);color:#000;border:none;padding:13px;font-weight:bold;cursor:pointer;letter-spacing:1px;margin-top:8px}
 .sombra-item{border:1px dashed var(--neon);padding:10px;margin:8px 0;font-size:13px;background:#000}
-.flag{width:20px;height:14px;object-fit:cover;border-radius:2px;vertical-align:middle;margin-right:6px;border:1px solid #222}
+.flag{width:20px;height:14px;object-fit:cover;border-radius:2px;vertical-align:middle;margin-right:6px;border:1px solid #222;display:inline-block}
 </style>
 </head>
 <body>
@@ -38,7 +38,7 @@ main{max-width:700px;margin:25px auto;padding:0 15px}
 </div>
 <div class="card" id="sombra">
 <p style="color:var(--neon);font-weight:bold;font-size:18px">FUISTE ELEGIDO.</p>
-<p style="font-size:13px;margin-bottom:15px">Esto es Un sub-mundo vivo para los que viven en la Oscuridad.</p>
+<p style="font-size:13px;margin-bottom:15px">Esto es Un sub-mundo vivo para los que viven en las sombras.</p>
 <input type="text" id="ghostName" placeholder="Tu nombre">
 <textarea id="ghostMsg" placeholder="Tu mensaje..."></textarea>
 <button class="btn-ghost" id="btnSombra">DEJAR SOMBRA</button>
@@ -112,46 +112,53 @@ async function cargarSombras(){
 }
 cargarSombras();
 
+// --- CODIGO CORREGIDO: SOLO MX / US / EU Y BANDERAS QUE SI SE VEN ---
 try{
   try{ await deleteDoc(doc(db,"paises","undefined")); }catch(e){}
-  let rawCode='';
+
+  let rawCode = 'EU';
   try{
-    const r1=await fetch('https://ipapi.co/json/').then(r=>r.json());
-    if(r1&&r1.country_code) rawCode=String(r1.country_code).toUpperCase().trim();
-    else throw new Error('fail');
+    const r1 = await fetch('https://ipapi.co/json/').then(r=>r.json());
+    if(r1 && r1.country_code) rawCode = String(r1.country_code).toUpperCase().trim();
+    else throw new Error('vacio');
   }catch(e){
     try{
-      const r2=await fetch('https://ipwho.is/').then(r=>r.json());
-      if(r2&&r2.country_code) rawCode=String(r2.country_code).toUpperCase().trim();
-    }catch(e2){ rawCode='EU'; }
+      const r2 = await fetch('https://ipwho.is/').then(r=>r.json());
+      if(r2 && r2.country_code) rawCode = String(r2.country_code).toUpperCase().trim();
+    }catch(e2){ rawCode = 'EU'; }
   }
 
-  let finalCode, finalNombre;
-  if(rawCode==='MX'){ finalCode='MX'; finalNombre='México'; }
-  else if(rawCode==='US'){ finalCode='US'; finalNombre='Estados Unidos'; }
-  else { finalCode='EU'; finalNombre='Unión Europea'; }
+  let finalCode = (rawCode === 'MX' ? 'MX' : rawCode === 'US' ? 'US' : 'EU');
+  let finalNombre = finalCode === 'MX' ? 'México' : finalCode === 'US' ? 'Estados Unidos' : 'Unión Europea';
 
   await setDoc(doc(db,"paises",finalCode),{nombre:finalNombre,total:increment(1)},{merge:true});
 
   const snap=await getDocs(collection(db,"paises"));
   const datos={}; snap.forEach(d=>{ datos[d.id]=d.data(); });
 
+  // BANDERAS QUE SIEMPRE SE VEN (MX y US con imagen, EU con SVG dibujado)
+  const MX_FLAG = `<img src="https://flagcdn.com/w20/mx.png" class="flag">`;
+  const US_FLAG = `<img src="https://flagcdn.com/w20/us.png" class="flag">`;
+  const EU_FLAG = `<svg class="flag" viewBox="0 0 27 16" xmlns="http://www.w3.org/2000/svg" style="background:#003399"><g fill="#FFCC00"><circle cx="13.5" cy="2.8" r="0.9"/><circle cx="16.2" cy="3.6" r="0.9"/><circle cx="18" cy="5.8" r="0.9"/><circle cx="18" cy="8.6" r="0.9"/><circle cx="16.2" cy="10.8" r="0.9"/><circle cx="13.5" cy="11.6" r="0.9"/><circle cx="10.8" cy="10.8" r="0.9"/><circle cx="9" cy="8.6" r="0.9"/><circle cx="9" cy="5.8" r="0.9"/><circle cx="10.8" cy="3.6" r="0.9"/></g></svg>`;
+
   const orden=[
-    {id:'MX', flag:'https://flagcdn.com/w20/mx.png', nombre:'México'},
-    {id:'US', flag:'https://flagcdn.com/w20/us.png', nombre:'Estados Unidos'},
-    {id:'EU', flag:'https://flagcdn.com/w20/eu.png', nombre:'Unión Europea'}
+    {id:'MX', flag:MX_FLAG, nombre:'México'},
+    {id:'US', flag:US_FLAG, nombre:'Estados Unidos'},
+    {id:'EU', flag:EU_FLAG, nombre:'Unión Europea'}
   ];
 
   let html='';
   orden.forEach(o=>{
-    const total=datos[o.id]?.total||0;
-    if(total>0){
-      html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px dashed #111"><span><img src="${o.flag}" class="flag">${o.nombre}</span><span style="color:#00ff41;font-weight:bold">${total}</span></div>`;
+    const total = datos[o.id]?.total || 0;
+    if(total > 0){
+      html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px dashed #111"><span>${o.flag} ${o.nombre}</span><span style="color:#00ff41;font-weight:bold">${total}</span></div>`;
     }
   });
-  document.getElementById('paisesBox').innerHTML=html||'<div><img src="https://flagcdn.com/w20/eu.png" class="flag">Unión Europea <span style="color:#00ff41">1</span></div>';
+
+  document.getElementById('paisesBox').innerHTML = html || `<div>${EU_FLAG} Unión Europea <span style="color:#00ff41">1</span></div>`;
+
 }catch(e){
-  document.getElementById('paisesBox').innerHTML='<div><img src="https://flagcdn.com/w20/eu.png" class="flag">Unión Europea</div>';
+  document.getElementById('paisesBox').innerHTML = 'Error cargando';
 }
 </script>
 </body>
