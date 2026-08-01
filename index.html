@@ -54,7 +54,7 @@ input,textarea{background:#000!important;border:1px solid #333!important;color:w
 
 <div class="card">
 <h2>📢 MURO DE SPIKE</h2>
-<p style="font-size:12px;color:#00ff88;margin-bottom:10px">💀 100% anónimo. Nadie sabrá quién fuiste.</p>
+<p style="font-size:12px;color:#00ff88;margin-bottom:10px"> </p>
 <input id="nombre" placeholder="¿Quién habla desde las sombras?">
 <textarea id="mensaje" placeholder="¿Qué oscuridad te acecha esta noche y desde dónde nos miras?"></textarea>
 <input type="file" id="foto" accept="image/*">
@@ -89,7 +89,7 @@ window.publicar=async()=>{
   let nRaw=document.getElementById('nombre').value.trim();
   let m=document.getElementById('mensaje').value.trim();
   let file=document.getElementById('foto').files[0];
-  if(!m)return alert('Escribe tu oscuridad primero 💀');
+  if(!m)return alert('Escribe tu oscuridad primero ');
   let n = nRaw || `Fantasma #${Math.floor(Math.random()*900)+100}`;
   let url='';
   if(file){const r=sRef(storage,'muro/'+Date.now()+'_'+file.name);await uploadBytes(r,file);url=await getDownloadURL(r);}
