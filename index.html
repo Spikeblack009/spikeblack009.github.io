@@ -54,15 +54,14 @@ input,textarea{background:#000!important;border:1px solid #333!important;color:w
 
 <div class="card">
 <h2>📢 MURO DE SPIKE</h2>
-<p style="font-size:12px;color:#00ff88;margin-bottom:10px"> </p>
-<input id="nombre" placeholder="¿Quién habla desde las sombras?">
+<input id="nombre" placeholder="Tu sombra...">
 <textarea id="mensaje" placeholder="¿Qué oscuridad te acecha esta noche y desde dónde nos miras?"></textarea>
 <input type="file" id="foto" accept="image/*">
-<button class="btn-red" onclick="publicar()">👁️ DEJAR MI SOMBRA EN EL CÍRCULO</button>
+<button class="btn-red" onclick="publicar()">👁️ DEJA TU HUELLA EN EL MURO</button>
 <div id="muro" style="margin-top:15px;"></div>
 </div>
 
-<div class="card"><h2>📖 LIBRO DE VISITAS</h2><input id="placaLibro" placeholder="Tu sombra..."><textarea id="mensajeLibro" placeholder="Deja tu huella en el círculo..."></textarea><button class="btn-verde2" onclick="firmarLibro()">Firmar como fantasma</button><div id="listaLibro" style="margin-top:15px;"></div></div>
+<div class="card"><h2>📖 LIBRO DE VISITAS</h2><textarea id="mensajeLibro" placeholder="Muéstranos tu pensar..."></textarea><button class="btn-verde2" onclick="firmarLibro()">Firmar como fantasma</button><div id="listaLibro" style="margin-top:15px;"></div></div>
 <button class="btn-whats" onclick="window.open('https://wa.me/523350807690','_blank')">💬 WHATSAPP</button>
 <div class="contador">👁️ VISITAS: <span id="contador">cargando...</span></div>
 <footer style="color:#444;font-size:11px;">Spike Black - Ghost Dark Circle © 2026</footer>
@@ -89,7 +88,7 @@ window.publicar=async()=>{
   let nRaw=document.getElementById('nombre').value.trim();
   let m=document.getElementById('mensaje').value.trim();
   let file=document.getElementById('foto').files[0];
-  if(!m)return alert('Escribe tu oscuridad primero ');
+  if(!m)return alert('Escribe tu oscuridad primero');
   let n = nRaw || `Fantasma #${Math.floor(Math.random()*900)+100}`;
   let url='';
   if(file){const r=sRef(storage,'muro/'+Date.now()+'_'+file.name);await uploadBytes(r,file);url=await getDownloadURL(r);}
@@ -101,12 +100,11 @@ onValue(muroRef,s=>{const c=document.getElementById('muro');c.innerHTML='';const
 
 const libroRef=ref(db,'libro_visitas');
 window.firmarLibro=async()=>{
-  let pRaw=document.getElementById('placaLibro').value.trim();
   let m=document.getElementById('mensajeLibro').value.trim();
   if(!m)return alert('Escribe mensaje');
-  let p = pRaw || `Fantasma #${Math.floor(Math.random()*900)+100}`;
+  let p = `Fantasma #${Math.floor(Math.random()*900)+100}`;
   await push(libroRef,{placa:p,mensaje:m,fecha:Date.now()});
-  document.getElementById('placaLibro').value='';document.getElementById('mensajeLibro').value='';
+  document.getElementById('mensajeLibro').value='';
 };
 onValue(libroRef,s=>{const c=document.getElementById('listaLibro');c.innerHTML='';const d=s.val();if(!d)return;Object.values(d).reverse().forEach(f=>{c.innerHTML+=`<div class="post"><b>${f.placa}</b><p>${f.mensaje}</p></div>`;});});
 
