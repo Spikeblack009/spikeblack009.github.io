@@ -22,9 +22,9 @@ h1{color:#ff0000;font-size:34px;font-weight:900;margin:10px 0 5px;text-shadow:0 
 input,textarea{background:#000!important;border:1px solid #333!important;color:white!important;border-radius:14px;padding:14px;margin:8px 0;width:100%;box-sizing:border-box}
 .btn-red{background:linear-gradient(90deg,#ff0033,#cc0000);color:white;border:none;padding:14px;border-radius:14px;font-weight:900;width:100%;cursor:pointer;margin-top:10px}
 .btn-verde2{background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;border:none;padding:14px;border-radius:14px;font-weight:900;width:100%;cursor:pointer;margin-top:10px}
-.post{background:#000!important;padding:14px;border-radius:14px;margin-top:14px;border:1px solid #222!important;border-left:4px solid #00ff88!important;text-align:left}
+.post{background:#000!important;padding:14px;border-radius:14px;margin-top:14px;border:1px solid #222!important;border-left:4px solid #00ff88!important;text-align:left;word-break:break-word}
 .post b{color:#00ff88}
-.post img{width:100%;border-radius:12px;margin-top:10px;border:1px solid #333}
+.post img,.post video,.post iframe{width:100%;border-radius:12px;margin-top:10px;border:1px solid #333}
 .contador{color:#00ff88;font-size:15px;margin:15px 0 40px;font-weight:bold;text-shadow:0 0 10px #00ff88}
 .nuyoo-card{max-width:600px;margin:20px auto;background:#0a0a0a;border:1px solid #00ff88;border-radius:22px;padding:15px;display:flex;align-items:center;gap:15px;box-shadow:0 0 25px rgba(0,255,136,0.25);cursor:pointer;text-align:left;text-decoration:none}
 .nuyoo-card img{width:70px;height:70px;border-radius:12px;border:1px solid #00ff88;object-fit:cover}
@@ -55,9 +55,9 @@ input,textarea{background:#000!important;border:1px solid #333!important;color:w
 <div class="card">
 <h2>📢 MURO DE SPIKE</h2>
 <input id="nombre" placeholder="Tu sombra...">
-<textarea id="mensaje" placeholder="¿Qué oscuridad te acecha esta noche y desde dónde nos miras?"></textarea>
-<input type="file" id="foto" accept="image/*">
-<button class="btn-red" onclick="publicar()"> DEJA TU HUELLA EN EL MURO</button>
+<textarea id="mensaje" placeholder="¿Qué oscuridad te acecha esta noche y desde dónde nos miras? Puedes pegar enlaces, fotos o videos"></textarea>
+<input type="file" id="foto" accept="image/*,video/*">
+<button class="btn-red" onclick="publicar()">👁️ DEJA TU HUELLA EN EL MURO</button>
 <div id="muro" style="margin-top:15px;"></div>
 </div>
 
@@ -83,20 +83,60 @@ import { getFirestore, doc, setDoc, increment, collection, getDocs } from "https
 const firebaseConfig={apiKey:"AIzaSyAR7kUWo6MKaOUgFTiuDaQXM5TYbfNcZKU",authDomain:"ghost-dark-circle.firebaseapp.com",databaseURL:"https://ghost-dark-circle-default-rtdb.firebaseio.com",projectId:"ghost-dark-circle",storageBucket:"ghost-dark-circle.firebasestorage.app",messagingSenderId:"1049315311255",appId:"1:1049315311255:web:005c42fbf8bd00bec6b3d2"};
 const app=initializeApp(firebaseConfig);const db=getDatabase(app);const storage=getStorage(app);const fdb=getFirestore(app);
 
+// Convierte enlaces en clickeables y si es video lo muestra
+function formatearTexto(texto){
+  if(!texto) return "";
+  let t = texto.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  t = t.replace(/(https?:\/\/[^\s]+)/g, (url)=>{
+    // video directo
+    if(url.match(/\.(mp4|webm|mov|ogg)(\?.*)?$/i)){
+      return `<a href="${url}" target="_blank" style="color:#00ff88">${url}</a><br><video src="${url}" controls></video>`;
+    }
+    // detectar reproductor externo sin nombrar
+    let id = null;
+    let m1 = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+    if(m1) id = m1[1];
+    if(id){
+      return `<a href="${url}" target="_blank" style="color:#00ff88">${url}</a><br><iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`;
+    }
+    return `<a href="${url}" target="_blank" style="color:#00ff88;text-decoration:underline">${url}</a>`;
+  });
+  return t;
+}
+
+function renderArchivo(url){
+  if(!url) return "";
+  if(url.match(/\.(mp4|webm|mov|ogg)/i) || url.includes("video")){
+    return `<video src="${url}" controls></video>`;
+  }
+  return `<img src="${url}">`;
+}
+
 const muroRef=ref(db,'muro_dark_circle');
 window.publicar=async()=>{
   let nRaw=document.getElementById('nombre').value.trim();
   let m=document.getElementById('mensaje').value.trim();
   let file=document.getElementById('foto').files[0];
-  if(!m)return alert('Escribe tu oscuridad primero');
+  if(!m &&!file)return alert('Escribe algo o sube archivo');
   let n = nRaw || `Fantasma #${Math.floor(Math.random()*900)+100}`;
   let url='';
-  if(file){const r=sRef(storage,'muro/'+Date.now()+'_'+file.name);await uploadBytes(r,file);url=await getDownloadURL(r);}
+  if(file){
+    const r=sRef(storage,'muro/'+Date.now()+'_'+file.name);
+    await uploadBytes(r,file);
+    url=await getDownloadURL(r);
+  }
   push(muroRef,{nombre:n,mensaje:m,fotoUrl:url,fecha:Date.now()});
   document.getElementById('nombre').value='';document.getElementById('mensaje').value='';document.getElementById('foto').value='';
   alert('Sombra dejada en el círculo 👁️');
 };
-onValue(muroRef,s=>{const c=document.getElementById('muro');c.innerHTML='';const d=s.val();if(!d){c.innerHTML='<p style=color:#666>El círculo está en silencio... sé el primero en romperlo 💀</p>';return;}Object.values(d).reverse().forEach(f=>{c.innerHTML+=`<div class="post"><b>${f.nombre}</b><p style="color:#ddd">${f.mensaje}</p>${f.fotoUrl?`<img src="${f.fotoUrl}">`:''}</div>`;});});
+onValue(muroRef,s=>{
+  const c=document.getElementById('muro');c.innerHTML='';
+  const d=s.val();
+  if(!d){c.innerHTML='<p style=color:#666>El círculo está en silencio... sé el primero en romperlo 💀</p>';return;}
+  Object.values(d).reverse().forEach(f=>{
+    c.innerHTML+=`<div class="post"><b>${f.nombre}</b><p style="color:#ddd">${formatearTexto(f.mensaje||'')}</p>${renderArchivo(f.fotoUrl)}</div>`;
+  });
+});
 
 const libroRef=ref(db,'libro_visitas');
 window.firmarLibro=async()=>{
@@ -106,7 +146,13 @@ window.firmarLibro=async()=>{
   await push(libroRef,{placa:p,mensaje:m,fecha:Date.now()});
   document.getElementById('mensajeLibro').value='';
 };
-onValue(libroRef,s=>{const c=document.getElementById('listaLibro');c.innerHTML='';const d=s.val();if(!d)return;Object.values(d).reverse().forEach(f=>{c.innerHTML+=`<div class="post"><b>${f.placa}</b><p>${f.mensaje}</p></div>`;});});
+onValue(libroRef,s=>{
+  const c=document.getElementById('listaLibro');c.innerHTML='';
+  const d=s.val();if(!d)return;
+  Object.values(d).reverse().forEach(f=>{
+    c.innerHTML+=`<div class="post"><b>${f.placa}</b><p>${formatearTexto(f.mensaje)}</p></div>`;
+  });
+});
 
 const contadorRT=ref(db,"visitas_contador");get(contadorRT).then(s=>{if(!s.exists())set(contadorRT,1);else set(contadorRT,s.val()+1);});onValue(contadorRT,s=>{if(s.exists())document.getElementById('contador').innerText=s.val();});
 
