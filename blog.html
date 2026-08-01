@@ -111,46 +111,64 @@ async function cargarSombras(){
 }
 cargarSombras();
 
+// CORRECCION DEFINITIVA: MX / US / EU + RESPALDO SI NO SE DETECTA
 try{
-  // 1. Borra el documento feo undefined que ya tienes
+  // Borra el undefined feo
   try{ await deleteDoc(doc(db,"paises","undefined")); }catch(e){}
 
-  const ip = await fetch('https://ipapi.co/json/').then(r=>r.json()).catch(()=>({country_code:'EU', country_name:'Unión Europea'}));
-  
-  let code = ip.country_code ? String(ip.country_code).trim().toUpperCase() : 'EU';
-  let nombre = ip.country_name ? String(ip.country_name).trim() : 'Unión Europea';
+  let rawCode = '';
+  let rawName = '';
 
-  // 2. Si viene vacio, lo forzamos a UNION EUROPEA
-  if(!code || code.toLowerCase() === 'undefined' || code.length !== 2){
-    code = 'EU';
-    nombre = 'Unión Europea';
-  }
-  if(!nombre || nombre.toLowerCase() === 'undefined'){
-    nombre = 'Unión Europea';
+  try{
+    const r1 = await fetch('https://ipapi.co/json/').then(r=>r.json());
+    if(r1 && r1.country_code && r1.country_name){
+      rawCode = String(r1.country_code).toUpperCase().trim();
+      rawName = String(r1.country_name).trim();
+    } else throw new Error('ipapi vacio');
+  }catch(e){
+    try{
+      const r2 = await fetch('https://ipwho.is/').then(r=>r.json());
+      if(r2 && r2.country_code){
+        rawCode = String(r2.country_code).toUpperCase().trim();
+        rawName = String(r2.country).trim();
+      }
+    }catch(e2){}
   }
 
-  await setDoc(doc(db,"paises",code),{nombre:nombre,total:increment(1)},{merge:true});
-  
+  // SI NO SE DETECTA -> UNION EUROPEA
+  let finalCode, finalNombre;
+  if(rawCode === 'MX'){ finalCode='MX'; finalNombre='México'; }
+  else if(rawCode === 'US'){ finalCode='US'; finalNombre='Estados Unidos'; }
+  else if(!rawCode || rawCode.toLowerCase()==='undefined' || rawCode.length!==2){
+    finalCode='EU'; finalNombre='Unión Europea';
+  } else {
+    // Si es de otro pais que no es MX/US, lo mandamos a EU para que solo tengas 3
+    finalCode='EU'; finalNombre='Unión Europea';
+  }
+
+  await setDoc(doc(db,"paises",finalCode),{nombre:finalNombre,total:increment(1)},{merge:true});
+
   const snap=await getDocs(collection(db,"paises"));
-  let html=""; 
-  snap.forEach(d=>{
-    const data = d.data();
-    const id = d.id;
-    if(!id || id.toLowerCase() === 'undefined') return;
-    if(!data.nombre || data.nombre.toLowerCase() === 'undefined') return;
+  const datos={}; snap.forEach(d=>{ datos[d.id]=d.data(); });
 
-    let flag = '🌍';
-    if(id === 'EU'){
-      flag = '🇪🇺';
-    } else if(id.length === 2){
-      flag = id.toUpperCase().replace(/./g,c=>String.fromCodePoint(127397+c.charCodeAt()));
+  let html='';
+  const orden=[
+    {id:'MX', flag:'🇲🇽', nombre:'México'},
+    {id:'US', flag:'🇺🇸', nombre:'Estados Unidos'},
+    {id:'EU', flag:'🇪🇺', nombre:'Unión Europea'}
+  ];
+
+  orden.forEach(o=>{
+    const total = datos[o.id]?.total || 0;
+    if(total>0){
+      html+=`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed #111"><span>${o.flag} ${o.nombre}</span><span style="color:#00ff41;font-weight:bold">${total}</span></div>`;
     }
-    
-    html+=`<div style="display:flex;justify-content:space-between;padding:2px 0"><span>${flag} ${data.nombre}</span><span style="color:#00ff41">${data.total}</span></div>`;
   });
-  document.getElementById('paisesBox').innerHTML=html || "Cargando...";
+
+  document.getElementById('paisesBox').innerHTML = html || '🇲🇽 México 0<br>🇺🇸 Estados Unidos 0<br>🇪🇺 Unión Europea 1';
+
 }catch(e){
-  document.getElementById('paisesBox').innerHTML="Error cargando países";
+  document.getElementById('paisesBox').innerHTML="🇪🇺 Unión Europea";
 }
 </script>
 </body>
