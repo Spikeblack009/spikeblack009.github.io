@@ -81,7 +81,7 @@ updateTotal();
 </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, setDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, setDoc, increment, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyAR7kQWOKaAgU1fuDaQWXM7FNZe2KU",
   authDomain: "ghost-dark-circle.firebaseapp.com",
@@ -110,17 +110,48 @@ async function cargarSombras(){
   document.getElementById('listaSombras').innerHTML=h||"<span style='font-size:11px;color:#555'>Sé el primero en dejar sombra</span>";
 }
 cargarSombras();
+
 try{
-  const ip=await fetch('https://ipapi.co/json/').then(r=>r.json()).catch(()=>({country_code:'MX',country_name:'Mexico'}));
-  const code=ip.country_code||'MX';
-  await setDoc(doc(db,"paises",code),{nombre:ip.country_name||code,total:increment(1)},{merge:true});
+  // 1. Borra el documento feo undefined que ya tienes
+  try{ await deleteDoc(doc(db,"paises","undefined")); }catch(e){}
+
+  const ip = await fetch('https://ipapi.co/json/').then(r=>r.json()).catch(()=>({country_code:'EU', country_name:'Unión Europea'}));
+  
+  let code = ip.country_code ? String(ip.country_code).trim().toUpperCase() : 'EU';
+  let nombre = ip.country_name ? String(ip.country_name).trim() : 'Unión Europea';
+
+  // 2. Si viene vacio, lo forzamos a UNION EUROPEA
+  if(!code || code.toLowerCase() === 'undefined' || code.length !== 2){
+    code = 'EU';
+    nombre = 'Unión Europea';
+  }
+  if(!nombre || nombre.toLowerCase() === 'undefined'){
+    nombre = 'Unión Europea';
+  }
+
+  await setDoc(doc(db,"paises",code),{nombre:nombre,total:increment(1)},{merge:true});
+  
   const snap=await getDocs(collection(db,"paises"));
-  let html=""; snap.forEach(d=>{
-    const flag=d.id.toUpperCase().replace(/./g,c=>String.fromCodePoint(127397+c.charCodeAt()));
-    html+=`<div style="display:flex;justify-content:space-between;padding:2px 0"><span>${flag} ${d.data().nombre}</span><span style="color:#00ff41">${d.data().total}</span></div>`;
+  let html=""; 
+  snap.forEach(d=>{
+    const data = d.data();
+    const id = d.id;
+    if(!id || id.toLowerCase() === 'undefined') return;
+    if(!data.nombre || data.nombre.toLowerCase() === 'undefined') return;
+
+    let flag = '🌍';
+    if(id === 'EU'){
+      flag = '🇪🇺';
+    } else if(id.length === 2){
+      flag = id.toUpperCase().replace(/./g,c=>String.fromCodePoint(127397+c.charCodeAt()));
+    }
+    
+    html+=`<div style="display:flex;justify-content:space-between;padding:2px 0"><span>${flag} ${data.nombre}</span><span style="color:#00ff41">${data.total}</span></div>`;
   });
-  document.getElementById('paisesBox').innerHTML=html;
-}catch(e){document.getElementById('paisesBox').innerHTML="Error cargando países"}
+  document.getElementById('paisesBox').innerHTML=html || "Cargando...";
+}catch(e){
+  document.getElementById('paisesBox').innerHTML="Error cargando países";
+}
 </script>
 </body>
 </html>
