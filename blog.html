@@ -1,35 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GHOST DARK CIRCLE</title>
+<style>
+:root{--bg:#000;--neon:#00ff41;--text:#e6ffe6;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:Consolas,monospace;line-height:1.7}
+header{background:#000;border-bottom:2px solid var(--neon);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
+header img{width:42px;height:42px;border-radius:50%;border:2px solid var(--neon);box-shadow:0 0 12px var(--neon);background:#111}
+header h1{color:var(--neon);font-size:1.1rem;letter-spacing:2px;text-shadow:0 0 8px var(--neon)}
+header a{margin-left:auto;color:var(--neon);border:1px solid var(--neon);padding:6px 12px;border-radius:6px;text-decoration:none}
+main{max-width:700px;margin:25px auto;padding:0 15px}
+.card{border:1px solid var(--neon);background:#0a0f0a;padding:20px;margin-bottom:18px;box-shadow:0 0 12px rgba(0,255,65,.15);}
+.post-meta{color:var(--neon);font-size:12px;margin-bottom:10px}
+.post-title{color:#fff;font-size:20px;letter-spacing:1px;margin-bottom:12px}
+.card input,.card textarea{width:100%;background:#000;border:1px solid var(--neon);color:var(--neon);padding:12px;margin:8px 0;font-family:inherit}
+.card textarea{min-height:80px;resize:vertical}
+.btn-ghost{width:100%;background:var(--neon);color:#000;border:none;padding:13px;font-weight:bold;cursor:pointer;letter-spacing:1px;margin-top:8px}
+.sombra-item{border:1px dashed var(--neon);padding:10px;margin:8px 0;font-size:13px;background:#000}
+.flag{width:20px;height:14px;object-fit:cover;border-radius:2px;vertical-align:middle;margin-right:6px;border:1px solid #222;display:inline-block}
+</style>
+</head>
+<body>
+<header>
+<img src="logo.png" onerror="this.src='https://spikeblack009.github.io/logo.png'" alt="G">
+<h1>GHOST DARK CIRCLE</h1>
+<a href="index.html">→ INICIO</a>
+</header>
+<main>
+<div class="card">Bienvenido. Este es GHOST DARK CIRCLE de SPIKE BLACK.<br><br><em>"La oscuridad no es el final. Es donde comienza todo."</em></div>
+<div class="card">
+<p class="post-meta">POST 001 - 11.05.2026 [SPIKE BLACK]</p>
+<h2 class="post-title">EL INICIO DEL CÍRCULO.</h2>
+<p style="color:#a0c0a0;font-size:14px">Esto no es un blog más. Es un registro de lo que pasa cuando nadie mira.<br><br>Si llegaste aquí, no fue por accidente. Ya eres parte.<br><br><a href="#sombra" style="color:var(--neon)">Deja tu sombra abajo.</a></p>
+</div>
+<div class="card" id="sombra">
+<p style="color:var(--neon);font-weight:bold;font-size:18px">FUISTE ELEGIDO.</p>
+<p style="font-size:13px;margin-bottom:15px">Esto es Un sub-mundo vivo para los que viven en la Oscuridad.</p>
+<input type="text" id="ghostName" placeholder="Tu nombre">
+<textarea id="ghostMsg" placeholder="Tu mensaje..."></textarea>
+<button class="btn-ghost" id="btnSombra">DEJAR SOMBRA</button>
+<div id="listaSombras" style="margin-top:12px"></div>
+</div>
+<div style="border:1px solid #00ff41;box-shadow:0 0 12px #00ff41;background:#0d0d0d;padding:20px;border-radius:10px;margin-bottom:25px;text-align:left;font-family:monospace">
+<p id="ghost-counter" style="margin:0 0 10px 0;color:#00ff41;font-weight:bold;font-size:13px">CARGANDO FANTASMAS...</p>
+<div style="border-top:1px dashed #222;padding-top:15px;text-align:center">
+<p style="color:#00ff41;font-size:12px;margin:0 0 12px 0">SOMBRAS QUE HAN CRUZADO EL CÍRCULO</p>
+<div style="margin-bottom:8px"><span style="color:#000;background:#00ff41;padding:2px 8px;border-radius:4px;font-weight:bold;font-size:12px">SOMBRAS</span> <span id="total-counter" style="color:#00ff41;font-weight:bold">...</span></div>
+<div style="margin-top:14px;border-top:1px dashed #222;padding-top:14px">
+<p style="color:#00ff41;font-size:10px;margin:0 0 8px 0">🌎 DE DÓNDE NOS MIRAN - EN VIVO</p>
+<div id="paisesBox" style="font-size:12px;text-align:left;max-width:260px;margin:0 auto;border:1px solid #222;padding:8px;background:#000">Cargando países...</div>
+</div>
+</div>
+</div>
+<div class="comments">
+<h3 style="color:var(--neon);margin-bottom:10px">Comentarios — Únete a la discusión</h3>
+<script src="https://utteranc.es/client.js" repo="SpikeBlack009/SpikeBlack009.github.io" issue-term="pathname" theme="github-dark" crossorigin="anonymous" async></script>
+</div>
+</main>
+<script>
+async function updateGhosts(){
+  const el=document.getElementById('ghost-counter');
+  try{
+    const r=await fetch('https://api.github.com/repos/SpikeBlack009/SpikeBlack009.github.io/issues?state=all&per_page=100');
+    const d=await r.json();
+    const issue=d.find(i=>i.title.includes('blog.html'));
+    el.innerHTML=issue&&issue.comments>0?`FANTASMAS EN EL CÍRCULO: ${issue.comments}`:`FANTASMAS EN EL CÍRCULO: 0 - Sé el primero`;
+  }catch(e){el.innerHTML=`FANTASMAS: 0`}
+}
+updateGhosts(); setInterval(updateGhosts,10000);
 async function updateTotal(){
-  const el=document.getElementById('total-counter');
-  const visitedKey='abacus_visited';
-  const cacheKey='abacus_cache';
-  
-  // Si ya visitó hoy, no vuelvas a hacer hit, usa cache
-  const lastVisit=localStorage.getItem(visitedKey);
-  const today=new Date().toDateString();
-  
-  let url='https://abacus.jasoncameron.dev/hit/spikeblack009-blog/total';
-  if(lastVisit===today){
-    url='https://abacus.jasoncameron.dev/get/spikeblack009-blog/total'; // solo lee, no suma
-    const cached=localStorage.getItem(cacheKey);
-    if(cached){ 
-      const d=JSON.parse(cached); 
-      if(Date.now()-d.t < 3600000){ // 1 hora cache
-        el.textContent=d.value;
-        return;
-      }
-    }
+  try{
+    const r=await fetch('https://abacus.jasoncameron.dev/hit/spikeblack009-blog/total');
+    const d=await r.json();
+    document.getElementById('total-counter').textContent=d.value;
+  }catch(e){document.getElementById('total-counter').textContent='1'}
+}
+updateTotal();
+</script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, setDoc, increment, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyAR7kQWOKaAgU1fuDaQWXM7FNZe2KU",
+  authDomain: "ghost-dark-circle.firebaseapp.com",
+  databaseURL: "https://ghost-dark-circle-default-rtdb.firebaseio.com",
+  projectId: "ghost-dark-circle",
+  storageBucket: "ghost-dark-circle.firebasestorage.app",
+  messagingSenderId: "1049315311255",
+  appId: "1:1049315311255:web:00542f7b8d00e0cb6b3d2"
+};
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+const btn=document.getElementById('btnSombra');
+btn.addEventListener('click',async()=>{
+  const n=document.getElementById('ghostName').value.trim();
+  const m=document.getElementById('ghostMsg').value.trim();
+  if(!n||!m) return alert("Escribe nombre y sombra");
+  btn.textContent="GUARDANDO...";
+  await addDoc(collection(db,"sombras"),{nombre:n,mensaje:m,fecha:serverTimestamp()});
+  document.getElementById('ghostName').value="";document.getElementById('ghostMsg').value="";
+  btn.textContent="DEJAR SOMBRA"; cargarSombras();
+});
+async function cargarSombras(){
+  const q=query(collection(db,"sombras"),orderBy("fecha","desc"));
+  const snap=await getDocs(q);
+  let h=""; snap.forEach(d=>{h+=`<div class="sombra-item"><b>${d.data().nombre}:</b> ${d.data().mensaje}</div>`});
+  document.getElementById('listaSombras').innerHTML=h||"<span style='font-size:11px;color:#555'>Sé el primero en dejar sombra</span>";
+}
+cargarSombras();
+
+// --- CODIGO CORREGIDO: SOLO MX / US / EU Y BANDERAS QUE SI SE VEN ---
+try{
+  try{ await deleteDoc(doc(db,"paises","undefined")); }catch(e){}
+
+  let rawCode = 'EU';
+  try{
+    const r1 = await fetch('https://ipapi.co/json/').then(r=>r.json());
+    if(r1 && r1.country_code) rawCode = String(r1.country_code).toUpperCase().trim();
+    else throw new Error('vacio');
+  }catch(e){
+    try{
+      const r2 = await fetch('https://ipwho.is/').then(r=>r.json());
+      if(r2 && r2.country_code) rawCode = String(r2.country_code).toUpperCase().trim();
+    }catch(e2){ rawCode = 'EU'; }
   }
 
-  try{
-    const r=await fetch(url,{cache:'no-store'});
-    const d=await r.json();
-    if(d.value){
-      el.textContent=d.value;
-      localStorage.setItem(cacheKey,JSON.stringify({t:Date.now(),value:d.value}));
-      localStorage.setItem(visitedKey,today);
+  let finalCode = (rawCode === 'MX' ? 'MX' : rawCode === 'US' ? 'US' : 'EU');
+  let finalNombre = finalCode === 'MX' ? 'México' : finalCode === 'US' ? 'Estados Unidos' : 'Unión Europea';
+
+  await setDoc(doc(db,"paises",finalCode),{nombre:finalNombre,total:increment(1)},{merge:true});
+
+  const snap=await getDocs(collection(db,"paises"));
+  const datos={}; snap.forEach(d=>{ datos[d.id]=d.data(); });
+
+  // BANDERAS QUE SIEMPRE SE VEN (MX y US con imagen, EU con SVG dibujado)
+  const MX_FLAG = `<img src="https://flagcdn.com/w20/mx.png" class="flag">`;
+  const US_FLAG = `<img src="https://flagcdn.com/w20/us.png" class="flag">`;
+  const EU_FLAG = `<svg class="flag" viewBox="0 0 27 16" xmlns="http://www.w3.org/2000/svg" style="background:#003399"><g fill="#FFCC00"><circle cx="13.5" cy="2.8" r="0.9"/><circle cx="16.2" cy="3.6" r="0.9"/><circle cx="18" cy="5.8" r="0.9"/><circle cx="18" cy="8.6" r="0.9"/><circle cx="16.2" cy="10.8" r="0.9"/><circle cx="13.5" cy="11.6" r="0.9"/><circle cx="10.8" cy="10.8" r="0.9"/><circle cx="9" cy="8.6" r="0.9"/><circle cx="9" cy="5.8" r="0.9"/><circle cx="10.8" cy="3.6" r="0.9"/></g></svg>`;
+
+  const orden=[
+    {id:'MX', flag:MX_FLAG, nombre:'México'},
+    {id:'US', flag:US_FLAG, nombre:'Estados Unidos'},
+    {id:'EU', flag:EU_FLAG, nombre:'Unión Europea'}
+  ];
+
+  let html='';
+  orden.forEach(o=>{
+    const total = datos[o.id]?.total || 0;
+    if(total > 0){
+      html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px dashed #111"><span>${o.flag} ${o.nombre}</span><span style="color:#00ff41;font-weight:bold">${total}</span></div>`;
     }
-  }catch(e){
-    const cached=localStorage.getItem(cacheKey);
-    el.textContent=cached?JSON.parse(cached).value:'1';
-  }
+  });
+
+  document.getElementById('paisesBox').innerHTML = html || `<div>${EU_FLAG} Unión Europea <span style="color:#00ff41">1</span></div>`;
+
+}catch(e){
+  document.getElementById('paisesBox').innerHTML = 'Error cargando';
 }
+</script>
+</body>
+</html>
