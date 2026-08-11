@@ -38,33 +38,26 @@ input,textarea{background:#000!important;border:1px solid #333!important;color:w
 <div class="logo"><img src="logo.png"></div>
 <h1>GHOST DARK CIRCLE</h1>
 <div class="sub">MURO OFICIAL DE SPIKE BLACK</div>
-
 <a href="Nuyoo/" class="nuyoo-card"><img src="logo.png"><div class="nuyoo-info"><b>Nuyoo</b><span>Spike Black • Single</span><br><span style="color:#00ff88;font-size:11px;font-weight:700">▶ REPRODUCIR AHORA</span></div><div class="nuyoo-play">▶</div></a>
-
 <div class="card" style="border:1px solid #00ff88!important"><h2 style="color:#00ff88">📖 DARK BLOG</h2><p>Entra al blog oficial donde las sombras hablan.</p><button class="btn-blog" onclick="window.location.href='blog.html'">👁️ ENTRAR AL BLOG</button></div>
-
 <div class="card" style="max-width:650px">
 <h2 style="color:#00ff88">🌎 MAPA MUNDIAL EN VIVO</h2>
 <div id="worldMap"></div>
 <div id="paisesLista" style="margin-top:12px;font-size:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center"></div>
 </div>
-
 <div class="card"><h2>Bienvenido al Dark Circle</h2><p>Música, muro de fans y comunidad Dark Circle.</p><button class="btn-green" onclick="window.open('https://github.com/Spikeblack009','_blank')">Seguir en GitHub</button></div>
-
 <div class="card">
-<h2>📢 MURO DE SPIKE</h2>
+<h2>📢 MURO DE SPIKE - VIDEO PÚBLICO</h2>
 <input id="nombre" placeholder="Tu sombra...">
-<textarea id="mensaje" placeholder="¿Qué oscuridad te acecha esta noche y desde dónde nos miras? Puedes pegar enlaces, fotos o videos"></textarea>
+<textarea id="mensaje" placeholder="¿Qué oscuridad te acecha? Puedes subir VIDEO como tal"></textarea>
 <input type="file" id="foto" accept="image/*,video/*">
-<button class="btn-red" onclick="publicar()">👁️ DEJA TU HUELLA EN EL MURO</button>
+<button class="btn-red" onclick="publicar()">👁️ PUBLICAR VIDEO EN LA PÁGINA</button>
 <div id="muro" style="margin-top:15px;"></div>
 </div>
-
 <div class="card"><h2>📖 LIBRO DE VISITAS</h2><textarea id="mensajeLibro" placeholder="Muéstranos tu pensar..."></textarea><button class="btn-verde2" onclick="firmarLibro()">Firmar como fantasma</button><div id="listaLibro" style="margin-top:15px;"></div></div>
 <button class="btn-whats" onclick="window.open('https://wa.me/523350807690','_blank')">💬 WHATSAPP</button>
 <div class="contador">👁️ VISITAS: <span id="contador">cargando...</span></div>
 <footer style="color:#444;font-size:11px;">Spike Black - Ghost Dark Circle © 2026</footer>
-
 <script>
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
@@ -73,7 +66,6 @@ function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeigh
 const chars="アカサタナハマヤラワガザダバパイキシチニヒミリギジヂビピウクスツヌフムユルグズヅブプエケセテネヘメレゲゼデベペオコソトノホモヨロゴゾドボポ0123456789GHOSTDARKCIRCLE".split("");
 (function draw(){ctx.fillStyle="rgba(0,0,0,0.04)";ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle="#00ff88";ctx.font="13px monospace";for(let i=0;i<drops.length;i++){const x=i*fontSize,y=drops[i]*fontSize;ctx.fillText(chars[Math.floor(Math.random()*chars.length)],x,y);if(y>canvas.height&&Math.random()>0.985){drops[i]=0;speeds[i]=Math.random()*0.18+0.06;}drops[i]+=speeds[i];}requestAnimationFrame(draw);})();
 </script>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, push, onValue, get, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -81,7 +73,6 @@ import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://ww
 import { getFirestore, doc, setDoc, increment, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyAR7kUWo6MKaOUgFTiuDaQXM5TYbfNcZKU",authDomain:"ghost-dark-circle.firebaseapp.com",databaseURL:"https://ghost-dark-circle-default-rtdb.firebaseio.com",projectId:"ghost-dark-circle",storageBucket:"ghost-dark-circle.firebasestorage.app",messagingSenderId:"1049315311255",appId:"1:1049315311255:web:005c42fbf8bd00bec6b3d2"};
 const app=initializeApp(firebaseConfig);const db=getDatabase(app);const storage=getStorage(app);const fdb=getFirestore(app);
-
 function formatearTexto(texto){
   if(!texto) return "";
   let t = texto.replace(/</g,"&lt;").replace(/>/g,"&gt;");
@@ -99,8 +90,8 @@ function formatearTexto(texto){
 }
 function renderArchivo(url){
   if(!url) return "";
-  if(url.match(/\.(mp4|webm|mov|ogg)/i) || url.includes("video")){
-    return `<video src="${url}" controls></video>`;
+  if(url.match(/\.(mp4|webm|mov|ogg)/i) || url.includes("video") || url.toLowerCase().includes(".mp4")){
+    return `<video src="${url}" controls playsinline></video>`;
   }
   return `<img src="${url}">`;
 }
@@ -109,13 +100,24 @@ window.publicar=async()=>{
   let nRaw=document.getElementById('nombre').value.trim();
   let m=document.getElementById('mensaje').value.trim();
   let file=document.getElementById('foto').files[0];
-  if(!m &&!file)return alert('Escribe algo o sube archivo');
+  if(!m &&!file) return alert('Escribe algo o sube video');
   let n = nRaw || `Fantasma #${Math.floor(Math.random()*900)+100}`;
   let url='';
-  if(file){const r=sRef(storage,'muro/'+Date.now()+'_'+file.name);await uploadBytes(r,file);url=await getDownloadURL(r);}
-  push(muroRef,{nombre:n,mensaje:m,fotoUrl:url,fecha:Date.now()});
-  document.getElementById('nombre').value='';document.getElementById('mensaje').value='';document.getElementById('foto').value='';
-  alert('Sombra dejada en el círculo 👁️');
+  try{
+    if(file){
+      const r=sRef(storage,'muro/'+Date.now()+'_'+file.name);
+      await uploadBytes(r,file);
+      url=await getDownloadURL(r);
+    }
+    await push(muroRef,{nombre:n,mensaje:m,fotoUrl:url,fecha:Date.now()});
+    document.getElementById('nombre').value='';
+    document.getElementById('mensaje').value='';
+    document.getElementById('foto').value='';
+    alert('Video publicado en la página principal 👁️');
+  }catch(e){
+    console.error(e);
+    alert('No se pudo subir: '+e.message);
+  }
 };
 onValue(muroRef,s=>{const c=document.getElementById('muro');c.innerHTML='';const d=s.val();if(!d){c.innerHTML='<p style=color:#666>El círculo está en silencio... sé el primero en romperlo 💀</p>';return;}Object.values(d).reverse().forEach(f=>{c.innerHTML+=`<div class="post"><b>${f.nombre}</b><p style="color:#ddd">${formatearTexto(f.mensaje||'')}</p>${renderArchivo(f.fotoUrl)}</div>`;});});
 const libroRef=ref(db,'libro_visitas');
