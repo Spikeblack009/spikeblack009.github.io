@@ -1,25 +1,29 @@
-/* FONDO NEGRO PARA TODO */
-main {
-  --color-canvas-default: #000000 !important;
-  --color-canvas-overlay: #000000 !important;
-  --color-canvas-subtle: #000000 !important;
-  --color-border-default: #000000 !important;
+main{
+--color-canvas-default:#000000!important;
+--color-canvas-overlay:#000000!important;
+--color-canvas-subtle:#000000!important;
+--color-border-default:#000000!important;
+--color-fg-default:#00ff88!important;
+--color-fg-muted:#00ff88!important;
 }
-html, body, .gsc-main { background: #000000 !important; }
+html,body,.gsc-main{background:#000!important}
 
-/* ESTA ES LA PARTE QUE TU QUIERES EN ROJO */
-.gsc-tab, .gsc-tabs button {
-  color: #ff0000 !important; /* Escribir y Previsualizar */
-}
-.gsc-tab[aria-selected="true"] {
-  color: #ff0000 !important;
-  border-bottom-color: #ff0000 !important;
-}
-.gsc-reactions-count, .gsc-social-count {
-  color: #ff0000 !important; /* 0 reacciones */
+/* ESTO ES LO QUE MARCASTE EN ROJO */
+.gsc-tab, 
+.gsc-tabs button,
+.gsc-comment-box-tabs button,
+button.gsc-toolbar-item,
+.gsc-toolbar-item{
+color:#ff0000!important;
 }
 
-/* Si lo quieres TODO lo demás en verde, deja esto */
-.gsc-comments-count, .gsc-comment-box-bottom {
-  color: #00ff88 !important;
+/* 0 reacciones también en rojo */
+.gsc-reactions-count, .gsc-social-count{
+color:#ff0000!important;
+}
+
+/* borde rojo cuando está seleccionado */
+.gsc-tab[aria-selected="true"]{
+color:#ff0000!important;
+border-color:#ff0000!important;
 }
