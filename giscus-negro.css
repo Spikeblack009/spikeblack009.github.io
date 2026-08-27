@@ -1,37 +1,47 @@
-/*! GHOST THEME FINAL */
-:root {
-  color-scheme: dark;
-}
+/* GHOST FINAL - ROJO + VERDE */
 main {
   --color-canvas-default: #000000 !important;
   --color-canvas-overlay: #000000 !important;
   --color-canvas-subtle: #000000 !important;
-  --color-neutral-muted: #000000 !important;
   --color-border-default: #000000 !important;
   --color-border-muted: #000000 !important;
-  --color-fg-default: #ff0000 !important;
-  --color-fg-muted: #ff0000 !important;
+  --color-neutral-muted: #000000 !important;
+  --color-fg-default: #00ff88 !important;
 }
-html, body, .gsc-main, .gsc-comments, .gsc-comment-box, .gsc-timeline {
-  background: #000000 !important;
-  background-color: #000000 !important;
-}
+html, body, .gsc-main { background: #000000 !important; }
 
-/* ESCRIBIR - PREVISUALIZAR - INICIAR SESIÓN PARA COMENTAR EN ROJO */
-.gsc-tabs, .gsc-tab, button.gsc-tab,
-.gsc-comment-box-tabs button {
+/* ESCRIBIR y PREVISUALIZAR se quedan en ROJO */
+.gsc-tab, .gsc-tabs button {
   color: #ff0000 !important;
 }
 .gsc-tab[aria-selected="true"] {
   color: #ff0000 !important;
-  border-bottom-color: #ff0000 !important;
+  border-color: #ff0000 !important;
 }
-.gsc-comment-box-textarea::placeholder {
-  color: #ff0000 !important;
+
+/* LOS 3 QUE MARCASTE EN VERDE */
+.gsc-comments-count, 
+.gsc-comment-box-textarea::placeholder,
+.gsc-comment-box-textarea,
+.gsc-comment-box-bottom,
+.gsc-comment-box-bottom a,
+.gsc-social,
+.gsc-reply-box,
+.gsc-comments-count-separator {
+  color: #00ff88 !important;
 }
-.gsc-comment-box-textarea {
-  color: #ff0000 !important;
+
+/* Botón Iniciar sesión con GitHub en VERDE */
+.gsc-comment-box-buttons button,
+a.gsc-social-button,
+button:has(> span) {
+  color: #00ff88 !important;
+  border-color: #00ff88 !important;
+  background: #000000 !important;
 }
-.gsc-comment-box-bottom, .gsc-comment-box-bottom a {
-  color: #ff0000 !important;
+
+/* Fondo siempre negro */
+.gsc-comment-box, .gsc-comment-box-textarea, .gsc-timeline {
+  background: #000000 !important;
+  border-color: #000000 !important;
 }
