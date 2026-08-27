@@ -148,7 +148,6 @@ async function cargarMapaMundial(){try{const snap = await getDocs(collection(fdb
 async function obtenerPais(){try{let data = await fetch('https://ipwho.is/').then(r=>r.json());if(data && data.country_code){return {code:data.country_code, name:data.country, lat:data.latitude, lng:data.longitude};}}catch(e){}try{let data = await fetch('https://ipapi.co/json/').then(r=>r.json());if(data && data.country_code){return {code:data.country_code, name:data.country_name, lat:data.latitude, lng:data.longitude};}}catch(e){}return {code:'MX', name:'Mexico', lat:23, lng:-102};}
 async function registrarPais(){
   try{
-    // Si ya visitó, solo carga el mapa, no vuelve a sumar
     if(localStorage.getItem("ghost_visited")) {
       cargarMapaMundial();
       return;
@@ -174,7 +173,7 @@ cargarMapaMundial();registrarPais();
         data-reactions-enabled="1"
         data-emit-metadata="0"
         data-input-position="bottom"
-        data-theme="preferred_color_scheme"
+        data-theme="https://spikeblack009.github.io/giscus-negro.css"
         data-lang="es"
         crossorigin="anonymous"
         async>
