@@ -1,47 +1,25 @@
-/* GHOST FINAL - ROJO + VERDE */
+/* FONDO NEGRO PARA TODO */
 main {
   --color-canvas-default: #000000 !important;
   --color-canvas-overlay: #000000 !important;
   --color-canvas-subtle: #000000 !important;
   --color-border-default: #000000 !important;
-  --color-border-muted: #000000 !important;
-  --color-neutral-muted: #000000 !important;
-  --color-fg-default: #00ff88 !important;
 }
 html, body, .gsc-main { background: #000000 !important; }
 
-/* ESCRIBIR y PREVISUALIZAR se quedan en ROJO */
+/* ESTA ES LA PARTE QUE TU QUIERES EN ROJO */
 .gsc-tab, .gsc-tabs button {
-  color: #ff0000 !important;
+  color: #ff0000 !important; /* Escribir y Previsualizar */
 }
 .gsc-tab[aria-selected="true"] {
   color: #ff0000 !important;
-  border-color: #ff0000 !important;
+  border-bottom-color: #ff0000 !important;
+}
+.gsc-reactions-count, .gsc-social-count {
+  color: #ff0000 !important; /* 0 reacciones */
 }
 
-/* LOS 3 QUE MARCASTE EN VERDE */
-.gsc-comments-count, 
-.gsc-comment-box-textarea::placeholder,
-.gsc-comment-box-textarea,
-.gsc-comment-box-bottom,
-.gsc-comment-box-bottom a,
-.gsc-social,
-.gsc-reply-box,
-.gsc-comments-count-separator {
+/* Si lo quieres TODO lo demás en verde, deja esto */
+.gsc-comments-count, .gsc-comment-box-bottom {
   color: #00ff88 !important;
-}
-
-/* Botón Iniciar sesión con GitHub en VERDE */
-.gsc-comment-box-buttons button,
-a.gsc-social-button,
-button:has(> span) {
-  color: #00ff88 !important;
-  border-color: #00ff88 !important;
-  background: #000000 !important;
-}
-
-/* Fondo siempre negro */
-.gsc-comment-box, .gsc-comment-box-textarea, .gsc-timeline {
-  background: #000000 !important;
-  border-color: #000000 !important;
 }
