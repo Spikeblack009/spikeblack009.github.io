@@ -60,6 +60,25 @@ input,textarea{background:#000!important;border:1px solid #333!important;color:w
 </div>
 
 <div class="card"><h2>📖 LIBRO DE VISITAS</h2><textarea id="mensajeLibro" placeholder="Muéstranos tu pensar..."></textarea><button class="btn-verde2" onclick="firmarLibro()">Firmar como fantasma</button><div id="listaLibro" style="margin-top:15px;"></div></div>
+
+<div class="card" style="background:#000!important;border:1px solid #000!important">
+<script src="https://giscus.app/client.js"
+        data-repo="Spikeblack009/spikeblack009.github.io"
+        data-repo-id="R_kgDOTc5MqQ"
+        data-category="General"
+        data-category-id="DIC_kwDOTc5Mqc4DESBL"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="https://spikeblack009.github.io/giscus-negro.css"
+        data-lang="es"
+        crossorigin="anonymous"
+        async>
+</script>
+</div>
+
 <button class="btn-whats" onclick="window.open('https://wa.me/523350807690','_blank')">💬 WHATSAPP</button>
 <div class="contador">👁️ VISITAS: <span id="contador">cargando...</span></div>
 <footer style="color:#444;font-size:11px;">Spike Black - Ghost Dark Circle © 2026</footer>
@@ -126,8 +145,6 @@ window.firmarLibro=async()=>{
   document.getElementById('mensajeLibro').value='';
 };
 onValue(libroRef,s=>{const c=document.getElementById('listaLibro');c.innerHTML='';const d=s.val();if(!d)return;Object.values(d).reverse().forEach(f=>{c.innerHTML+=`<div class="post"><b>${f.placa}</b><p>${formatearTexto(f.mensaje)}</p></div>`;});});
-
-// === CONTADOR CORREGIDO - NO CUENTA REFRESCADAS ===
 const contadorRT=ref(db,"visitas_contador");
 if(!localStorage.getItem("ghost_visited")){
   get(contadorRT).then(s=>{
@@ -137,7 +154,6 @@ if(!localStorage.getItem("ghost_visited")){
   });
 }
 onValue(contadorRT,s=>{if(s.exists())document.getElementById('contador').innerText=s.val();});
-
 const map=L.map('worldMap',{worldCopyJump:true}).setView([20,0],2);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:18}).addTo(map);
 const markersLayer = L.layerGroup().addTo(map);
@@ -162,21 +178,6 @@ async function registrarPais(){
   finally {cargarMapaMundial();}
 }
 cargarMapaMundial();registrarPais();
-</script>
-<script src="https://giscus.app/client.js"
-        data-repo="Spikeblack009/spikeblack009.github.io"
-        data-repo-id="R_kgDOTc5MqQ"
-        data-category="General"
-        data-category-id="DIC_kwDOTc5Mqc4DESBL"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="https://spikeblack009.github.io/giscus-negro.css"
-        data-lang="es"
-        crossorigin="anonymous"
-        async>
 </script>
 </body>
 </html>
