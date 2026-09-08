@@ -5,47 +5,121 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GHOST DARK CIRCLE - Spike Black</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-body{background:#000;color:white;font-family:Arial,sans-serif;margin:0;padding:15px;text-align:center;position:relative;overflow-x:hidden}
-#matrix{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;opacity:0.18;pointer-events:none}
-.logo{width:260px;height:260px;margin:15px auto;border-radius:50%;overflow:hidden;box-shadow:0 0 35px #00ff88,0 0 60px #00ff88;background:#000;border:2px solid #00ff88}
+/* ===== RESET & BASE ===== */
+*{box-sizing:border-box}
+body{background:#000;color:#fff;font-family:'Rajdhani',Arial,sans-serif;margin:0;padding:15px;text-align:center;position:relative;overflow-x:hidden;min-height:100vh}
+::-webkit-scrollbar{width:8px;background:#000}
+::-webkit-scrollbar-thumb{background:#00ff88;border-radius:4px;box-shadow:0 0 15px #00ff88}
+::-webkit-scrollbar-track{background:#111}
+
+/* ===== MATRIX ===== */
+#matrix{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;opacity:0.15;pointer-events:none}
+
+/* ===== LOGO ===== */
+.logo{width:260px;height:260px;margin:15px auto;border-radius:50%;overflow:hidden;box-shadow:0 0 35px #00ff88,0 0 60px #00ff88;background:#000;border:2px solid #00ff88;animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 35px #00ff88,0 0 60px #00ff88}50%{box-shadow:0 0 50px #00ff88,0 0 80px #00ff88,0 0 100px rgba(0,255,136,0.3)}}
 .logo img{width:100%;height:100%;object-fit:cover}
-h1{color:#ff0000;font-size:34px;font-weight:900;margin:10px 0 5px;text-shadow:0 0 15px #00ff88;letter-spacing:2px}
-.sub{color:#888;margin-bottom:25px;font-size:14px}
-.card{background:rgba(0,0,0,0.85)!important;border-radius:22px;padding:22px;margin:20px auto;max-width:600px;border:1px solid #222!important;box-shadow:0 4px 20px rgba(0,255,136,0.1);backdrop-filter:blur(4px)}
-.card h2{color:#ff0000;margin:0 0 15px;font-size:20px}
-.btn-blog{background:transparent;color:#00ff88;border:2px solid #00ff88;padding:16px 30px;border-radius:30px;font-weight:900;font-size:16px;cursor:pointer;width:100%;box-shadow:0 0 20px rgba(0,255,136,0.3);letter-spacing:2px}
-.btn-blog:hover{background:#00ff88;color:#000}
-.btn-whats{background:linear-gradient(90deg,#25D366,#128C7E);color:white;border:none;padding:14px 30px;border-radius:30px;font-weight:900;font-size:16px;cursor:pointer;width:100%;max-width:600px;margin:20px auto 10px;display:block}
-input,textarea{background:#000!important;border:1px solid #333!important;color:white!important;border-radius:14px;padding:14px;margin:8px 0;width:100%;box-sizing:border-box}
-.btn-red{background:linear-gradient(90deg,#ff0033,#cc0000);color:white;border:none;padding:14px;border-radius:14px;font-weight:900;width:100%;cursor:pointer;margin-top:10px}
-.btn-verde2{background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;border:none;padding:14px;border-radius:14px;font-weight:900;width:100%;cursor:pointer;margin-top:10px}
-.post{background:#000!important;padding:14px;border-radius:14px;margin-top:14px;border:1px solid #222!important;border-left:4px solid #00ff88!important;text-align:left;word-break:break-word}
+
+/* ===== TYPOGRAPHY ===== */
+h1{font-family:'Orbitron',monospace;color:#ff0000;font-size:34px;font-weight:900;margin:10px 0 5px;text-shadow:0 0 15px #00ff88,0 0 30px rgba(0,255,136,0.3);letter-spacing:3px;animation:glitch 4s infinite}
+@keyframes glitch{0%,100%{text-shadow:0 0 15px #00ff88}50%{text-shadow:0 0 25px #00ff88,0 0 50px #00ff88,2px 2px 0 #ff0000,-2px -2px 0 #00ff88}}
+.sub{color:#888;margin-bottom:25px;font-size:14px;letter-spacing:4px;font-weight:300}
+
+/* ===== CARDS ===== */
+.card{background:rgba(0,0,0,0.85)!important;border-radius:22px;padding:22px;margin:20px auto;max-width:600px;border:1px solid #222!important;box-shadow:0 4px 20px rgba(0,255,136,0.1);backdrop-filter:blur(4px);transition:all 0.4s ease;animation:fadeInUp 0.6s ease}
+.card:hover{box-shadow:0 4px 40px rgba(0,255,136,0.2);border-color:#00ff88!important}
+.card h2{font-family:'Orbitron',monospace;color:#ff0000;margin:0 0 15px;font-size:20px;letter-spacing:1px}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== BUTTONS ===== */
+.btn-blog{background:transparent;color:#00ff88;border:2px solid #00ff88;padding:16px 30px;border-radius:30px;font-weight:900;font-size:16px;cursor:pointer;width:100%;box-shadow:0 0 20px rgba(0,255,136,0.3);letter-spacing:2px;transition:all 0.3s;font-family:'Rajdhani',sans-serif}
+.btn-blog:hover{background:#00ff88;color:#000;transform:scale(1.02);box-shadow:0 0 40px rgba(0,255,136,0.5)}
+.btn-whats{background:linear-gradient(90deg,#25D366,#128C7E);color:#fff;border:none;padding:14px 30px;border-radius:30px;font-weight:900;font-size:16px;cursor:pointer;width:100%;max-width:600px;margin:20px auto 10px;display:block;transition:all 0.3s;font-family:'Rajdhani',sans-serif}
+.btn-whats:hover{transform:scale(1.02);box-shadow:0 0 30px rgba(37,211,102,0.4)}
+input,textarea{background:#000!important;border:1px solid #333!important;color:#fff!important;border-radius:14px;padding:14px;margin:8px 0;width:100%;box-sizing:border-box;font-family:'Rajdhani',sans-serif;transition:border 0.3s}
+input:focus,textarea:focus{outline:none;border-color:#00ff88!important;box-shadow:0 0 20px rgba(0,255,136,0.1)}
+.btn-red{background:linear-gradient(90deg,#ff0033,#cc0000);color:#fff;border:none;padding:14px;border-radius:14px;font-weight:900;width:100%;cursor:pointer;margin-top:10px;transition:all 0.3s;font-family:'Rajdhani',sans-serif}
+.btn-red:hover{transform:scale(1.02);box-shadow:0 0 30px rgba(255,0,51,0.4)}
+.btn-verde2{background:linear-gradient(90deg,#00ff88,#00cc6a);color:#000;border:none;padding:14px;border-radius:14px;font-weight:900;width:100%;cursor:pointer;margin-top:10px;transition:all 0.3s;font-family:'Rajdhani',sans-serif}
+.btn-verde2:hover{transform:scale(1.02);box-shadow:0 0 30px rgba(0,255,136,0.4)}
+
+/* ===== POSTS ===== */
+.post{background:#000!important;padding:14px;border-radius:14px;margin-top:14px;border:1px solid #222!important;border-left:4px solid #00ff88!important;text-align:left;word-break:break-word;animation:fadeInUp 0.4s ease}
 .post b{color:#00ff88}
-.post img,.post video,.post iframe{width:100%;border-radius:12px;margin-top:10px;border:1px solid #333}
-.contador{color:#00ff88;font-size:15px;margin:15px 0 40px;font-weight:bold;text-shadow:0 0 10px #00ff88}
-.nuyoo-card{max-width:600px;margin:20px auto;background:#0a0a0a;border:1px solid #00ff88;border-radius:22px;padding:15px;display:flex;align-items:center;gap:15px;box-shadow:0 0 25px rgba(0,255,136,0.25);cursor:pointer;text-align:left;text-decoration:none}
+.post img,.post video,.post iframe{width:100%;border-radius:12px;margin-top:10px;border:1px solid #333;max-height:500px;object-fit:contain}
+.post-actions{display:flex;gap:15px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.post-actions button{background:transparent;border:1px solid #333;color:#888;padding:4px 12px;border-radius:20px;cursor:pointer;font-size:12px;transition:all 0.3s;font-family:'Rajdhani',sans-serif}
+.post-actions button:hover{color:#00ff88;border-color:#00ff88;background:rgba(0,255,136,0.1)}
+.post-actions .liked{color:#ff0033;border-color:#ff0033}
+.reply-box{display:none;margin-top:10px;padding-left:20px;border-left:2px solid #00ff88}
+.reply-box textarea{font-size:13px;padding:10px}
+.reply{background:rgba(0,255,136,0.05);padding:10px;border-radius:10px;margin-top:8px;border-left:2px solid #ff0033}
+.reply b{color:#ff0033}
+.reply small{color:#666;font-size:11px}
+
+/* ===== LOADING INDICATOR ===== */
+.loading{display:inline-block;width:20px;height:20px;border:2px solid #00ff88;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== TOAST ===== */
+.toast{visibility:hidden;min-width:280px;background:rgba(0,0,0,0.95);color:#00ff88;text-align:center;border-radius:14px;padding:16px 24px;position:fixed;z-index:99999;left:50%;bottom:30px;font-size:16px;border:1px solid #00ff88;box-shadow:0 0 35px rgba(0,255,136,0.3);transform:translateX(-50%);font-family:'Rajdhani',sans-serif;font-weight:600;backdrop-filter:blur(10px)}
+.toast.show{visibility:visible;animation:toastIn 0.5s,toastOut 0.5s 2.5s}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes toastOut{from{opacity:1;transform:translateX(-50%) translateY(0)}to{opacity:0;transform:translateX(-50%) translateY(20px)}}
+
+/* ===== CONTADOR ===== */
+.contador{color:#00ff88;font-size:15px;margin:15px 0 40px;font-weight:bold;text-shadow:0 0 10px #00ff88;font-family:'Orbitron',monospace}
+
+/* ===== NUYOO CARD ===== */
+.nuyoo-card{max-width:600px;margin:20px auto;background:#0a0a0a;border:1px solid #00ff88;border-radius:22px;padding:15px;display:flex;align-items:center;gap:15px;box-shadow:0 0 25px rgba(0,255,136,0.25);cursor:pointer;text-align:left;text-decoration:none;transition:all 0.3s}
+.nuyoo-card:hover{transform:scale(1.02);box-shadow:0 0 50px rgba(0,255,136,0.4)}
 .nuyoo-card img{width:70px;height:70px;border-radius:12px;border:1px solid #00ff88;object-fit:cover}
-.nuyoo-info{flex:1}.nuyoo-info b{color:#fff;font-size:16px;display:block}.nuyoo-info span{color:#a1a1a6;font-size:13px}
-.nuyoo-play{width:38px;height:38px;background:#00ff88;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#000;font-weight:900}
+.nuyoo-info{flex:1}
+.nuyoo-info b{color:#fff;font-size:16px;display:block;font-family:'Orbitron',monospace}
+.nuyoo-info span{color:#a1a1a6;font-size:13px}
+.nuyoo-play{width:38px;height:38px;background:#00ff88;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#000;font-weight:900;transition:all 0.3s}
+.nuyoo-card:hover .nuyoo-play{transform:scale(1.1);box-shadow:0 0 30px rgba(0,255,136,0.5)}
+
+/* ===== MAPA ===== */
 #worldMap{width:100%;height:480px;border-radius:12px;border:1px solid #00ff88;box-shadow:0 0 25px rgba(0,255,136,0.2)}
+.paises-container{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-height:120px;overflow-y:auto;padding:6px;margin-top:12px;scrollbar-width:thin}
+.paises-container::-webkit-scrollbar{width:4px}
+.paises-container::-webkit-scrollbar-thumb{background:#00ff88;border-radius:4px}
+.pais-tag{background:#000;border:1px solid #00ff88;padding:4px 10px;border-radius:20px;font-size:11px;white-space:nowrap;display:inline-flex;align-items:center;gap:4px;transition:all 0.3s}
+.pais-tag:hover{background:#00ff88;color:#000;transform:scale(1.05)}
+.pais-tag b{color:#00ff88}
+.pais-tag:hover b{color:#000}
+
+/* ===== BOTÓN SUBIR ===== */
+#backToTop{position:fixed;bottom:80px;right:20px;background:#00ff88;color:#000;border:none;border-radius:50%;width:50px;height:50px;font-size:24px;cursor:pointer;box-shadow:0 0 30px rgba(0,255,136,0.3);display:none;transition:all 0.3s;z-index:9998;font-family:'Orbitron',monospace}
+#backToTop:hover{transform:scale(1.1);box-shadow:0 0 50px rgba(0,255,136,0.5)}
+
+/* ===== PREVIEW ARCHIVO ===== */
+#previewContainer{display:none;margin:10px 0;padding:10px;border:1px solid #00ff88;border-radius:12px;background:rgba(0,0,0,0.5)}
+#previewContainer img,#previewContainer video{max-width:100%;max-height:300px;border-radius:8px}
+#previewContainer .remove-preview{background:#ff0033;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;float:right;font-size:14px}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){.logo{width:180px;height:180px}h1{font-size:24px}.card{padding:16px;margin:12px}.nuyoo-card{padding:12px}#worldMap{height:320px}}
 </style>
 </head>
 <body>
 <canvas id="matrix"></canvas>
-<div class="logo"><img src="logo.png"></div>
+<div class="logo"><img src="logo.png" alt="Logo" loading="lazy"></div>
 <h1>GHOST DARK CIRCLE</h1>
 <div class="sub">MURO OFICIAL DE SPIKE BLACK</div>
 
-<a href="Nuyoo/" class="nuyoo-card"><img src="logo.png"><div class="nuyoo-info"><b>Nuyoo</b><span>Spike Black • Single</span><br><span style="color:#00ff88;font-size:11px;font-weight:700">▶ REPRODUCIR AHORA</span></div><div class="nuyoo-play">▶</div></a>
+<a href="Nuyoo/" class="nuyoo-card"><img src="logo.png" alt="Nuyoo" loading="lazy"><div class="nuyoo-info"><b>Nuyoo</b><span>Spike Black • Single</span><br><span style="color:#00ff88;font-size:11px;font-weight:700">▶ REPRODUCIR AHORA</span></div><div class="nuyoo-play">▶</div></a>
 
 <div class="card" style="border:1px solid #00ff88!important"><h2 style="color:#00ff88">📖 DARK BLOG</h2><p>Entra al blog oficial donde las sombras hablan.</p><button class="btn-blog" onclick="window.location.href='blog.html'">👁️ ENTRAR AL BLOG</button></div>
 
 <div class="card" style="max-width:650px">
 <h2 style="color:#00ff88">🌎 MAPA MUNDIAL EN VIVO</h2>
 <div id="worldMap"></div>
-<div id="paisesLista" style="margin-top:12px;font-size:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center"></div>
+<div id="paisesContainer" class="paises-container"></div>
 </div>
 
 <div class="card"><h2>Bienvenido al Dark Circle</h2><p>Música, muro de fans y comunidad Dark Circle.</p></div>
@@ -55,8 +129,10 @@ input,textarea{background:#000!important;border:1px solid #333!important;color:w
 <input id="nombre" placeholder="Tu sombra...">
 <textarea id="mensaje" placeholder="¿Qué oscuridad te acecha esta noche y desde dónde nos miras? Puedes pegar enlaces, fotos o videos"></textarea>
 <input type="file" id="foto" accept="image/*,video/*">
-<button class="btn-red" onclick="publicar()">👁️ DEJA TU HUELLA EN EL MURO</button>
+<div id="previewContainer"><button class="remove-preview" onclick="removePreview()">✕</button><div id="previewContent"></div></div>
+<button class="btn-red" onclick="publicar()" id="publicarBtn">👁️ DEJA TU HUELLA EN EL MURO</button>
 <div id="muro" style="margin-top:15px;"></div>
+<div id="muroLoading" style="text-align:center;padding:20px;display:none"><div class="loading"></div>Cargando más sombras...</div>
 </div>
 
 <div class="card"><h2>📖 LIBRO DE VISITAS</h2><textarea id="mensajeLibro" placeholder="Muéstranos tu pensar..."></textarea><button class="btn-verde2" onclick="firmarLibro()">Firmar como fantasma</button><div id="listaLibro" style="margin-top:15px;"></div></div>
@@ -82,103 +158,492 @@ input,textarea{background:#000!important;border:1px solid #333!important;color:w
 </script>
 </div>
 
-<footer style="color:#444;font-size:11px;">Spike Black - Ghost Dark Circle © 2026</footer>
+<footer style="color:#444;font-size:11px;font-family:'Rajdhani',sans-serif;">Spike Black - Ghost Dark Circle © 2026</footer>
+
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
 
 <script>
+// ===== MATRIX EFFECT =====
 const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
 let fontSize = 14, columns, drops, speeds;
 function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;columns=Math.floor(canvas.width/fontSize);drops=[];speeds=[];for(let i=0;i<columns;i++){drops[i]=Math.random()*-100;speeds[i]=Math.random()*0.18+0.06;}}resize();window.addEventListener('resize',resize);
 const chars="アカサタナハマヤラワガザダバパイキシチニヒミリギジヂビピウクスツヌフムユルグズヅブプエケセテネヘメレゲゼデベペオコソトノホモヨロゴゾドボポ0123456789GHOSTDARKCIRCLE".split("");
 (function draw(){ctx.fillStyle="rgba(0,0,0,0.04)";ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle="#00ff88";ctx.font="13px monospace";for(let i=0;i<drops.length;i++){const x=i*fontSize,y=drops[i]*fontSize;ctx.fillText(chars[Math.floor(Math.random()*chars.length)],x,y);if(y>canvas.height&&Math.random()>0.985){drops[i]=0;speeds[i]=Math.random()*0.18+0.06;}drops[i]+=speeds[i];}requestAnimationFrame(draw);})();
+
+// ===== BACK TO TOP =====
+window.addEventListener('scroll',()=>{
+  document.getElementById('backToTop').style.display = window.scrollY > 500 ? 'block' : 'none';
+});
+
+// ===== TOAST =====
+function showToast(message){
+  const existing = document.querySelector('.toast');
+  if(existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.className='toast show',10);
+  setTimeout(()=>toast.remove(),3000);
+}
+
+// ===== PREVIEW ARCHIVO =====
+document.getElementById('foto').addEventListener('change',function(){
+  const container = document.getElementById('previewContainer');
+  const content = document.getElementById('previewContent');
+  if(this.files && this.files[0]){
+    const file = this.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e){
+      if(file.type.startsWith('image/')){
+        content.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+      } else if(file.type.startsWith('video/')){
+        content.innerHTML = `<video src="${e.target.result}" controls style="max-height:300px"></video>`;
+      }
+      container.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+});
+window.removePreview = function(){
+  document.getElementById('foto').value = '';
+  document.getElementById('previewContainer').style.display = 'none';
+  document.getElementById('previewContent').innerHTML = '';
+};
+
+// ===== INDICADOR DE ESCRIBIENDO =====
+function showLoading(btnId, loading){
+  const btn = document.getElementById(btnId);
+  if(loading){
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loading"></span> Procesando...';
+  } else {
+    btn.disabled = false;
+    btn.innerHTML = btnId === 'publicarBtn' ? '👁️ DEJA TU HUELLA EN EL MURO' : 'Firmar como fantasma';
+  }
+}
 </script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, get, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, push, onValue, get, set, query, limitToLast, startAt, orderByChild, limitToFirst } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-import { getFirestore, doc, setDoc, increment, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-const firebaseConfig={apiKey:"AIzaSyAR7kUWo6MKaOUgFTiuDaQXM5TYbfNcZKU",authDomain:"ghost-dark-circle.firebaseapp.com",databaseURL:"https://ghost-dark-circle-default-rtdb.firebaseio.com",projectId:"ghost-dark-circle",storageBucket:"ghost-dark-circle.firebasestorage.app",messagingSenderId:"1049315311255",appId:"1:1049315311255:web:005c42fbf8bd00bec6b3d2"};
-const app=initializeApp(firebaseConfig);const db=getDatabase(app);const storage=getStorage(app);const fdb=getFirestore(app);
+import { getFirestore, doc, setDoc, increment, collection, getDocs, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+// ===== CONFIG =====
+const firebaseConfig = {
+  apiKey: "AIzaSyAR7kUWo6MKaOUgFTiuDaQXM5TYbfNcZKU",
+  authDomain: "ghost-dark-circle.firebaseapp.com",
+  databaseURL: "https://ghost-dark-circle-default-rtdb.firebaseio.com",
+  projectId: "ghost-dark-circle",
+  storageBucket: "ghost-dark-circle.firebasestorage.app",
+  messagingSenderId: "1049315311255",
+  appId: "1:1049315311255:web:005c42fbf8bd00bec6b3d2"
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const storage = getStorage(app);
+const fdb = getFirestore(app);
+
+// ===== SANITIZACIÓN HTML (DOMPurify) =====
+// Versión ligera manual + reemplazo de caracteres peligrosos
+function sanitizeHTML(str){
+  if(!str) return '';
+  let s = str.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  s = s.replace(/javascript:/gi,'blocked:');
+  s = s.replace(/on\w+=/gi,'data-blocked=');
+  return s;
+}
+
+// ===== FORMATEAR TEXTO =====
 function formatearTexto(texto){
   if(!texto) return "";
-  let t = texto.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  let t = sanitizeHTML(texto);
   t = t.replace(/(https?:\/\/[^\s]+)/g, (url)=>{
     if(url.match(/\.(mp4|webm|mov|ogg)(\?.*)?$/i)){
-      return `<a href="${url}" target="_blank" style="color:#00ff88">${url}</a><br><video src="${url}" controls></video>`;
+      return `<a href="${url}" target="_blank" style="color:#00ff88">${url}</a><br><video src="${url}" controls loading="lazy"></video>`;
     }
     let m1 = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
     if(m1){
-      return `<a href="${url}" target="_blank" style="color:#00ff88">${url}</a><br><iframe src="https://www.youtube.com/embed/${m1[1]}" allowfullscreen></iframe>`;
+      return `<a href="${url}" target="_blank" style="color:#00ff88">${url}</a><br><iframe src="https://www.youtube.com/embed/${m1[1]}" allowfullscreen loading="lazy"></iframe>`;
     }
     return `<a href="${url}" target="_blank" style="color:#00ff88;text-decoration:underline">${url}</a>`;
   });
   return t;
 }
+
+// ===== RENDER ARCHIVO =====
 function renderArchivo(url){
   if(!url) return "";
   if(url.match(/\.(mp4|webm|mov|ogg)/i) || url.includes("video")){
-    return `<video src="${url}" controls></video>`;
+    return `<video src="${url}" controls loading="lazy"></video>`;
   }
-  return `<img src="${url}">`;
+  return `<img src="${url}" loading="lazy">`;
 }
-const muroRef=ref(db,'muro_dark_circle');
-window.publicar=async()=>{
-  let nRaw=document.getElementById('nombre').value.trim();
-  let m=document.getElementById('mensaje').value.trim();
-  let file=document.getElementById('foto').files[0];
-  if(!m &&!file)return alert('Escribe algo o sube archivo');
-  let n = nRaw || `Fantasma #${Math.floor(Math.random()*900)+100}`;
-  let url='';
-  if(file){const r=sRef(storage,'muro/'+Date.now()+'_'+file.name);await uploadBytes(r,file);url=await getDownloadURL(r);}
-  push(muroRef,{nombre:n,mensaje:m,fotoUrl:url,fecha:Date.now()});
-  document.getElementById('nombre').value='';document.getElementById('mensaje').value='';document.getElementById('foto').value='';
-  alert('Sombra dejada en el círculo 👁️');
+
+// ===== REFERENCIAS =====
+const muroRef = ref(db, 'muro_dark_circle');
+const libroRef = ref(db, 'libro_visitas');
+const contadorRT = ref(db, "visitas_contador");
+let lastPostKey = null;
+let isLoading = false;
+let hasMore = true;
+
+// ===== PUBLICAR =====
+window.publicar = async ()=>{
+  const btn = document.getElementById('publicarBtn');
+  showLoading('publicarBtn', true);
+  try {
+    let nRaw = document.getElementById('nombre').value.trim();
+    let m = document.getElementById('mensaje').value.trim();
+    let file = document.getElementById('foto').files[0];
+    if(!m && !file) { showToast('Escribe algo o sube archivo'); showLoading('publicarBtn', false); return; }
+    let n = nRaw || `Fantasma #${Math.floor(Math.random()*900)+100}`;
+    let url = '';
+    if(file){
+      const r = sRef(storage, 'muro/'+Date.now()+'_'+file.name);
+      await uploadBytes(r, file);
+      url = await getDownloadURL(r);
+    }
+    await push(muroRef, {nombre:n, mensaje:m, fotoUrl:url, fecha:Date.now(), likes:0, replies:[]});
+    document.getElementById('nombre').value='';
+    document.getElementById('mensaje').value='';
+    document.getElementById('foto').value='';
+    removePreview();
+    showToast('Sombra dejada en el círculo 👁️');
+  } catch(e) {
+    console.error("Error al publicar:", e);
+    showToast('Error al publicar, intenta de nuevo');
+  }
+  showLoading('publicarBtn', false);
 };
-onValue(muroRef,s=>{const c=document.getElementById('muro');c.innerHTML='';const d=s.val();if(!d){c.innerHTML='<p style=color:#666>El círculo está en silencio... sé el primero en romperlo 💀</p>';return;}Object.values(d).reverse().forEach(f=>{c.innerHTML+=`<div class="post"><b>${f.nombre}</b><p style="color:#ddd">${formatearTexto(f.mensaje||'')}</p>${renderArchivo(f.fotoUrl)}</div>`;});});
-const libroRef=ref(db,'libro_visitas');
-window.firmarLibro=async()=>{
-  let m=document.getElementById('mensajeLibro').value.trim();
-  if(!m)return alert('Escribe mensaje');
-  let p = `Fantasma #${Math.floor(Math.random()*900)+100}`;
-  await push(libroRef,{placa:p,mensaje:m,fecha:Date.now()});
-  document.getElementById('mensajeLibro').value='';
-};
-onValue(libroRef,s=>{const c=document.getElementById('listaLibro');c.innerHTML='';const d=s.val();if(!d)return;Object.values(d).reverse().forEach(f=>{c.innerHTML+=`<div class="post"><b>${f.placa}</b><p>${formatearTexto(f.mensaje)}</p></div>`;});});
-const contadorRT=ref(db,"visitas_contador");
-if(!localStorage.getItem("ghost_visited")){
-  get(contadorRT).then(s=>{
-    if(!s.exists()) set(contadorRT,1);
-    else set(contadorRT,s.val()+1);
-    localStorage.setItem("ghost_visited","1");
-  });
-}
-onValue(contadorRT,s=>{if(s.exists())document.getElementById('contador').innerText=s.val();});
-const map=L.map('worldMap',{worldCopyJump:true}).setView([20,0],2);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:18}).addTo(map);
-const markersLayer = L.layerGroup().addTo(map);
-const countryCoords={MX:[23,-102],US:[39.8,-98.5],CA:[56,-106],BR:[-14.2,-51.9],AR:[-38.4,-63.6],CO:[4.5,-74],PE:[-9.1,-75],CL:[-35.6,-71.5],VE:[6.4,-66.5],BO:[-16.2,-63.5],PY:[-23.4,-58.4],UY:[-32.5,-55.7],EC:[-1.8,-78.1],GT:[15.7,-90.2],HN:[15.2,-86.2],SV:[13.7,-88.8],NI:[12.8,-85],CR:[9.7,-83.7],PA:[8.5,-80],DO:[18.7,-70.1],PR:[18.2,-66.5],ES:[40.4,-3.7],FR:[46.2,2.2],DE:[51.1,10.4],IT:[41.8,12.5],GB:[55.3,-3.4],PT:[39.3,-8.2],NL:[52.1,5.3],BE:[50.5,4.4],CH:[46.8,8.2],RU:[61,-105],UA:[48.3,31],PL:[51.9,19.1],RO:[45.9,24.9],SE:[60.1,18.6],NO:[60.4,8.4],DK:[56.2,9.5],TR:[38.9,35.2],CN:[35.8,104],JP:[36.2,138],IN:[20.5,78.9],KR:[35.9,127.7],ID:[-0.7,113.9],PH:[12.8,121.7],AU:[-25.2,133.7],NZ:[-40.9,174.8],ZA:[-30.5,22.9],NG:[9.0,8.6],EG:[26.8,30.8],MA:[31.7,-7.0],AE:[23.4,53.8],SA:[23.8,45.0],EU:[51.16,10.45],UE:[51.16,10.45]};
-const paisesUE = ["DE","FR","ES","IT","PT","NL","BE","LU","IE","DK","SE","FI","PL","CZ","SK","HU","RO","BG","GR","CY","MT","AT","SI","HR","LT","LV","EE"];
-function flagEmoji(code){const c = code.toUpperCase();if(c === 'EU' || c === 'UE') return '🇪🇺';return c.replace(/./g, ch => String.fromCodePoint(127397 + ch.charCodeAt()));}
-async function cargarMapaMundial(){try{const snap = await getDocs(collection(fdb,"paises"));markersLayer.clearLayers();let listaHtml = "";if(snap.empty){document.getElementById('paisesLista').innerHTML="Aún no hay marcas...";return;}snap.forEach(d=>{let rawCode = d.id.toUpperCase();let code = rawCode === 'UE'? 'EU' : rawCode;const data = d.data();const nombreMostrar = (code === 'EU')? 'European Union' : (data.nombre || code);const totalMostrar = data.total?? 0;const coords = countryCoords[code] || countryCoords[rawCode] || [data.lat||51.16, data.lng||10.45];const size = 7 + Math.min(totalMostrar||1, 12);L.circleMarker(coords,{radius:size,color:'#00ff88',fillColor:'#00ff41',fillOpacity:0.85,weight:2}).addTo(markersLayer).bindPopup(`<b style="color:#00ff88">${flagEmoji(code)} ${nombreMostrar}</b><br>Visitas: ${totalMostrar}`);listaHtml+=`<span style="border:1px solid #00ff88;padding:4px 8px;background:#000;border-radius:6px">${flagEmoji(code)} ${nombreMostrar} <b style="color:#00ff88">${totalMostrar}</b></span>`;});document.getElementById('paisesLista').innerHTML=listaHtml;}catch(e){console.error("Error mapa:", e);}}
-async function obtenerPais(){try{let data = await fetch('https://ipwho.is/').then(r=>r.json());if(data && data.country_code){return {code:data.country_code, name:data.country, lat:data.latitude, lng:data.longitude};}}catch(e){}try{let data = await fetch('https://ipapi.co/json/').then(r=>r.json());if(data && data.country_code){return {code:data.country_code, name:data.country_name, lat:data.latitude, lng:data.longitude};}}catch(e){}return {code:'MX', name:'Mexico', lat:23, lng:-102};}
-async function registrarPais(){
+
+// ===== SISTEMA DE LIKES Y REACCIONES =====
+async function toggleLike(postId, btn){
   try{
-    if(localStorage.getItem("ghost_visited")) {
-      cargarMapaMundial();
+    const postRef = ref(db, `muro_dark_circle/${postId}`);
+    const snap = await get(postRef);
+    if(snap.exists()){
+      const data = snap.val();
+      const currentLikes = data.likes || 0;
+      const isLiked = localStorage.getItem(`liked_${postId}`) === 'true';
+      const newLikes = isLiked ? currentLikes - 1 : currentLikes + 1;
+      await set(postRef, {...data, likes: newLikes});
+      localStorage.setItem(`liked_${postId}`, isLiked ? 'false' : 'true');
+      btn.classList.toggle('liked');
+      btn.textContent = `❤️ ${newLikes}`;
+    }
+  } catch(e){ console.error("Error like:", e); showToast('Error al dar like'); }
+}
+
+// ===== RESPUESTAS (HILOS) =====
+async function addReply(postId){
+  const replyBox = document.getElementById(`replyBox_${postId}`);
+  const textarea = replyBox.querySelector('textarea');
+  const msg = textarea.value.trim();
+  if(!msg) { showToast('Escribe una respuesta'); return; }
+  try{
+    const postRef = ref(db, `muro_dark_circle/${postId}`);
+    const snap = await get(postRef);
+    if(snap.exists()){
+      const data = snap.val();
+      const replies = data.replies || [];
+      replies.push({nombre: `Fantasma #${Math.floor(Math.random()*900)+100}`, mensaje: msg, fecha: Date.now()});
+      await set(postRef, {...data, replies});
+      textarea.value = '';
+      showToast('Respuesta añadida');
+      replyBox.style.display = 'none';
+    }
+  } catch(e){ console.error("Error reply:", e); showToast('Error al responder'); }
+}
+
+function toggleReplies(postId){
+  const box = document.getElementById(`replyBox_${postId}`);
+  box.style.display = box.style.display === 'block' ? 'none' : 'block';
+  if(box.style.display === 'block'){
+    box.querySelector('textarea').focus();
+  }
+}
+
+// ===== RENDER POSTS CON PAGINACIÓN =====
+let postCache = null;
+
+function renderPosts(data, append = false){
+  const container = document.getElementById('muro');
+  if(!append) container.innerHTML = '';
+  if(!data){
+    if(!append) container.innerHTML = '<p style="color:#666">El círculo está en silencio... sé el primero en romperlo 💀</p>';
+    return;
+  }
+  const entries = Object.entries(data).sort((a,b) => b[1].fecha - a[1].fecha);
+  // Cache para lazy loading
+  const cacheData = {};
+  entries.forEach(([key, val]) => {
+    cacheData[key] = val;
+    const postId = key;
+    const f = val;
+    const likes = f.likes || 0;
+    const isLiked = localStorage.getItem(`liked_${postId}`) === 'true';
+    const replies = f.replies || [];
+    let repliesHTML = replies.map(r => 
+      `<div class="reply"><b>${sanitizeHTML(r.nombre)}</b><p>${formatearTexto(r.mensaje)}</p><small>${new Date(r.fecha).toLocaleString()}</small></div>`
+    ).join('');
+    const postHTML = `
+      <div class="post" data-postid="${postId}">
+        <b>${sanitizeHTML(f.nombre)}</b>
+        <p style="color:#ddd">${formatearTexto(f.mensaje||'')}</p>
+        ${renderArchivo(f.fotoUrl)}
+        <div class="post-actions">
+          <button class="${isLiked?'liked':''}" onclick="toggleLike('${postId}', this)">❤️ ${likes}</button>
+          <button onclick="toggleReplies('${postId}')">💬 ${replies.length} Respuestas</button>
+        </div>
+        <div id="replyBox_${postId}" class="reply-box">
+          <textarea placeholder="Responde como fantasma..." style="width:100%;padding:8px;font-size:13px"></textarea>
+          <button class="btn-verde2" style="font-size:13px;padding:8px" onclick="addReply('${postId}')">Responder</button>
+        </div>
+        ${repliesHTML}
+      </div>
+    `;
+    container.innerHTML += postHTML;
+  });
+  postCache = cacheData;
+}
+
+// ===== CARGA INICIAL Y PAGINACIÓN =====
+const POSTS_PER_PAGE = 10;
+let lastLoadedKey = null;
+
+function loadMorePosts(){
+  if(isLoading || !hasMore) return;
+  isLoading = true;
+  document.getElementById('muroLoading').style.display = 'block';
+  
+  let queryRef;
+  if(lastLoadedKey){
+    queryRef = query(ref(db, 'muro_dark_circle'), orderByChild('fecha'), limitToLast(POSTS_PER_PAGE + 1));
+  } else {
+    queryRef = query(ref(db, 'muro_dark_circle'), limitToLast(POSTS_PER_PAGE));
+  }
+  
+  onValue(queryRef, (snap) => {
+    const data = snap.val();
+    document.getElementById('muroLoading').style.display = 'none';
+    isLoading = false;
+    if(!data){
+      if(!lastLoadedKey) renderPosts(null);
+      hasMore = false;
       return;
     }
+    const entries = Object.entries(data).sort((a,b) => b[1].fecha - a[1].fecha);
+    if(entries.length < POSTS_PER_PAGE) hasMore = false;
+    // Obtener todas las keys
+    const allKeys = Object.keys(data).sort((a,b) => data[b].fecha - data[a].fecha);
+    if(lastLoadedKey){
+      const index = allKeys.indexOf(lastLoadedKey);
+      const newKeys = allKeys.slice(0, index);
+      const newData = {};
+      newKeys.forEach(k => { newData[k] = data[k]; });
+      renderPosts(newData, true);
+      if(newKeys.length < POSTS_PER_PAGE) hasMore = false;
+      lastLoadedKey = newKeys.length > 0 ? newKeys[newKeys.length-1] : null;
+    } else {
+      renderPosts(data);
+      lastLoadedKey = allKeys.length > 0 ? allKeys[allKeys.length-1] : null;
+    }
+  }, { onlyOnce: true });
+}
+
+// ===== SCROLL INFINITO =====
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    const container = document.getElementById('muro');
+    if(!container) return;
+    const rect = container.getBoundingClientRect();
+    const isNearBottom = rect.bottom - window.innerHeight < 200;
+    if(isNearBottom && !isLoading && hasMore){
+      loadMorePosts();
+    }
+  }, 200);
+});
+
+// ===== EXPONER FUNCIONES GLOBALES =====
+window.toggleLike = toggleLike;
+window.addReply = addReply;
+window.toggleReplies = toggleReplies;
+
+// ===== LIBRO DE VISITAS =====
+window.firmarLibro = async ()=>{
+  showLoading('firmarBtn', true);
+  try {
+    let m = document.getElementById('mensajeLibro').value.trim();
+    if(!m) { showToast('Escribe mensaje'); showLoading('firmarBtn', false); return; }
+    let p = `Fantasma #${Math.floor(Math.random()*900)+100}`;
+    await push(libroRef, {placa:p, mensaje:m, fecha:Date.now()});
+    document.getElementById('mensajeLibro').value='';
+    showToast('Firma registrada 👻');
+  } catch(e){ console.error("Error libro:", e); showToast('Error al firmar'); }
+  showLoading('firmarBtn', false);
+};
+
+onValue(libroRef, s => {
+  const c = document.getElementById('listaLibro');
+  c.innerHTML = '';
+  const d = s.val();
+  if(!d) return;
+  Object.values(d).reverse().forEach(f => {
+    c.innerHTML += `<div class="post"><b>${sanitizeHTML(f.placa)}</b><p>${formatearTexto(f.mensaje)}</p></div>`;
+  });
+});
+
+// ===== CONTADOR =====
+if(!localStorage.getItem("ghost_visited")){
+  get(contadorRT).then(s => {
+    if(!s.exists()) set(contadorRT, 1);
+    else set(contadorRT, s.val() + 1);
+    localStorage.setItem("ghost_visited", "1");
+  }).catch(e => console.error("Error contador:", e));
+}
+onValue(contadorRT, s => { if(s.exists()) document.getElementById('contador').innerText = s.val(); });
+
+// ===== MAPA MUNDIAL =====
+const map = L.map('worldMap', {worldCopyJump:true}).setView([20,0], 2);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {maxZoom:18}).addTo(map);
+const markersLayer = L.layerGroup().addTo(map);
+
+const countryCoords = {
+  MX:[23,-102], US:[39.8,-98.5], CA:[56,-106], BR:[-14.2,-51.9], AR:[-38.4,-63.6],
+  CO:[4.5,-74], PE:[-9.1,-75], CL:[-35.6,-71.5], VE:[6.4,-66.5], BO:[-16.2,-63.5],
+  PY:[-23.4,-58.4], UY:[-32.5,-55.7], EC:[-1.8,-78.1], GT:[15.7,-90.2], HN:[15.2,-86.2],
+  SV:[13.7,-88.8], NI:[12.8,-85], CR:[9.7,-83.7], PA:[8.5,-80], DO:[18.7,-70.1],
+  PR:[18.2,-66.5], ES:[40.4,-3.7], FR:[46.2,2.2], DE:[51.1,10.4], IT:[41.8,12.5],
+  GB:[55.3,-3.4], PT:[39.3,-8.2], NL:[52.1,5.3], BE:[50.5,4.4], CH:[46.8,8.2],
+  RU:[61,-105], UA:[48.3,31], PL:[51.9,19.1], RO:[45.9,24.9], SE:[60.1,18.6],
+  NO:[60.4,8.4], DK:[56.2,9.5], TR:[38.9,35.2], CN:[35.8,104], JP:[36.2,138],
+  IN:[20.5,78.9], KR:[35.9,127.7], ID:[-0.7,113.9], PH:[12.8,121.7], AU:[-25.2,133.7],
+  NZ:[-40.9,174.8], ZA:[-30.5,22.9], NG:[9.0,8.6], EG:[26.8,30.8], MA:[31.7,-7.0],
+  AE:[23.4,53.8], SA:[23.8,45.0], EU:[51.16,10.45], UE:[51.16,10.45]
+};
+const paisesUE = ["DE","FR","ES","IT","PT","NL","BE","LU","IE","DK","SE","FI","PL","CZ","SK","HU","RO","BG","GR","CY","MT","AT","SI","HR","LT","LV","EE"];
+
+function flagEmoji(code){
+  const c = code.toUpperCase();
+  if(c === 'EU' || c === 'UE') return '🇪🇺';
+  return c.replace(/./g, ch => String.fromCodePoint(127397 + ch.charCodeAt()));
+}
+
+// ===== CACHE FIRESTORE =====
+let countriesCache = null;
+async function cargarMapaMundial(){
+  try {
+    // Usar caché si existe (15 minutos)
+    const cached = localStorage.getItem('countriesCache');
+    if(cached){
+      const data = JSON.parse(cached);
+      if(Date.now() - data.timestamp < 900000){
+        renderMapData(data.data);
+        return;
+      }
+    }
+    
+    const snap = await getDocs(collection(fdb, "paises"));
+    const data = [];
+    snap.forEach(d => data.push({id: d.id, ...d.data()}));
+    
+    // Guardar en caché
+    localStorage.setItem('countriesCache', JSON.stringify({data, timestamp: Date.now()}));
+    renderMapData(data);
+  } catch(e){
+    console.error("Error mapa:", e);
+    // Intentar usar caché aunque esté expirada
+    const cached = localStorage.getItem('countriesCache');
+    if(cached){
+      const data = JSON.parse(cached);
+      renderMapData(data.data);
+    } else {
+      document.getElementById('paisesContainer').innerHTML = 'Error al cargar mapa';
+    }
+  }
+}
+
+function renderMapData(data){
+  markersLayer.clearLayers();
+  let listaHtml = "";
+  if(!data || data.length === 0){
+    document.getElementById('paisesContainer').innerHTML = "Aún no hay marcas...";
+    return;
+  }
+  data.forEach(item => {
+    let rawCode = item.id.toUpperCase();
+    let code = rawCode === 'UE' ? 'EU' : rawCode;
+    const nombreMostrar = code === 'EU' ? 'European Union' : (item.nombre || code);
+    const totalMostrar = item.total ?? 0;
+    const coords = countryCoords[code] || countryCoords[rawCode] || [item.lat||51.16, item.lng||10.45];
+    const size = 7 + Math.min(totalMostrar||1, 12);
+    L.circleMarker(coords, {
+      radius: size,
+      color: '#00ff88',
+      fillColor: '#00ff41',
+      fillOpacity: 0.85,
+      weight: 2
+    }).addTo(markersLayer).bindPopup(`<b style="color:#00ff88">${flagEmoji(code)} ${nombreMostrar}</b><br>Visitas: ${totalMostrar}`);
+    listaHtml += `<span class="pais-tag">${flagEmoji(code)} ${nombreMostrar} <b>${totalMostrar}</b></span>`;
+  });
+  document.getElementById('paisesContainer').innerHTML = listaHtml;
+}
+
+// ===== OBTENER PAÍS =====
+async function obtenerPais(){
+  try {
+    let data = await fetch('https://ipwho.is/').then(r=>r.json());
+    if(data && data.country_code){
+      return {code:data.country_code, name:data.country, lat:data.latitude, lng:data.longitude};
+    }
+  } catch(e){}
+  try {
+    let data = await fetch('https://ipapi.co/json/').then(r=>r.json());
+    if(data && data.country_code){
+      return {code:data.country_code, name:data.country_name, lat:data.latitude, lng:data.longitude};
+    }
+  } catch(e){}
+  return {code:'MX', name:'Mexico', lat:23, lng:-102};
+}
+
+// ===== REGISTRAR PAÍS =====
+async function registrarPais(){
+  try {
+    if(localStorage.getItem("ghost_visited")) { cargarMapaMundial(); return; }
     const info = await obtenerPais();
     const code = (info.code||'MX').toUpperCase();
-    await setDoc(doc(fdb,"paises",code),{nombre:info.name||code,total:increment(1),lat: info.lat||countryCoords[code]?.[0]||0,lng: info.lng||countryCoords[code]?.[1]||0},{merge:true});
+    await setDoc(doc(fdb, "paises", code), {
+      nombre: info.name||code,
+      total: increment(1),
+      lat: info.lat||countryCoords[code]?.[0]||0,
+      lng: info.lng||countryCoords[code]?.[1]||0
+    }, {merge: true});
     if(paisesUE.includes(code)){
-      await setDoc(doc(fdb,"paises","EU"),{nombre:"European Union",total:increment(1),lat: 51.16,lng: 10.45},{merge:true});
+      await setDoc(doc(fdb, "paises", "EU"), {
+        nombre: "European Union",
+        total: increment(1),
+        lat: 51.16,
+        lng: 10.45
+      }, {merge: true});
     }
-  }catch(e){console.error("Error registrar pais", e);}
-  finally {cargarMapaMundial();}
+  } catch(e){ console.error("Error registrar pais:", e); }
+  finally { cargarMapaMundial(); }
 }
-cargarMapaMundial();registrarPais();
+
+// ===== INICIALIZAR =====
+cargarMapaMundial();
+registrarPais();
+
+// ===== CARGA INICIAL DE POSTS =====
+loadMorePosts();
+
+// ===== BOTÓN DE FIRMAR =====
+document.getElementById('listaLibro').parentElement.querySelector('button').id = 'firmarBtn';
 </script>
 </body>
 </html>
