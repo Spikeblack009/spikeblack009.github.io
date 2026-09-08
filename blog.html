@@ -4,28 +4,65 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GHOST DARK CIRCLE</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#000;--neon:#00ff41;--text:#e6ffe6;}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:Consolas,monospace;line-height:1.7}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',Consolas,monospace;line-height:1.7}
 header{background:#000;border-bottom:2px solid var(--neon);padding:14px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
 header img{width:42px;height:42px;border-radius:50%;border:2px solid var(--neon);box-shadow:0 0 12px var(--neon);background:#111}
-header h1{color:var(--neon);font-size:1.1rem;letter-spacing:2px;text-shadow:0 0 8px var(--neon)}
-header a{margin-left:auto;color:var(--neon);border:1px solid var(--neon);padding:6px 12px;border-radius:6px;text-decoration:none}
+header h1{font-family:'Orbitron',monospace;color:var(--neon);font-size:1.1rem;letter-spacing:2px;text-shadow:0 0 8px var(--neon)}
+header a{margin-left:auto;color:var(--neon);border:1px solid var(--neon);padding:6px 12px;border-radius:6px;text-decoration:none;transition:all 0.3s}
+header a:hover{background:var(--neon);color:#000}
 main{max-width:700px;margin:25px auto;padding:0 15px}
-.card{border:1px solid var(--neon);background:#0a0f0a;padding:20px;margin-bottom:18px;box-shadow:0 0 12px rgba(0,255,65,.15);}
-.post-meta{color:var(--neon);font-size:12px;margin-bottom:10px}
-.post-title{color:#fff;font-size:20px;letter-spacing:1px;margin-bottom:12px}
-.card input,.card textarea{width:100%;background:#000;border:1px solid var(--neon);color:var(--neon);padding:12px;margin:8px 0;font-family:inherit}
+.card{border:1px solid var(--neon);background:#0a0f0a;padding:20px;margin-bottom:18px;box-shadow:0 0 12px rgba(0,255,65,.15);transition:all 0.3s}
+.card:hover{box-shadow:0 0 25px rgba(0,255,65,.25)}
+.post-meta{color:var(--neon);font-size:12px;margin-bottom:10px;font-weight:600}
+.post-title{color:#fff;font-size:20px;letter-spacing:1px;margin-bottom:12px;font-family:'Orbitron',monospace}
+.card input,.card textarea{width:100%;background:#000;border:1px solid var(--neon);color:var(--neon);padding:12px;margin:8px 0;font-family:'Rajdhani',monospace;transition:all 0.3s}
+.card input:focus,.card textarea:focus{outline:none;box-shadow:0 0 20px rgba(0,255,65,.2)}
 .card textarea{min-height:80px;resize:vertical}
-.btn-ghost{width:100%;background:var(--neon);color:#000;border:none;padding:13px;font-weight:bold;cursor:pointer;letter-spacing:1px;margin-top:8px}
-.sombra-item{border:1px dashed var(--neon);padding:10px;margin:8px 0;font-size:13px;background:#000}
+.btn-ghost{width:100%;background:var(--neon);color:#000;border:none;padding:13px;font-weight:bold;cursor:pointer;letter-spacing:1px;margin-top:8px;transition:all 0.3s;font-family:'Rajdhani',monospace}
+.btn-ghost:hover{transform:scale(1.02);box-shadow:0 0 30px rgba(0,255,65,.4)}
+.btn-ghost:disabled{opacity:0.6;cursor:not-allowed}
+.sombra-item{border:1px dashed var(--neon);padding:10px;margin:8px 0;font-size:13px;background:#000;animation:fadeInUp 0.4s ease}
+.sombra-item b{color:var(--neon)}
 .flag{width:20px;height:14px;object-fit:cover;border-radius:2px;vertical-align:middle;margin-right:6px;border:1px solid #222;display:inline-block}
+
+/* ===== TOAST ===== */
+.toast{visibility:hidden;min-width:280px;background:rgba(0,0,0,0.95);color:var(--neon);text-align:center;border-radius:14px;padding:16px 24px;position:fixed;z-index:99999;left:50%;bottom:30px;font-size:16px;border:1px solid var(--neon);box-shadow:0 0 35px rgba(0,255,65,0.3);transform:translateX(-50%);font-family:'Rajdhani',sans-serif;font-weight:600;backdrop-filter:blur(10px)}
+.toast.show{visibility:visible;animation:toastIn 0.5s,toastOut 0.5s 2.5s}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes toastOut{from{opacity:1;transform:translateX(-50%) translateY(0)}to{opacity:0;transform:translateX(-50%) translateY(20px)}}
+
+/* ===== LOADING ===== */
+.loading{display:inline-block;width:20px;height:20px;border:2px solid var(--neon);border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== BOTÓN SUBIR ===== */
+#backToTop{position:fixed;bottom:80px;right:20px;background:var(--neon);color:#000;border:none;border-radius:50%;width:50px;height:50px;font-size:24px;cursor:pointer;box-shadow:0 0 30px rgba(0,255,65,0.3);display:none;transition:all 0.3s;z-index:9998;font-family:'Orbitron',monospace}
+#backToTop:hover{transform:scale(1.1);box-shadow:0 0 50px rgba(0,255,65,0.5)}
+
+/* ===== PREVIEW ===== */
+#previewContainer{display:none;margin:10px 0;padding:10px;border:1px solid var(--neon);border-radius:12px;background:rgba(0,0,0,0.5)}
+#previewContainer img,#previewContainer video{max-width:100%;max-height:300px;border-radius:8px}
+#previewContainer .remove-preview{background:#ff0033;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;float:right;font-size:14px}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:8px;background:#000}
+::-webkit-scrollbar-thumb{background:var(--neon);border-radius:4px;box-shadow:0 0 15px var(--neon)}
+::-webkit-scrollbar-track{background:#111}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){header h1{font-size:0.9rem}.card{padding:15px}}
 </style>
 </head>
 <body>
 <header>
-<img src="logo.png" onerror="this.src='https://spikeblack009.github.io/logo.png'" alt="G">
+<img src="logo.png" onerror="this.src='https://spikeblack009.github.io/logo.png'" alt="G" loading="lazy">
 <h1>GHOST DARK CIRCLE</h1>
 <a href="index.html">→ INICIO</a>
 </header>
@@ -37,10 +74,12 @@ main{max-width:700px;margin:25px auto;padding:0 15px}
 <p style="color:#a0c0a0;font-size:14px">Esto no es un blog más. Es un registro de lo que pasa cuando nadie mira.<br><br>Si llegaste aquí, no fue por accidente. Ya eres parte.<br><br><a href="#sombra" style="color:var(--neon)">Deja tu sombra abajo.</a></p>
 </div>
 <div class="card" id="sombra">
-<p style="color:var(--neon);font-weight:bold;font-size:18px">FUISTE ELEGIDO.</p>
+<p style="color:var(--neon);font-weight:bold;font-size:18px;font-family:'Orbitron',monospace">FUISTE ELEGIDO.</p>
 <p style="font-size:13px;margin-bottom:15px">Esto es Un sub-mundo vivo para los que viven en la Oscuridad.</p>
 <input type="text" id="ghostName" placeholder="Tu nombre">
 <textarea id="ghostMsg" placeholder="Tu mensaje..."></textarea>
+<input type="file" id="ghostFile" accept="image/*,video/*">
+<div id="previewContainer"><button class="remove-preview" onclick="removePreview()">✕</button><div id="previewContent"></div></div>
 <button class="btn-ghost" id="btnSombra">DEJAR SOMBRA</button>
 <div id="listaSombras" style="margin-top:12px"></div>
 </div>
@@ -56,33 +95,105 @@ main{max-width:700px;margin:25px auto;padding:0 15px}
 </div>
 </div>
 <div class="comments">
-<h3 style="color:var(--neon);margin-bottom:10px">Comentarios — Únete a la discusión</h3>
+<h3 style="color:var(--neon);margin-bottom:10px;font-family:'Orbitron',monospace">Comentarios — Únete a la discusión</h3>
 <script src="https://utteranc.es/client.js" repo="SpikeBlack009/SpikeBlack009.github.io" issue-term="pathname" theme="github-dark" crossorigin="anonymous" async></script>
 </div>
 </main>
+
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+
 <script>
+// ===== TOAST =====
+function showToast(message){
+  const existing = document.querySelector('.toast');
+  if(existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.className='toast show',10);
+  setTimeout(()=>toast.remove(),3000);
+}
+
+// ===== BACK TO TOP =====
+window.addEventListener('scroll',()=>{
+  document.getElementById('backToTop').style.display = window.scrollY > 500 ? 'block' : 'none';
+});
+
+// ===== PREVIEW ARCHIVO =====
+document.getElementById('ghostFile').addEventListener('change',function(){
+  const container = document.getElementById('previewContainer');
+  const content = document.getElementById('previewContent');
+  if(this.files && this.files[0]){
+    const file = this.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e){
+      if(file.type.startsWith('image/')){
+        content.innerHTML = `<img src="${e.target.result}" alt="Preview" loading="lazy">`;
+      } else if(file.type.startsWith('video/')){
+        content.innerHTML = `<video src="${e.target.result}" controls style="max-height:300px" preload="metadata"></video>`;
+      }
+      container.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+});
+window.removePreview = function(){
+  document.getElementById('ghostFile').value = '';
+  document.getElementById('previewContainer').style.display = 'none';
+  document.getElementById('previewContent').innerHTML = '';
+};
+
+// ===== LOADING BUTTON =====
+function setLoading(loading){
+  const btn = document.getElementById('btnSombra');
+  if(loading){
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loading"></span> GUARDANDO...';
+  } else {
+    btn.disabled = false;
+    btn.innerHTML = 'DEJAR SOMBRA';
+  }
+}
+
+// ===== SANITIZACIÓN =====
+function sanitizeHTML(str){
+  if(!str) return '';
+  let s = str.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  s = s.replace(/javascript:/gi,'blocked:');
+  s = s.replace(/on\w+=/gi,'data-blocked=');
+  return s;
+}
+
+// ===== GITHUB GHOSTS =====
 async function updateGhosts(){
   const el=document.getElementById('ghost-counter');
   try{
     const r=await fetch('https://api.github.com/repos/SpikeBlack009/SpikeBlack009.github.io/issues?state=all&per_page=100');
+    if(!r.ok) throw new Error('Network error');
     const d=await r.json();
-    const issue=d.find(i=>i.title.includes('blog.html'));
-    el.innerHTML=issue&&issue.comments>0?`FANTASMAS EN EL CÍRCULO: ${issue.comments}`:`FANTASMAS EN EL CÍRCULO: 0 - Sé el primero`;
-  }catch(e){el.innerHTML=`FANTASMAS: 0`}
+    const issue=d.find(i=>i.title && i.title.includes('blog.html'));
+    el.innerHTML=issue && issue.comments > 0 ? `FANTASMAS EN EL CÍRCULO: ${issue.comments}` : `FANTASMAS EN EL CÍRCULO: 0 - Sé el primero`;
+  }catch(e){ el.innerHTML=`FANTASMAS: 0`; }
 }
 updateGhosts(); setInterval(updateGhosts,10000);
+
 async function updateTotal(){
   try{
     const r=await fetch('https://abacus.jasoncameron.dev/hit/spikeblack009-blog/total');
+    if(!r.ok) throw new Error('Network error');
     const d=await r.json();
     document.getElementById('total-counter').textContent=d.value;
-  }catch(e){document.getElementById('total-counter').textContent='1'}
+  }catch(e){ document.getElementById('total-counter').textContent='1'; }
 }
 updateTotal();
 </script>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, setDoc, increment, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAR7kQWOKaAgU1fuDaQWXM7FNZe2KU",
   authDomain: "ghost-dark-circle.firebaseapp.com",
@@ -94,25 +205,68 @@ const firebaseConfig = {
 };
 const app=initializeApp(firebaseConfig);
 const db=getFirestore(app);
+const storage=getStorage(app);
+
+// ===== CARGAR SOMBRAS CON MANEJO DE ERRORES =====
+async function cargarSombras(){
+  try {
+    const q=query(collection(db,"sombras"),orderBy("fecha","desc"));
+    const snap=await getDocs(q);
+    let h="";
+    snap.forEach(d=>{
+      const data = d.data();
+      h+=`<div class="sombra-item"><b>${sanitizeHTML(data.nombre)}:</b> ${sanitizeHTML(data.mensaje)}${data.fotoUrl ? `<br><img src="${data.fotoUrl}" style="max-width:100%;max-height:200px;border-radius:8px;margin-top:8px" loading="lazy">` : ''}</div>`;
+    });
+    document.getElementById('listaSombras').innerHTML=h||"<span style='font-size:11px;color:#555'>Sé el primero en dejar sombra</span>";
+  } catch(e){
+    console.error("Error cargando sombras:", e);
+    showToast('Error al cargar las sombras');
+  }
+}
+
+// ===== PUBLICAR SOMBRA =====
 const btn=document.getElementById('btnSombra');
 btn.addEventListener('click',async()=>{
-  const n=document.getElementById('ghostName').value.trim();
-  const m=document.getElementById('ghostMsg').value.trim();
-  if(!n||!m) return alert("Escribe nombre y sombra");
-  btn.textContent="GUARDANDO...";
-  await addDoc(collection(db,"sombras"),{nombre:n,mensaje:m,fecha:serverTimestamp()});
-  document.getElementById('ghostName').value="";document.getElementById('ghostMsg').value="";
-  btn.textContent="DEJAR SOMBRA"; cargarSombras();
+  try {
+    const n=document.getElementById('ghostName').value.trim();
+    const m=document.getElementById('ghostMsg').value.trim();
+    const file=document.getElementById('ghostFile').files[0];
+    
+    if(!n||!m){ showToast("Escribe nombre y sombra"); return; }
+    
+    setLoading(true);
+    
+    let fotoUrl = '';
+    if(file){
+      const r = sRef(storage, 'sombras/'+Date.now()+'_'+file.name);
+      await uploadBytes(r, file);
+      fotoUrl = await getDownloadURL(r);
+    }
+    
+    await addDoc(collection(db,"sombras"),{
+      nombre: n,
+      mensaje: m,
+      fotoUrl: fotoUrl,
+      fecha: serverTimestamp()
+    });
+    
+    document.getElementById('ghostName').value="";
+    document.getElementById('ghostMsg').value="";
+    document.getElementById('ghostFile').value="";
+    removePreview();
+    showToast("Sombra guardada 👻");
+    cargarSombras();
+  } catch(e){
+    console.error("Error guardando:", e);
+    showToast('Error al guardar la sombra');
+  } finally {
+    setLoading(false);
+  }
 });
-async function cargarSombras(){
-  const q=query(collection(db,"sombras"),orderBy("fecha","desc"));
-  const snap=await getDocs(q);
-  let h=""; snap.forEach(d=>{h+=`<div class="sombra-item"><b>${d.data().nombre}:</b> ${d.data().mensaje}</div>`});
-  document.getElementById('listaSombras').innerHTML=h||"<span style='font-size:11px;color:#555'>Sé el primero en dejar sombra</span>";
-}
+
 cargarSombras();
 
-// --- CODIGO CORREGIDO: SOLO MX / US / EU Y BANDERAS QUE SI SE VEN ---
+// ===== PAÍSES CON CACHE =====
 try{
   try{ await deleteDoc(doc(db,"paises","undefined")); }catch(e){}
 
@@ -133,12 +287,28 @@ try{
 
   await setDoc(doc(db,"paises",finalCode),{nombre:finalNombre,total:increment(1)},{merge:true});
 
-  const snap=await getDocs(collection(db,"paises"));
-  const datos={}; snap.forEach(d=>{ datos[d.id]=d.data(); });
+  // CACHE DE PAÍSES (15 minutos)
+  let paisesData = null;
+  const cached = localStorage.getItem('paisesCache');
+  if(cached){
+    try {
+      const data = JSON.parse(cached);
+      if(Date.now() - data.timestamp < 900000){
+        paisesData = data.data;
+      }
+    } catch(e){}
+  }
 
-  // BANDERAS QUE SIEMPRE SE VEN (MX y US con imagen, EU con SVG dibujado)
-  const MX_FLAG = `<img src="https://flagcdn.com/w20/mx.png" class="flag">`;
-  const US_FLAG = `<img src="https://flagcdn.com/w20/us.png" class="flag">`;
+  if(!paisesData){
+    const snap=await getDocs(collection(db,"paises"));
+    paisesData = {};
+    snap.forEach(d=>{ paisesData[d.id]=d.data(); });
+    localStorage.setItem('paisesCache', JSON.stringify({data: paisesData, timestamp: Date.now()}));
+  }
+
+  // BANDERAS
+  const MX_FLAG = `<img src="https://flagcdn.com/w20/mx.png" class="flag" loading="lazy">`;
+  const US_FLAG = `<img src="https://flagcdn.com/w20/us.png" class="flag" loading="lazy">`;
   const EU_FLAG = `<svg class="flag" viewBox="0 0 27 16" xmlns="http://www.w3.org/2000/svg" style="background:#003399"><g fill="#FFCC00"><circle cx="13.5" cy="2.8" r="0.9"/><circle cx="16.2" cy="3.6" r="0.9"/><circle cx="18" cy="5.8" r="0.9"/><circle cx="18" cy="8.6" r="0.9"/><circle cx="16.2" cy="10.8" r="0.9"/><circle cx="13.5" cy="11.6" r="0.9"/><circle cx="10.8" cy="10.8" r="0.9"/><circle cx="9" cy="8.6" r="0.9"/><circle cx="9" cy="5.8" r="0.9"/><circle cx="10.8" cy="3.6" r="0.9"/></g></svg>`;
 
   const orden=[
@@ -149,7 +319,7 @@ try{
 
   let html='';
   orden.forEach(o=>{
-    const total = datos[o.id]?.total || 0;
+    const total = paisesData[o.id]?.total || 0;
     if(total > 0){
       html+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px dashed #111"><span>${o.flag} ${o.nombre}</span><span style="color:#00ff41;font-weight:bold">${total}</span></div>`;
     }
@@ -158,7 +328,9 @@ try{
   document.getElementById('paisesBox').innerHTML = html || `<div>${EU_FLAG} Unión Europea <span style="color:#00ff41">1</span></div>`;
 
 }catch(e){
-  document.getElementById('paisesBox').innerHTML = 'Error cargando';
+  console.error("Error países:", e);
+  document.getElementById('paisesBox').innerHTML = 'Error cargando países';
+  showToast('Error al cargar países');
 }
 </script>
 </body>
