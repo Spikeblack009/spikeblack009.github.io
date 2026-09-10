@@ -53,7 +53,7 @@ input:focus,textarea:focus{outline:none;border-color:#00ff88!important;box-shado
 .post-actions{display:flex;gap:15px;margin-top:10px;flex-wrap:wrap;align-items:center}
 .post-actions button{background:transparent;border:1px solid #333;color:#888;padding:4px 12px;border-radius:20px;cursor:pointer;font-size:12px;transition:all 0.3s;font-family:'Rajdhani',sans-serif}
 .post-actions button:hover{color:#00ff88;border-color:#00ff88;background:rgba(0,255,136,0.1)}
-.post-actions .liked{color:#ff0033;border-color:#ff0033}
+.post-actions.liked{color:#ff0033;border-color:#ff0033}
 .reply-box{display:none;margin-top:10px;padding-left:20px;border-left:2px solid #00ff88}
 .reply-box textarea{font-size:13px;padding:10px}
 .reply{background:rgba(0,255,136,0.05);padding:10px;border-radius:10px;margin-top:8px;border-left:2px solid #ff0033}
@@ -81,7 +81,7 @@ input:focus,textarea:focus{outline:none;border-color:#00ff88!important;box-shado
 .nuyoo-info b{color:#fff;font-size:16px;display:block;font-family:'Orbitron',monospace}
 .nuyoo-info span{color:#a1a1a6;font-size:13px}
 .nuyoo-play{width:38px;height:38px;background:#00ff88;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#000;font-weight:900;transition:all 0.3s}
-.nuyoo-card:hover .nuyoo-play{transform:scale(1.1);box-shadow:0 0 30px rgba(0,255,136,0.5)}
+.nuyoo-card:hover.nuyoo-play{transform:scale(1.1);box-shadow:0 0 30px rgba(0,255,136,0.5)}
 
 /* ===== MAPA ===== */
 #worldMap{width:100%;height:480px;border-radius:12px;border:1px solid #00ff88;box-shadow:0 0 25px rgba(0,255,136,0.2)}
@@ -100,7 +100,7 @@ input:focus,textarea:focus{outline:none;border-color:#00ff88!important;box-shado
 /* ===== PREVIEW ARCHIVO ===== */
 #previewContainer{display:none;margin:10px 0;padding:10px;border:1px solid #00ff88;border-radius:12px;background:rgba(0,0,0,0.5)}
 #previewContainer img,#previewContainer video{max-width:100%;max-height:300px;border-radius:8px}
-#previewContainer .remove-preview{background:#ff0033;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;float:right;font-size:14px}
+#previewContainer.remove-preview{background:#ff0033;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;float:right;font-size:14px}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:600px){.logo{width:180px;height:180px}h1{font-size:24px}.card{padding:16px;margin:12px}.nuyoo-card{padding:12px}#worldMap{height:320px}}
@@ -173,7 +173,7 @@ const chars="アカサタナハマヤラワガザダバパイキシチニヒミ�
 
 // ===== BACK TO TOP =====
 window.addEventListener('scroll',()=>{
-  document.getElementById('backToTop').style.display = window.scrollY > 500 ? 'block' : 'none';
+  document.getElementById('backToTop').style.display = window.scrollY > 500? 'block' : 'none';
 });
 
 // ===== TOAST =====
@@ -188,7 +188,7 @@ function showToast(message){
   setTimeout(()=>toast.remove(),3000);
 }
 
-// ===== PREVIEW ARCHIVO =====
+// ===== PREVIEW ARCHIVO - CON PERSISTENCIA LOCAL =====
 document.getElementById('foto').addEventListener('change',function(){
   const container = document.getElementById('previewContainer');
   const content = document.getElementById('previewContent');
@@ -196,20 +196,40 @@ document.getElementById('foto').addEventListener('change',function(){
     const file = this.files[0];
     const reader = new FileReader();
     reader.onload = function(e){
+      const result = e.target.result;
+      // Guardar para que no desaparezca al refrescar
+      try { localStorage.setItem('ghost_foto_preview', result); } catch(err){}
       if(file.type.startsWith('image/')){
-        content.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+        content.innerHTML = `<img src="${result}" alt="Preview">`;
       } else if(file.type.startsWith('video/')){
-        content.innerHTML = `<video src="${e.target.result}" controls style="max-height:300px"></video>`;
+        content.innerHTML = `<video src="${result}" controls style="max-height:300px"></video>`;
       }
       container.style.display = 'block';
     };
     reader.readAsDataURL(file);
   }
 });
+
+// Cargar preview guardado al iniciar (para que no desaparezca al refrescar)
+(function(){
+  const guardada = localStorage.getItem('ghost_foto_preview');
+  if(guardada){
+    const container = document.getElementById('previewContainer');
+    const content = document.getElementById('previewContent');
+    if(guardada.startsWith('data:video')){
+      content.innerHTML = `<video src="${guardada}" controls style="max-height:300px"></video>`;
+    } else {
+      content.innerHTML = `<img src="${guardada}" alt="Preview">`;
+    }
+    container.style.display = 'block';
+  }
+})();
+
 window.removePreview = function(){
   document.getElementById('foto').value = '';
   document.getElementById('previewContainer').style.display = 'none';
   document.getElementById('previewContent').innerHTML = '';
+  localStorage.removeItem('ghost_foto_preview');
 };
 
 // ===== INDICADOR DE ESCRIBIENDO =====
@@ -220,7 +240,7 @@ function showLoading(btnId, loading){
     btn.innerHTML = '<span class="loading"></span> Procesando...';
   } else {
     btn.disabled = false;
-    btn.innerHTML = btnId === 'publicarBtn' ? '👁️ DEJA TU HUELLA EN EL MURO' : 'Firmar como fantasma';
+    btn.innerHTML = btnId === 'publicarBtn'? '👁️ DEJA TU HUELLA EN EL MURO' : 'Firmar como fantasma';
   }
 }
 </script>
@@ -298,7 +318,7 @@ window.publicar = async ()=>{
     let nRaw = document.getElementById('nombre').value.trim();
     let m = document.getElementById('mensaje').value.trim();
     let file = document.getElementById('foto').files[0];
-    if(!m && !file) { showToast('Escribe algo o sube archivo'); showLoading('publicarBtn', false); return; }
+    if(!m &&!file) { showToast('Escribe algo o sube archivo'); showLoading('publicarBtn', false); return; }
     let n = nRaw || `Fantasma #${Math.floor(Math.random()*900)+100}`;
     let url = '';
     if(file){
@@ -328,9 +348,9 @@ async function toggleLike(postId, btn){
       const data = snap.val();
       const currentLikes = data.likes || 0;
       const isLiked = localStorage.getItem(`liked_${postId}`) === 'true';
-      const newLikes = isLiked ? currentLikes - 1 : currentLikes + 1;
+      const newLikes = isLiked? currentLikes - 1 : currentLikes + 1;
       await set(postRef, {...data, likes: newLikes});
-      localStorage.setItem(`liked_${postId}`, isLiked ? 'false' : 'true');
+      localStorage.setItem(`liked_${postId}`, isLiked? 'false' : 'true');
       btn.classList.toggle('liked');
       btn.textContent = `❤️ ${newLikes}`;
     }
@@ -360,7 +380,7 @@ async function addReply(postId){
 
 function toggleReplies(postId){
   const box = document.getElementById(`replyBox_${postId}`);
-  box.style.display = box.style.display === 'block' ? 'none' : 'block';
+  box.style.display = box.style.display === 'block'? 'none' : 'block';
   if(box.style.display === 'block'){
     box.querySelector('textarea').focus();
   }
@@ -386,7 +406,7 @@ function renderPosts(data, append = false){
     const likes = f.likes || 0;
     const isLiked = localStorage.getItem(`liked_${postId}`) === 'true';
     const replies = f.replies || [];
-    let repliesHTML = replies.map(r => 
+    let repliesHTML = replies.map(r =>
       `<div class="reply"><b>${sanitizeHTML(r.nombre)}</b><p>${formatearTexto(r.mensaje)}</p><small>${new Date(r.fecha).toLocaleString()}</small></div>`
     ).join('');
     const postHTML = `
@@ -415,17 +435,17 @@ const POSTS_PER_PAGE = 10;
 let lastLoadedKey = null;
 
 function loadMorePosts(){
-  if(isLoading || !hasMore) return;
+  if(isLoading ||!hasMore) return;
   isLoading = true;
   document.getElementById('muroLoading').style.display = 'block';
-  
+
   let queryRef;
   if(lastLoadedKey){
     queryRef = query(ref(db, 'muro_dark_circle'), orderByChild('fecha'), limitToLast(POSTS_PER_PAGE + 1));
   } else {
     queryRef = query(ref(db, 'muro_dark_circle'), limitToLast(POSTS_PER_PAGE));
   }
-  
+
   onValue(queryRef, (snap) => {
     const data = snap.val();
     document.getElementById('muroLoading').style.display = 'none';
@@ -446,204 +466,7 @@ function loadMorePosts(){
       newKeys.forEach(k => { newData[k] = data[k]; });
       renderPosts(newData, true);
       if(newKeys.length < POSTS_PER_PAGE) hasMore = false;
-      lastLoadedKey = newKeys.length > 0 ? newKeys[newKeys.length-1] : null;
+      lastLoadedKey = newKeys.length > 0? newKeys[newKeys.length-1] : null;
     } else {
       renderPosts(data);
-      lastLoadedKey = allKeys.length > 0 ? allKeys[allKeys.length-1] : null;
-    }
-  }, { onlyOnce: true });
-}
-
-// ===== SCROLL INFINITO =====
-let scrollTimeout;
-window.addEventListener('scroll', () => {
-  clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(() => {
-    const container = document.getElementById('muro');
-    if(!container) return;
-    const rect = container.getBoundingClientRect();
-    const isNearBottom = rect.bottom - window.innerHeight < 200;
-    if(isNearBottom && !isLoading && hasMore){
-      loadMorePosts();
-    }
-  }, 200);
-});
-
-// ===== EXPONER FUNCIONES GLOBALES =====
-window.toggleLike = toggleLike;
-window.addReply = addReply;
-window.toggleReplies = toggleReplies;
-
-// ===== LIBRO DE VISITAS =====
-window.firmarLibro = async ()=>{
-  showLoading('firmarBtn', true);
-  try {
-    let m = document.getElementById('mensajeLibro').value.trim();
-    if(!m) { showToast('Escribe mensaje'); showLoading('firmarBtn', false); return; }
-    let p = `Fantasma #${Math.floor(Math.random()*900)+100}`;
-    await push(libroRef, {placa:p, mensaje:m, fecha:Date.now()});
-    document.getElementById('mensajeLibro').value='';
-    showToast('Firma registrada 👻');
-  } catch(e){ console.error("Error libro:", e); showToast('Error al firmar'); }
-  showLoading('firmarBtn', false);
-};
-
-onValue(libroRef, s => {
-  const c = document.getElementById('listaLibro');
-  c.innerHTML = '';
-  const d = s.val();
-  if(!d) return;
-  Object.values(d).reverse().forEach(f => {
-    c.innerHTML += `<div class="post"><b>${sanitizeHTML(f.placa)}</b><p>${formatearTexto(f.mensaje)}</p></div>`;
-  });
-});
-
-// ===== CONTADOR =====
-if(!localStorage.getItem("ghost_visited")){
-  get(contadorRT).then(s => {
-    if(!s.exists()) set(contadorRT, 1);
-    else set(contadorRT, s.val() + 1);
-    localStorage.setItem("ghost_visited", "1");
-  }).catch(e => console.error("Error contador:", e));
-}
-onValue(contadorRT, s => { if(s.exists()) document.getElementById('contador').innerText = s.val(); });
-
-// ===== MAPA MUNDIAL =====
-const map = L.map('worldMap', {worldCopyJump:true}).setView([20,0], 2);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {maxZoom:18}).addTo(map);
-const markersLayer = L.layerGroup().addTo(map);
-
-const countryCoords = {
-  MX:[23,-102], US:[39.8,-98.5], CA:[56,-106], BR:[-14.2,-51.9], AR:[-38.4,-63.6],
-  CO:[4.5,-74], PE:[-9.1,-75], CL:[-35.6,-71.5], VE:[6.4,-66.5], BO:[-16.2,-63.5],
-  PY:[-23.4,-58.4], UY:[-32.5,-55.7], EC:[-1.8,-78.1], GT:[15.7,-90.2], HN:[15.2,-86.2],
-  SV:[13.7,-88.8], NI:[12.8,-85], CR:[9.7,-83.7], PA:[8.5,-80], DO:[18.7,-70.1],
-  PR:[18.2,-66.5], ES:[40.4,-3.7], FR:[46.2,2.2], DE:[51.1,10.4], IT:[41.8,12.5],
-  GB:[55.3,-3.4], PT:[39.3,-8.2], NL:[52.1,5.3], BE:[50.5,4.4], CH:[46.8,8.2],
-  RU:[61,-105], UA:[48.3,31], PL:[51.9,19.1], RO:[45.9,24.9], SE:[60.1,18.6],
-  NO:[60.4,8.4], DK:[56.2,9.5], TR:[38.9,35.2], CN:[35.8,104], JP:[36.2,138],
-  IN:[20.5,78.9], KR:[35.9,127.7], ID:[-0.7,113.9], PH:[12.8,121.7], AU:[-25.2,133.7],
-  NZ:[-40.9,174.8], ZA:[-30.5,22.9], NG:[9.0,8.6], EG:[26.8,30.8], MA:[31.7,-7.0],
-  AE:[23.4,53.8], SA:[23.8,45.0], EU:[51.16,10.45], UE:[51.16,10.45]
-};
-const paisesUE = ["DE","FR","ES","IT","PT","NL","BE","LU","IE","DK","SE","FI","PL","CZ","SK","HU","RO","BG","GR","CY","MT","AT","SI","HR","LT","LV","EE"];
-
-function flagEmoji(code){
-  const c = code.toUpperCase();
-  if(c === 'EU' || c === 'UE') return '🇪🇺';
-  return c.replace(/./g, ch => String.fromCodePoint(127397 + ch.charCodeAt()));
-}
-
-// ===== CACHE FIRESTORE =====
-let countriesCache = null;
-async function cargarMapaMundial(){
-  try {
-    // Usar caché si existe (15 minutos)
-    const cached = localStorage.getItem('countriesCache');
-    if(cached){
-      const data = JSON.parse(cached);
-      if(Date.now() - data.timestamp < 900000){
-        renderMapData(data.data);
-        return;
-      }
-    }
-    
-    const snap = await getDocs(collection(fdb, "paises"));
-    const data = [];
-    snap.forEach(d => data.push({id: d.id, ...d.data()}));
-    
-    // Guardar en caché
-    localStorage.setItem('countriesCache', JSON.stringify({data, timestamp: Date.now()}));
-    renderMapData(data);
-  } catch(e){
-    console.error("Error mapa:", e);
-    // Intentar usar caché aunque esté expirada
-    const cached = localStorage.getItem('countriesCache');
-    if(cached){
-      const data = JSON.parse(cached);
-      renderMapData(data.data);
-    } else {
-      document.getElementById('paisesContainer').innerHTML = 'Error al cargar mapa';
-    }
-  }
-}
-
-function renderMapData(data){
-  markersLayer.clearLayers();
-  let listaHtml = "";
-  if(!data || data.length === 0){
-    document.getElementById('paisesContainer').innerHTML = "Aún no hay marcas...";
-    return;
-  }
-  data.forEach(item => {
-    let rawCode = item.id.toUpperCase();
-    let code = rawCode === 'UE' ? 'EU' : rawCode;
-    const nombreMostrar = code === 'EU' ? 'European Union' : (item.nombre || code);
-    const totalMostrar = item.total ?? 0;
-    const coords = countryCoords[code] || countryCoords[rawCode] || [item.lat||51.16, item.lng||10.45];
-    const size = 7 + Math.min(totalMostrar||1, 12);
-    L.circleMarker(coords, {
-      radius: size,
-      color: '#00ff88',
-      fillColor: '#00ff41',
-      fillOpacity: 0.85,
-      weight: 2
-    }).addTo(markersLayer).bindPopup(`<b style="color:#00ff88">${flagEmoji(code)} ${nombreMostrar}</b><br>Visitas: ${totalMostrar}`);
-    listaHtml += `<span class="pais-tag">${flagEmoji(code)} ${nombreMostrar} <b>${totalMostrar}</b></span>`;
-  });
-  document.getElementById('paisesContainer').innerHTML = listaHtml;
-}
-
-// ===== OBTENER PAÍS =====
-async function obtenerPais(){
-  try {
-    let data = await fetch('https://ipwho.is/').then(r=>r.json());
-    if(data && data.country_code){
-      return {code:data.country_code, name:data.country, lat:data.latitude, lng:data.longitude};
-    }
-  } catch(e){}
-  try {
-    let data = await fetch('https://ipapi.co/json/').then(r=>r.json());
-    if(data && data.country_code){
-      return {code:data.country_code, name:data.country_name, lat:data.latitude, lng:data.longitude};
-    }
-  } catch(e){}
-  return {code:'MX', name:'Mexico', lat:23, lng:-102};
-}
-
-// ===== REGISTRAR PAÍS =====
-async function registrarPais(){
-  try {
-    if(localStorage.getItem("ghost_visited")) { cargarMapaMundial(); return; }
-    const info = await obtenerPais();
-    const code = (info.code||'MX').toUpperCase();
-    await setDoc(doc(fdb, "paises", code), {
-      nombre: info.name||code,
-      total: increment(1),
-      lat: info.lat||countryCoords[code]?.[0]||0,
-      lng: info.lng||countryCoords[code]?.[1]||0
-    }, {merge: true});
-    if(paisesUE.includes(code)){
-      await setDoc(doc(fdb, "paises", "EU"), {
-        nombre: "European Union",
-        total: increment(1),
-        lat: 51.16,
-        lng: 10.45
-      }, {merge: true});
-    }
-  } catch(e){ console.error("Error registrar pais:", e); }
-  finally { cargarMapaMundial(); }
-}
-
-// ===== INICIALIZAR =====
-cargarMapaMundial();
-registrarPais();
-
-// ===== CARGA INICIAL DE POSTS =====
-loadMorePosts();
-
-// ===== BOTÓN DE FIRMAR =====
-document.getElementById('listaLibro').parentElement.querySelector('button').id = 'firmarBtn';
-</script>
-</body>
-</html>
+      lastLoadedKey = allKeys.length > 0? allKeys
