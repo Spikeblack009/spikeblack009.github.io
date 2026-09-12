@@ -54,7 +54,7 @@ function getMemberId(){let id=storageGet('member_id');if(!id||typeof id!=='strin
 let previewObjectURL=null;document.getElementById('foto').addEventListener('change',function(){const c=document.getElementById('previewContainer');const cc=document.getElementById('previewContent');if(previewObjectURL){URL.revokeObjectURL(previewObjectURL);previewObjectURL=null}cc.innerHTML='';const f=this.files?.[0];if(!f){c.style.display='none';return}const max=f.type.startsWith('video/')?30*1024*1024:8*1024*1024;if(f.size>max){this.value='';showToast(f.type.startsWith('video/')?'Video >30MB':'Imagen >8MB');return}previewObjectURL=URL.createObjectURL(f);if(f.type.startsWith('image/')){const i=document.createElement('img');i.src=previewObjectURL;cc.appendChild(i)}else{const v=document.createElement('video');v.src=previewObjectURL;v.controls=true;cc.appendChild(v)}c.style.display='block'});
 window.removePreview=function(){document.getElementById('foto').value='';document.getElementById('previewContainer').style.display='none';document.getElementById('previewContent').innerHTML='';if(previewObjectURL){URL.revokeObjectURL(previewObjectURL);previewObjectURL=null}};
 
-// MATRIX FONDO - LINEAS LARGAS
+// MATRIX FONDO - LINEAS LARGAS Y LENTAS
 (function(){
   const canvas=document.getElementById('matrix');
   if(!canvas)return;
@@ -73,9 +73,9 @@ window.removePreview=function(){document.getElementById('foto').value='';documen
   rs();
   addEventListener('resize',()=>setTimeout(rs,200),{passive:true});
   function dr(t){
-    if(t-lt<28){requestAnimationFrame(dr);return}
+    if(t-lt<65){requestAnimationFrame(dr);return}
     lt=t;
-    ctx.fillStyle='rgba(0,0,0,0.04)';
+    ctx.fillStyle='rgba(0,0,0,0.06)';
     ctx.fillRect(0,0,w,h);
     ctx.fillStyle='#00ff88';
     ctx.font=fs+'px monospace';
@@ -84,7 +84,7 @@ window.removePreview=function(){document.getElementById('foto').value='';documen
       const y=cols[i]*fs;
       ctx.fillText(chars[Math.floor(Math.random()*chars.length)],x,y);
       if(y>h && Math.random()>.975) cols[i]=0;
-      cols[i]+= 0.55 + Math.random()*0.95;
+      cols[i]+= 0.10 + Math.random()*0.18;
     }
     requestAnimationFrame(dr);
   }
