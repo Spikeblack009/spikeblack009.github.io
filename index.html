@@ -36,8 +36,9 @@
 </div>
 <footer style="color:#444;font-size:11px;font-family:'Rajdhani',sans-serif;padding:15px 0 25px">Spike Black - Ghost Dark Circle © 2026</footer>
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">⬆</button>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+// UI BASICA
 function showToast(m){const e=document.querySelector('.toast');if(e)e.remove();const t=document.createElement('div');t.className='toast show';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),3000)}
 let topButtonTick=false;window.addEventListener('scroll',()=>{if(topButtonTick)return;topButtonTick=true;requestAnimationFrame(()=>{document.getElementById('backToTop').style.display=window.scrollY>500?'block':'none';topButtonTick=false})},{passive:true});
 function showLoading(btnId,loading){const btn=document.getElementById(btnId);if(!btn)return;if(loading){btn.disabled=true;btn.dataset.originalText=btn.textContent;btn.innerHTML='<span class="loading"></span> Procesando...'}else{btn.disabled=false;btn.textContent=btn.dataset.originalText||(btnId==='publicarBtn'?'👁️ DEJA TU HUELLA EN EL MURO':'Firmar como fantasma')}}
@@ -46,7 +47,6 @@ function storageSet(k,v){try{localStorage.setItem(STORAGE_PREFIX+k,JSON.stringif
 function storageGet(k){try{const v=localStorage.getItem(STORAGE_PREFIX+k);return v?JSON.parse(v):null}catch(e){return null}}
 const VISITA_KEY="ghost_visit_registered";
 const MIEMBRO_KEY="ghost_member_registered";
-const PAIS_KEY="ghost_dark_circle_country_registered";
 function yaRegistroVisita(){return localStorage.getItem(VISITA_KEY)==="1";}
 function marcarVisita(){localStorage.setItem(VISITA_KEY,"1");}
 function yaEsMiembroLocal(){return localStorage.getItem(MIEMBRO_KEY)==="1";}
@@ -54,7 +54,8 @@ function marcarMiembroLocal(){localStorage.setItem(MIEMBRO_KEY,"1");}
 function getMemberId(){let id=storageGet('member_id');if(!id||typeof id!=='string'){id=crypto.randomUUID?crypto.randomUUID():(Date.now()+'-'+Math.random().toString(36).slice(2));storageSet('member_id',id)}return id}
 let previewObjectURL=null;document.getElementById('foto').addEventListener('change',function(){const c=document.getElementById('previewContainer');const cc=document.getElementById('previewContent');if(previewObjectURL){URL.revokeObjectURL(previewObjectURL);previewObjectURL=null}cc.innerHTML='';const f=this.files?.[0];if(!f){c.style.display='none';return}const max=f.type.startsWith('video/')?30*1024*1024:8*1024*1024;if(f.size>max){this.value='';showToast(f.type.startsWith('video/')?'Video >30MB':'Imagen >8MB');return}previewObjectURL=URL.createObjectURL(f);if(f.type.startsWith('image/')){const i=document.createElement('img');i.src=previewObjectURL;cc.appendChild(i)}else{const v=document.createElement('video');v.src=previewObjectURL;v.controls=true;cc.appendChild(v)}c.style.display='block'});
 window.removePreview=function(){document.getElementById('foto').value='';document.getElementById('previewContainer').style.display='none';document.getElementById('previewContent').innerHTML='';if(previewObjectURL){URL.revokeObjectURL(previewObjectURL);previewObjectURL=null}};
-(function(){const canvas=document.getElementById('matrix');const ctx=canvas.getContext('2d',{alpha:true});if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){canvas.remove();return}const chars="01GHOSTDARKCIRCLEアカサタナハマヤラワ";let w=0,h=0,fs=15,cols=[],lt=0;function rs(){const dpr=Math.min(devicePixelRatio||1,1.5);w=innerWidth;h=innerHeight;canvas.width=w*dpr;canvas.height=h*dpr;canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);cols=Array.from({length:Math.ceil(w/fs)},()=>Math.random()*-40)}rs();addEventListener('resize',()=>setTimeout(rs,200),{passive:true});function dr(t){if(t-lt<42){requestAnimationFrame(dr);return}lt=t;ctx.fillStyle='rgba(0,0,0,.09)';ctx.fillRect(0,0,w,h);ctx.fillStyle='#00ff88';ctx.font=fs+'px monospace';for(let i=0;i<cols.length;i++){const x=i*fs,y=cols[i]*fs;ctx.fillText(chars[Math.floor(Math.random()*chars.length)],x,y);if(y>h&&Math.random()>.985)cols[i]=0;cols[i]+=.055+Math.random()*.12}requestAnimationFrame(dr)}requestAnimationFrame(dr)})();
+// MATRIX FONDO - SIEMPRE ACTIVA
+(function(){const canvas=document.getElementById('matrix');if(!canvas)return;const ctx=canvas.getContext('2d',{alpha:true});if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){canvas.remove();return}const chars="01GHOSTDARKCIRCLEアカサタナハマヤラワ";let w=0,h=0,fs=15,cols=[],lt=0;function rs(){const dpr=Math.min(devicePixelRatio||1,1.5);w=innerWidth;h=innerHeight;canvas.width=w*dpr;canvas.height=h*dpr;canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);cols=Array.from({length:Math.ceil(w/fs)},()=>Math.random()*-40)}rs();addEventListener('resize',()=>setTimeout(rs,200),{passive:true});function dr(t){if(t-lt<42){requestAnimationFrame(dr);return}lt=t;ctx.fillStyle='rgba(0,0,0,.09)';ctx.fillRect(0,0,w,h);ctx.fillStyle='#00ff88';ctx.font=fs+'px monospace';for(let i=0;i<cols.length;i++){const x=i*fs,y=cols[i]*fs;ctx.fillText(chars[Math.floor(Math.random()*chars.length)],x,y);if(y>h&&Math.random()>.985)cols[i]=0;cols[i]+=.055+Math.random()*.12}requestAnimationFrame(dr)}requestAnimationFrame(dr)})();
 </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -79,20 +80,17 @@ const miembroId=getMemberId();
 let authListo=false;
 let currentUid=null;
 
+// MAPA SIEMPRE CARGA, NO ESPERA AUTH
+function iniciarMapaFix(){if(typeof L==='undefined'){setTimeout(iniciarMapaFix,200);return}const map=L.map('worldMap',{worldCopyJump:true,minZoom:1,maxZoom:7}).setView([20,0],2);L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:7,minZoom:1}).addTo(map);const markersLayer=L.layerGroup().addTo(map);window.ghostMap={map,markersLayer};cargarMapaMundial()}
+iniciarMapaFix();
+
 onAuthStateChanged(auth, async (user)=>{
   if(user){
     authListo=true;
     currentUid=user.uid;
     iniciarMuro();
-    // PASO 6,9,11: VISITA separada -> RTDB
-    if(!yaRegistroVisita()){
-      await registrarVisita();
-    }
-    // PASO 6,7,8,11: MIEMBRO -> usuarios/UID + increment(1)
-    if(!yaEsMiembroLocal()){
-      await registrarUsuarioMiembro(user);
-    }
-    // PASO 9: PAIS separado -> Firestore con increment(1)
+    if(!yaRegistroVisita()) await registrarVisita();
+    if(!yaEsMiembroLocal()) await registrarUsuarioMiembro(user);
     await registrarPais();
   }
 });
@@ -101,75 +99,17 @@ signInAnonymously(auth).catch(e=>console.error(e));
 function sanitizeText(v){return String(v??'').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'').trim()}
 function formatearTexto(texto){const frag=document.createDocumentFragment();const limpio=sanitizeText(texto);if(!limpio)return frag;const regex=/(https?:\/\/[^\s]+)/gi;let ultimo=0,match;while((match=regex.exec(limpio))){if(match.index>ultimo)frag.appendChild(document.createTextNode(limpio.slice(ultimo,match.index)));const url=match[0];const a=document.createElement('a');try{const p=new URL(url);if(p.protocol!=='http:'&&p.protocol!=='https:'){frag.appendChild(document.createTextNode(url));ultimo=regex.lastIndex;continue}}catch(_){frag.appendChild(document.createTextNode(url));ultimo=regex.lastIndex;continue}a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=url;a.style.color='#00ff88';frag.appendChild(a);ultimo=regex.lastIndex}if(ultimo<limpio.length)frag.appendChild(document.createTextNode(limpio.slice(ultimo)));return frag}
 function crearArchivo(url){if(!url)return null;try{const parsed=new URL(url);if(parsed.protocol!=='https:'&&parsed.protocol!=='http:')return null;const path=parsed.pathname.toLowerCase();if(/\.(mp4|webm|mov|ogg|m4v)$/.test(path)){const v=document.createElement('video');v.src=url;v.controls=true;v.preload='metadata';return v}if(/\.(jpg|jpeg|png|webp|gif)$/.test(path)){const i=document.createElement('img');i.src=url;i.loading='lazy';return i}}catch(_){}return null}
-
-// PASO 4,5,6: Contador visitas correcto con runTransaction + localStorage
-async function registrarVisita(){
-  if(yaRegistroVisita()) return;
-  try{
-    const res=await runTransaction(contadorRef,(actual)=>{if(actual===null)return 1;return Number(actual)+1;});
-    if(res.committed){marcarVisita();actualizarNumero('contador',res.snapshot.val());actualizarNumero('contadorTexto',res.snapshot.val());}
-  }catch(e){console.error("Error contador:",e);}
-}
-
-// PASO 6,7,8: Usuario real + miembros_contador con increment(1)
-async function registrarUsuarioMiembro(user){
-  try{
-    const userRef=doc(fdb,"usuarios",user.uid);
-    const snap=await getDoc(userRef);
-    if(!snap.exists()){
-      // PASO 7: usuarios/UID con nombre, fechaRegistro
-      await setDoc(userRef,{
-        nombre:`Fantasma #${Math.floor(Math.random()*900)+100}`,
-        fechaRegistro: Date.now(),
-        uid: user.uid,
-        foto: "",
-        miembroDesde: Date.now()
-      },{merge:true});
-      // PASO 8: increment(1) sin leer+sumar
-      await setDoc(doc(fdb,"estadisticas","global"),{miembros:increment(1)},{merge:true});
-      await runTransaction(miembrosRef,(actual)=>{if(actual===null)return 1;return Number(actual)+1;});
-      marcarMiembroLocal();
-      console.log("👥 Nuevo miembro registrado:",user.uid);
-    }else{
-      marcarMiembroLocal();
-    }
-  }catch(e){console.error("Error miembro:",e);}
-}
-
+async function registrarVisita(){if(yaRegistroVisita()) return;try{const res=await runTransaction(contadorRef,(actual)=>{if(actual===null)return 1;return Number(actual)+1;});if(res.committed){marcarVisita();actualizarNumero('contador',res.snapshot.val());actualizarNumero('contadorTexto',res.snapshot.val());}}catch(e){console.error(e);}}
+async function registrarUsuarioMiembro(user){try{const userRef=doc(fdb,"usuarios",user.uid);const snap=await getDoc(userRef);if(!snap.exists()){await setDoc(userRef,{nombre:`Fantasma #${Math.floor(Math.random()*900)+100}`,fechaRegistro:Date.now(),uid:user.uid,foto:"",miembroDesde:Date.now()},{merge:true});await setDoc(doc(fdb,"estadisticas","global"),{miembros:increment(1)},{merge:true});await runTransaction(miembrosRef,(actual)=>{if(actual===null)return 1;return Number(actual)+1;});marcarMiembroLocal();}else{marcarMiembroLocal();}}catch(e){console.error(e);}}
 function actualizarNumero(id,val){const el=document.getElementById(id);if(el)el.textContent=Number(val||0).toLocaleString('es-MX')}
 onValue(contadorRef,s=>{if(s.exists()){actualizarNumero('contador',s.val());actualizarNumero('contadorTexto',s.val())}});
 onValue(miembrosRef,s=>{actualizarNumero('miembros',s.exists()?s.val():0)});
-
-// PASO 10: Storage muro/{uid}/{archivo} con validación
-window.publicar=async function(){
-  if(!authListo||!currentUid){showToast('Conectando... espera 2 seg');return;}
-  showLoading('publicarBtn',true);
-  try{
-    const nombreInput=document.getElementById('nombre');const mensajeInput=document.getElementById('mensaje');const fileInput=document.getElementById('foto');
-    const nombre=sanitizeText(nombreInput.value).slice(0,40);const mensaje=sanitizeText(mensajeInput.value).slice(0,3000);const file=fileInput.files?.[0];
-    if(!mensaje&&!file){showToast('Escribe algo');showLoading('publicarBtn',false);return}
-    let archivoUrl='';
-    if(file){
-      const allowed=['image/jpeg','image/png','image/webp','video/mp4','video/webm'];
-      if(!allowed.includes(file.type)) throw new Error('Tipo no permitido');
-      const limite=file.type.startsWith('video/')?30*1024*1024:8*1024*1024;
-      if(file.size>limite) throw new Error('Archivo muy grande');
-      const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_').slice(0,80);
-      const storageRef=sRef(storage, `muro/${currentUid}/${Date.now()}_${safeName}`);
-      await uploadBytes(storageRef,file,{contentType:file.type});
-      archivoUrl=await getDownloadURL(storageRef);
-    }
-    const nombreFinal=nombre||`Fantasma #${Math.floor(Math.random()*900)+100}`;
-    await push(muroRef,{nombre:nombreFinal,mensaje,fotoUrl:archivoUrl,fecha:Date.now(),likes:0,replies:[],authorId:miembroId,uid:currentUid});
-    nombreInput.value='';mensajeInput.value='';removePreview();showToast('Sombra dejada 👁️')
-  }catch(e){console.error(e);showToast(e.message)}showLoading('publicarBtn',false)
-};
-
+window.publicar=async function(){if(!authListo||!currentUid){showToast('Conectando...');return;}showLoading('publicarBtn',true);try{const nombre=sanitizeText(document.getElementById('nombre').value).slice(0,40);const mensaje=sanitizeText(document.getElementById('mensaje').value).slice(0,3000);const file=document.getElementById('foto').files?.[0];if(!mensaje&&!file){showToast('Escribe algo');showLoading('publicarBtn',false);return}let archivoUrl='';if(file){const allowed=['image/jpeg','image/png','image/webp','video/mp4','video/webm'];if(!allowed.includes(file.type)) throw new Error('Tipo no permitido');const limite=file.type.startsWith('video/')?30*1024*1024:8*1024*1024;if(file.size>limite) throw new Error('Archivo muy grande');const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_').slice(0,80);const storageRef=sRef(storage, `muro/${currentUid}/${Date.now()}_${safeName}`);await uploadBytes(storageRef,file,{contentType:file.type});archivoUrl=await getDownloadURL(storageRef);}const nombreFinal=nombre||`Fantasma #${Math.floor(Math.random()*900)+100}`;await push(muroRef,{nombre:nombreFinal,mensaje,fotoUrl:archivoUrl,fecha:Date.now(),likes:0,replies:[],authorId:miembroId,uid:currentUid});document.getElementById('nombre').value='';document.getElementById('mensaje').value='';removePreview();showToast('Sombra dejada 👁️')}catch(e){showToast(e.message)}showLoading('publicarBtn',false)};
 async function toggleLike(postId,btn){if(!postId||!btn)return;const likeKey=`liked_${postId}`;const wasLiked=storageGet(likeKey)===true;try{const postRef=ref(db,`muro_dark_circle/${postId}`);const res=await runTransaction(postRef,post=>{if(post===null)return;const likes=Math.max(0,Number(post.likes||0));post.likes=wasLiked?Math.max(0,likes-1):likes+1;return post});if(!res.committed)return;const np=res.snapshot.val();storageSet(likeKey,!wasLiked);btn.classList.toggle('liked',!wasLiked);btn.textContent=`❤️ ${Number(np.likes||0)}`}catch(e){showToast('No se pudo like')}}
 async function addReply(postId){const box=document.getElementById(`replyBox_${postId}`);if(!box)return;const mensaje=sanitizeText(box.querySelector('textarea').value).slice(0,1500);if(!mensaje){showToast('Escribe respuesta');return}try{const postRef=ref(db,`muro_dark_circle/${postId}`);await runTransaction(postRef,post=>{if(!post)return;const r=Array.isArray(post.replies)?post.replies:[];r.push({nombre:`Fantasma #${Math.floor(Math.random()*900)+100}`,mensaje,fecha:Date.now(),authorId:miembroId,uid:currentUid});post.replies=r.slice(-100);return post});box.querySelector('textarea').value='';box.style.display='none';showToast('Respuesta añadida')}catch(e){showToast('Error')}}
 function toggleReplies(postId){const b=document.getElementById(`replyBox_${postId}`);if(!b)return;const v=b.style.display==='block';b.style.display=v?'none':'block';if(!v)b.querySelector('textarea')?.focus()}
 window.toggleLike=toggleLike;window.addReply=addReply;window.toggleReplies=toggleReplies;
-function crearPost(postId,data){const art=document.createElement('article');art.className='post';art.dataset.postid=postId;const b=document.createElement('b');b.textContent=sanitizeText(data.nombre||'Fantasma');art.appendChild(b);const p=document.createElement('p');p.style.color='#ddd';p.appendChild(formatearTexto(data.mensaje||''));art.appendChild(p);const arch=crearArchivo(data.fotoUrl);if(arch)art.appendChild(arch);const acts=document.createElement('div');acts.className='post-actions';const likes=Number(data.likes||0);const liked=storageGet(`liked_${postId}`)===true;const lb=document.createElement('button');lb.type='button';lb.className=liked?'liked':'';lb.textContent=`❤️ ${likes}`;lb.addEventListener('click',()=>toggleLike(postId,lb));const replies=Array.isArray(data.replies)?data.replies:[];const rb=document.createElement('button');rb.type='button';rb.textContent=`💬 ${replies.length} Respuestas`;rb.addEventListener('click',()=>toggleReplies(postId));acts.appendChild(lb);acts.appendChild(rb);art.appendChild(acts);const replyBox=document.createElement('div');replyBox.id=`replyBox_${postId}`;replyBox.className='reply-box';const ta=document.createElement('textarea');ta.maxLength=1500;ta.placeholder='Responde como fantasma...';const rs=document.createElement('button');rs.type='button';rs.className='btn-verde2';rs.textContent='Responder';rs.addEventListener('click',()=>addReply(postId));replyBox.appendChild(ta);replyBox.appendChild(rs);art.appendChild(replyBox);replies.slice(-100).forEach(r=>{const d=document.createElement('div');d.className='reply';const bb=document.createElement('b');bb.textContent=sanitizeText(r.nombre||'Fantasma');const pp=document.createElement('p');pp.appendChild(formatearTexto(r.mensaje||''));const sm=document.createElement('small');sm.textContent=r.fecha?new Date(r.fecha).toLocaleString('es-MX'):'';d.appendChild(bb);d.appendChild(pp);d.appendChild(sm);art.appendChild(d)});return art}
+function crearPost(postId,data){const art=document.createElement('article');art.className='post';const b=document.createElement('b');b.textContent=sanitizeText(data.nombre||'Fantasma');art.appendChild(b);const p=document.createElement('p');p.style.color='#ddd';p.appendChild(formatearTexto(data.mensaje||''));art.appendChild(p);const arch=crearArchivo(data.fotoUrl);if(arch)art.appendChild(arch);const acts=document.createElement('div');acts.className='post-actions';const likes=Number(data.likes||0);const liked=storageGet(`liked_${postId}`)===true;const lb=document.createElement('button');lb.type='button';lb.className=liked?'liked':'';lb.textContent=`❤️ ${likes}`;lb.addEventListener('click',()=>toggleLike(postId,lb));const replies=Array.isArray(data.replies)?data.replies:[];const rb=document.createElement('button');rb.type='button';rb.textContent=`💬 ${replies.length} Respuestas`;rb.addEventListener('click',()=>toggleReplies(postId));acts.appendChild(lb);acts.appendChild(rb);art.appendChild(acts);const replyBox=document.createElement('div');replyBox.id=`replyBox_${postId}`;replyBox.className='reply-box';const ta=document.createElement('textarea');ta.maxLength=1500;ta.placeholder='Responde como fantasma...';const rs=document.createElement('button');rs.type='button';rs.className='btn-verde2';rs.textContent='Responder';rs.addEventListener('click',()=>addReply(postId));replyBox.appendChild(ta);replyBox.appendChild(rs);art.appendChild(replyBox);replies.slice(-100).forEach(r=>{const d=document.createElement('div');d.className='reply';const bb=document.createElement('b');bb.textContent=sanitizeText(r.nombre||'Fantasma');const pp=document.createElement('p');pp.appendChild(formatearTexto(r.mensaje||''));const sm=document.createElement('small');sm.textContent=r.fecha?new Date(r.fecha).toLocaleString('es-MX'):'';d.appendChild(bb);d.appendChild(pp);d.appendChild(sm);art.appendChild(d)});return art}
 const POSTS_PER_PAGE=10;let postsData={},postsOrder=[],loadedCount=0,postsListenerStarted=false;
 function renderPosts(){const c=document.getElementById('muro');c.innerHTML='';postsOrder.slice(0,loadedCount).forEach(k=>{if(postsData[k])c.appendChild(crearPost(k,postsData[k]))});updateLoadMore()}
 function rebuildOrder(){postsOrder=Object.keys(postsData).sort((a,b)=>Number(postsData[b]?.fecha||0)-Number(postsData[a]?.fecha||0))}
@@ -180,29 +120,12 @@ document.getElementById('loadMoreBtn').addEventListener('click',loadMorePosts);
 let scrollTimer=0;window.addEventListener('scroll',()=>{if(scrollTimer)return;scrollTimer=setTimeout(()=>{scrollTimer=0;const cont=document.getElementById('muro');if(!cont)return;const rect=cont.getBoundingClientRect();if(rect.bottom-innerHeight<350)loadMorePosts()},200)},{passive:true});
 window.firmarLibro=async function(){if(!authListo){showToast('Conectando...');return;}showLoading('firmarBtn',true);try{const input=document.getElementById('mensajeLibro');const mensaje=sanitizeText(input.value).slice(0,1500);if(!mensaje){showToast('Escribe');showLoading('firmarBtn',false);return}const placa=`Fantasma #${Math.floor(Math.random()*900)+100}`;await push(libroRef,{placa,mensaje,fecha:Date.now(),authorId:miembroId,uid:currentUid});input.value='';showToast('Firma registrada 👁️')}catch(e){showToast('Error')}showLoading('firmarBtn',false)};
 onValue(libroRef,s=>{const cont=document.getElementById('listaLibro');cont.innerHTML='';const data=s.val();if(!data)return;Object.values(data).sort((a,b)=>Number(b.fecha||0)-Number(a.fecha||0)).slice(0,50).forEach(item=>{const post=document.createElement('div');post.className='post';const b=document.createElement('b');b.textContent=sanitizeText(item.placa||'Fantasma');const p=document.createElement('p');p.appendChild(formatearTexto(item.mensaje||''));post.appendChild(b);post.appendChild(p);cont.appendChild(post)})});
-
-// --- PASO 8,9,11: Paises con increment(1) separado ---
 const countryCoords={MX:[23,-102],US:[39.8,-98.5],CA:[56,-106],BR:[-14.2,-51.9],AR:[-38.4,-63.6],CO:[4.5,-74],PE:[-9.1,-75],CL:[-35.6,-71.5],VE:[6.4,-66.5],BO:[-16.2,-63.5],PY:[-23.4,-58.4],UY:[-32.5,-55.7],EC:[-1.8,-78.1],GT:[15.7,-90.2],HN:[15.2,-86.2],SV:[13.7,-88.8],NI:[12.8,-85],CR:[9.7,-83.7],PA:[8.5,-80],DO:[18.7,-70.1],PR:[18.2,-66.5],ES:[40.4,-3.7],FR:[46.2,2.2],DE:[51.1,10.4],IT:[41.8,12.5],GB:[55.3,-3.4],PT:[39.3,-8.2],NL:[52.1,5.3],BE:[50.5,4.4],CH:[46.8,8.2],RU:[61,-105],UA:[48.3,31],PL:[51.9,19.1],RO:[45.9,24.9],SE:[60.1,18.6],NO:[60.4,8.4],DK:[56.2,9.5],TR:[38.9,35.2],CN:[35.8,104],JP:[36.2,138],IN:[20.5,78.9],KR:[35.9,127.7],ID:[-0.7,113.9],PH:[12.8,121.7],AU:[-25.2,133.7],NZ:[-40.9,174.8],ZA:[-30.5,22.9],NG:[9.0,8.6],EG:[26.8,30.8],MA:[31.7,-7.0],AE:[23.4,53.8],SA:[23.8,45.0],EU:[51.16,10.45]};
 function flagEmoji(code){if(code==='EU'||code==='UE')return '🇪🇺';return String(code).toUpperCase().replace(/./g,ch=>String.fromCodePoint(127397+ch.charCodeAt(0)))}
-function iniciarMapa(){if(typeof L==='undefined'){setTimeout(iniciarMapa,100);return}const map=L.map('worldMap',{worldCopyJump:true,minZoom:1,maxZoom:7}).setView([20,0],2);L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:7,minZoom:1}).addTo(map);const markersLayer=L.layerGroup().addTo(map);window.ghostMap={map,markersLayer};cargarMapaMundial()}
 async function cargarMapaMundial(){const status=document.getElementById('mapStatus');try{const cached=storageGet('countries_cache');if(cached&&Date.now()-cached.timestamp<15*60*1000){renderMapData(cached.data);return}const snap=await getDocs(collection(fdb,'paises'));const data=[];snap.forEach(d=>{data.push({id:d.id,...d.data()})});storageSet('countries_cache',{timestamp:Date.now(),data});renderMapData(data)}catch(e){const cached=storageGet('countries_cache');if(cached)renderMapData(cached.data);else status.textContent='No se pudo cargar actividad.'}}
-function renderMapData(data){if(!window.ghostMap)return;const{markersLayer}=window.ghostMap;markersLayer.clearLayers();const cont=document.getElementById('paisesContainer');cont.innerHTML='';if(!data||!data.length){cont.textContent='Aún no hay actividad...';return}const ord=[...data].sort((a,b)=>Number(b.total||0)-Number(a.total||0));let tot=0;ord.forEach(item=>{const raw=String(item.id||'').toUpperCase();const code=raw==='UE'?'EU':raw;const total=Number(item.total||0);tot+=total;const coords=countryCoords[code]||[Number(item.lat)||0,Number(item.lng)||0];const marker=L.circleMarker(coords,{radius:Math.min(13,5+Math.log10(Math.max(1,total))*4),color:'#00ff88',fillColor:'#00ff88',fillOpacity:.75,weight:1.5,className:'activity-marker'});marker.bindPopup(`<div><b style="color:#00ff88">${flagEmoji(code)} ${item.nombre||code}</b><br>👁️ ${total.toLocaleString('es-MX')}</div>`);marker.addTo(markersLayer);const tag=document.createElement('span');tag.className='pais-tag';tag.innerHTML=`${flagEmoji(code)} ${item.nombre||code} <b>${total.toLocaleString('es-MX')}</b>`;cont.appendChild(tag)});actualizarNumero('paisesActivos',data.length);actualizarNumero('mapCountries',data.length);actualizarNumero('mapVisits',tot);document.getElementById('mapStatus').textContent='● Actividad mundial en tiempo real'}
-function escapeMapText(t){return String(t??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function renderMapData(data){if(!window.ghostMap)return;const{markersLayer}=window.ghostMap;markersLayer.clearLayers();const cont=document.getElementById('paisesContainer');cont.innerHTML='';if(!data||!data.length){cont.textContent='Aún no hay actividad...';return}const ord=[...data].sort((a,b)=>Number(b.total||0)-Number(a.total||0));let tot=0;ord.forEach(item=>{const raw=String(item.id||'').toUpperCase();const code=raw==='UE'?'EU':raw;const total=Number(item.total||0);tot+=total;const coords=countryCoords[code]||[Number(item.lat)||0,Number(item.lng)||0];const marker=L.circleMarker(coords,{radius:Math.min(13,5+Math.log10(Math.max(1,total))*4),color:'#00ff88',fillColor:'#00ff88',fillOpacity:.75,weight:1.5,className:'activity-marker'});marker.bindPopup(`<div><b style="color:#00ff88">${flagEmoji(code)} ${item.nombre||code}</b><br>👁️ ${total.toLocaleString('es-MX')}</div>`);marker.addTo(markersLayer);const tag=document.createElement('span');tag.className='pais-tag';tag.innerHTML=`${flagEmoji(code)} ${item.nombre||code} <b>${total.toLocaleString('es-MX')}</b>`;cont.appendChild(tag)});actualizarNumero('paisesActivos',data.length);actualizarNumero('mapCountries',data.length);actualizarNumero('mapVisits',tot);document.getElementById('mapStatus').textContent='● Actividad mundial en tiempo real · Los puntos representan actividad por país'}
 async function obtenerPais(){try{const r=await fetch('https://ipwho.is/',{cache:'no-store'});const d=await r.json();if(d&&d.country_code)return{code:d.country_code,name:d.country,lat:d.latitude,lng:d.longitude}}catch(_){}try{const r=await fetch('https://ipapi.co/json/',{cache:'no-store'});const d=await r.json();if(d&&d.country_code)return{code:d.country_code,name:d.country_name,lat:d.latitude,lng:d.longitude}}catch(_){}return{code:'MX',name:'Mexico',lat:23,lng:-102}}
-async function registrarPais(){
-  try{
-    const prev=storageGet('country_registered');
-    if(prev && Date.now()-prev < 24*60*60*1000) return;
-    const info=await obtenerPais();
-    const code=String(info.code||'MX').toUpperCase();
-    await setDoc(doc(fdb,'paises',code),{nombre:info.name||code,total:increment(1),lat:Number(info.lat||0),lng:Number(info.lng||0)},{merge:true});
-    if(["DE","FR","ES","IT","PT","NL","BE","LU","IE","DK","SE","FI","PL","CZ","SK","HU","RO","BG","GR","CY","MT","AT","SI","HR","LT","LV","EE"].includes(code)){
-      await setDoc(doc(fdb,'paises','EU'),{nombre:'European Union',total:increment(1),lat:51.16,lng:10.45},{merge:true});
-    }
-    storageSet('country_registered',Date.now());
-    await cargarMapaMundial();
-  }catch(e){console.error("Error país:",e);}
-}
+async function registrarPais(){try{const prev=storageGet('country_registered');if(prev && Date.now()-prev < 24*60*60*1000) return;const info=await obtenerPais();const code=String(info.code||'MX').toUpperCase();await setDoc(doc(fdb,'paises',code),{nombre:info.name||code,total:increment(1),lat:Number(info.lat||0),lng:Number(info.lng||0)},{merge:true});if(["DE","FR","ES","IT","PT","NL","BE","LU","IE","DK","SE","FI","PL","CZ","SK","HU","RO","BG","GR","CY","MT","AT","SI","HR","LT","LV","EE"].includes(code)){await setDoc(doc(fdb,'paises','EU'),{nombre:'European Union',total:increment(1),lat:51.16,lng:10.45},{merge:true});}storageSet('country_registered',Date.now());await cargarMapaMundial();}catch(e){console.error(e);}}
 </script>
 </body>
 </html>
