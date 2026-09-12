@@ -31,7 +31,11 @@
 <div class="card" id="muroCard"><h2>📢 MURO DE SPIKE</h2><input id="nombre" maxlength="40" placeholder="Tu sombra..."><textarea id="mensaje" maxlength="3000" placeholder="¿Qué oscuridad te acecha?"></textarea><input type="file" id="foto" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"><div id="previewContainer"><button type="button" onclick="removePreview()">✕</button><div id="previewContent"></div></div><button class="btn-red" onclick="publicar()" id="publicarBtn">👁️ DEJA TU HUELLA EN EL MURO</button><div id="muro" style="margin-top:15px;"></div><button id="loadMoreBtn" class="btn-verde2" type="button" style="display:none">CARGAR MÁS SOMBRAS</button></div>
 <div class="card" id="libroCard"><h2>📖 LIBRO DE VISITAS</h2><textarea id="mensajeLibro" maxlength="1500" placeholder="Muéstranos tu pensar..."></textarea><button class="btn-verde2" id="firmarBtn" onclick="firmarLibro()">Firmar como fantasma</button><div id="listaLibro" style="margin-top:15px;"></div></div>
 <button class="btn-whats" onclick="window.open('https://wa.me/523350807690','_blank')">💬 WHATSAPP</button>
-<div class="contador">👁️ VISITAS: <span id="contadorTexto">cargando...</span></div>
+<div class="contador">👁️ VISITAS DEL DARK CIRCLE: <span id="contadorTexto">cargando...</span></div>
+<div class="card" style="background:#000!important;border:1px solid #000!important">
+<script src="https://giscus.app/client.js" data-repo="Spikeblack009/spikeblack009.github.io" data-repo-id="R_kgDOTc5MqQ" data-category="General" data-category-id="DIC_kwDOTc5Mqc4DESBL" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="https://spikeblack009.github.io/giscus-negro.css" data-lang="es" crossorigin="anonymous" async></script>
+</div>
+<footer style="color:#444;font-size:11px;font-family:'Rajdhani',sans-serif;padding:15px 0 25px">Spike Black - Ghost Dark Circle © 2026</footer>
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
@@ -88,20 +92,23 @@ document.getElementById('loadMoreBtn').addEventListener('click',()=>{loadedCount
 window.firmarLibro=async function(){const input=document.getElementById('mensajeLibro');const mensaje=sanitizeText(input.value).slice(0,1500);if(!mensaje){showToast('Escribe');return}const placa=`Fantasma #${Math.floor(Math.random()*900)+100}`;await push(libroRef,{placa,mensaje,fecha:Date.now(),authorId:miembroId,uid:currentUid});input.value='';showToast('Firma registrada')};
 onValue(libroRef,s=>{const cont=document.getElementById('listaLibro');cont.innerHTML='';const data=s.val();if(!data)return;Object.values(data).sort((a,b)=>Number(b.fecha||0)-Number(a.fecha||0)).slice(0,50).forEach(item=>{const post=document.createElement('div');post.className='post';const b=document.createElement('b');b.textContent=sanitizeText(item.placa||'Fantasma');const p=document.createElement('p');p.textContent=item.mensaje||'';post.appendChild(b);post.appendChild(p);cont.appendChild(post)})});
 
-// PUNTOS FIJOS MEXICO USA EUROPA
-const countryCoords={MX:[23,-102],US:[39.8,-98.5],EU:[51.16,10.45],ES:[40.4,-3.7],FR:[46.2,2.2],DE:[51.1,10.4],IT:[41.8,12.5],GB:[55.3,-3.4]};
-function flagEmoji(code){if(code==='EU'||code==='UE')return '🇪🇺';return String(code).toUpperCase().replace(/./g,ch=>String.fromCodePoint(127397+ch.charCodeAt(0)))}
+// MAPA SOLO MX USA EU - SIN UE DUPLICADO
+const countryCoords={MX:[23,-102],US:[39.8,-98.5],EU:[51.16,10.45]};
+function flagEmoji(code){if(code==='EU')return '🇪🇺';return String(code).toUpperCase().replace(/./g,ch=>String.fromCodePoint(127397+ch.charCodeAt(0)))}
 async function cargarMapaMundial(){
   try{
     const snap=await getDocs(collection(fdb,'paises'));
-    let data=[];snap.forEach(d=>{data.push({id:d.id,...d.data()})});
-    if(!data.length){
-      data=[
-        {id:'MX', nombre:'Mexico', total:1, lat:23, lng:-102},
-        {id:'US', nombre:'United States', total:1, lat:39.8, lng:-98.5},
-        {id:'EU', nombre:'European Union', total:1, lat:51.16, lng:10.45}
-      ];
-    }
+    let raw=[];snap.forEach(d=>{raw.push({id:d.id,...d.data()})});
+    const map=new Map();
+    raw.forEach(item=>{
+      let code=String(item.id||'').toUpperCase().trim();
+      if(code==='UE') code='EU';
+      if(!['MX','US','EU'].includes(code)) return;
+      const prev=map.get(code);
+      if(prev){prev.total=Number(prev.total||0)+Number(item.total||0);}
+      else{map.set(code,{id:code,nombre:code==='MX'?'Mexico':code==='US'?'United States':'European Union',total:Number(item.total||0),lat:item.lat,lng:item.lng});}
+    });
+    let data=Array.from(map.values());
     if(!data.find(d=>d.id==='MX')) data.push({id:'MX', nombre:'Mexico', total:1, lat:23, lng:-102});
     if(!data.find(d=>d.id==='US')) data.push({id:'US', nombre:'United States', total:1, lat:39.8, lng:-98.5});
     if(!data.find(d=>d.id==='EU')) data.push({id:'EU', nombre:'European Union', total:1, lat:51.16, lng:10.45});
@@ -123,17 +130,17 @@ function renderMapData(data){
   data.sort((a,b)=>Number(b.total||0)-Number(a.total||0)).forEach(item=>{
     const code=String(item.id||'').toUpperCase();
     const total=Number(item.total||0);tot+=total;
-    const coords=countryCoords[code]||[Number(item.lat)||23,Number(item.lng)||-102];
+    const coords=countryCoords[code]||[23,-102];
     const icon=L.divIcon({className:'leaflet-div-icon',html:`<div class="activity-marker"></div>`,iconSize:[14,14],iconAnchor:[7,7]});
     const marker=L.marker(coords,{icon}).bindPopup(`<b style="color:#00ff88">${flagEmoji(code)} ${item.nombre||code}</b><br>👁️ ${total}`);
     marker.addTo(markersLayer);
     const tag=document.createElement('span');tag.className='pais-tag';tag.innerHTML=`${flagEmoji(code)} ${item.nombre||code} <b>${total}</b>`;cont.appendChild(tag);
   });
   actualizarNumero('paisesActivos',data.length);actualizarNumero('mapCountries',data.length);actualizarNumero('mapVisits',tot);
-  document.getElementById('mapStatus').textContent='● '+data.length+' países · '+tot+' visitas · MX · US · EU';
+  document.getElementById('mapStatus').textContent='● '+data.length+' países · '+tot+' visitas';
 }
 async function obtenerPais(){try{const r=await fetch('https://ipwho.is/');const d=await r.json();if(d&&d.country_code)return{code:d.country_code,name:d.country,lat:d.latitude,lng:d.longitude}}catch(_){}return{code:'MX',name:'Mexico',lat:23,lng:-102}}
-async function registrarPais(){try{const prev=storageGet('country_registered');if(prev && Date.now()-prev < 24*60*60*1000) return;const info=await obtenerPais();const code=String(info.code||'MX').toUpperCase();await setDoc(doc(fdb,'paises',code),{nombre:info.name||code,total:increment(1),lat:Number(info.lat||0),lng:Number(info.lng||0)},{merge:true});if(["DE","FR","ES","IT","PT","NL","BE"].includes(code)){await setDoc(doc(fdb,'paises','EU'),{nombre:'European Union',total:increment(1),lat:51.16,lng:10.45},{merge:true});}storageSet('country_registered',Date.now());await cargarMapaMundial();}catch(e){}}
+async function registrarPais(){try{const prev=storageGet('country_registered');if(prev && Date.now()-prev < 24*60*60*1000) return;const info=await obtenerPais();let code=String(info.code||'MX').toUpperCase();if(code==='UE') code='EU';if(!['MX','US','EU'].includes(code)) code='MX';await setDoc(doc(fdb,'paises',code),{nombre:code==='MX'?'Mexico':code==='US'?'United States':'European Union',total:increment(1),lat:Number(info.lat||0),lng:Number(info.lng||0)},{merge:true});storageSet('country_registered',Date.now());await cargarMapaMundial();}catch(e){}}
 </script>
 </body>
 </html>
